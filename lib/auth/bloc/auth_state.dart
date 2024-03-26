@@ -13,29 +13,27 @@ abstract class AuthState {
 }
 
 class AuthNotInitializedState extends AuthState {
-  const AuthNotInitializedState({required bool isLoading})
-      : super(isLoading: isLoading);
+  const AuthNotInitializedState({required super.isLoading});
 }
 
 class AuthRegistrationState extends AuthState {
   final Exception? exception;
   const AuthRegistrationState({
     required this.exception,
-    required bool isLoading,
-  }) : super(isLoading: isLoading);
+    required super.isLoading,
+  });
 }
 
 class AuthLoggedInState extends AuthState {
   final AuthUser user;
   const AuthLoggedInState({
     required this.user,
-    required bool isLoading,
-  }) : super(isLoading: isLoading);
+    required super.isLoading,
+  });
 }
 
 class AuthEmailNotVerifiedState extends AuthState {
-  const AuthEmailNotVerifiedState({required bool isLoading})
-      : super(isLoading: isLoading);
+  const AuthEmailNotVerifiedState({required super.isLoading});
 }
 
 class AuthForgotPasswordState extends AuthState {
@@ -44,8 +42,8 @@ class AuthForgotPasswordState extends AuthState {
   const AuthForgotPasswordState({
     required this.exception,
     required this.hasSentEmail,
-    required bool isLoading,
-  }) : super(isLoading: isLoading);
+    required super.isLoading,
+  });
 }
 
 class AuthLoggedOutState extends AuthState with EquatableMixin {
@@ -53,18 +51,14 @@ class AuthLoggedOutState extends AuthState with EquatableMixin {
 
   const AuthLoggedOutState({
     required this.exception,
-    required bool isLoading,
-    String? loadingMessage,
-  }) : super(
-          isLoading: isLoading,
-          loadingMessage: loadingMessage,
-        );
+    required super.isLoading,
+    super.loadingMessage = null,
+  });
 
   @override
   List<Object?> get props => [exception, isLoading];
 }
 
 class AuthPhoneLogInInitiatedState extends AuthState {
-  const AuthPhoneLogInInitiatedState({required bool isLoading})
-      : super(isLoading: isLoading);
+  const AuthPhoneLogInInitiatedState({required super.isLoading});
 }
