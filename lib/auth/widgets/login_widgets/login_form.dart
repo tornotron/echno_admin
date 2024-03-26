@@ -50,7 +50,10 @@ class LoginFormWidget extends StatelessWidget {
             controller: _passwordController,
             labelText: 'Password',
             hintText: 'Password',
-            validator: (value) => EchnoValidator.validatePassword(value),
+            validator: (value) => EchnoValidator.defaultValidator(
+              value,
+              'Please enter the password',
+            ),
           ),
           const SizedBox(height: EchnoSize.spaceBtwItems / 2),
           const ForgotPasswordWidget(),
