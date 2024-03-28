@@ -7,24 +7,24 @@ import 'package:image_picker/image_picker.dart';
 
 class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
   final BasicEmployeeDatabaseHandler basicEmployeeDatabaseHandler;
+  late final Employee _currentEmployee;
 
   EmployeeBloc(this.basicEmployeeDatabaseHandler)
       : super(const EmployeeNotInitializedState()) {
     on<EmployeeInitializeEvent>((event, emit) async {
       final Employee employee =
           await basicEmployeeDatabaseHandler.currentEmployee;
-      emit(EmployeeInitializedState(currentEmployee: employee));
+      _currentEmployee = employee;
+      emit(EmployeeInitializedState(currentEmployee: _currentEmployee));
     });
     on<EmployeeHomeEvent>((event, emit) {
-      final currentEmployee = event.currentEmployee;
-      emit(EmployeeHomeState(currentEmployee: currentEmployee));
+      emit(EmployeeHomeState(currentEmployee: _currentEmployee));
     });
     on<EmployeeProfileEvent>((event, emit) async {
-      final employee = event.currentEmployee;
       if (event.section == 'profile_leave_section') {
-        emit(EmployeeLeavesState(currentEmployee: employee));
+        emit(EmployeeLeavesState(currentEmployee: _currentEmployee));
       } else {
-        emit(EmployeeProfileState(currentEmployee: employee));
+        emit(EmployeeProfileState(currentEmployee: _currentEmployee));
       }
     });
     on<EmployeeUpdatePhotoEvent>((event, emit) async {
@@ -41,8 +41,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
       emit(state);
     });
     on<HrHomeEvent>((event, emit) {
-      final currentEmployee = event.currentEmployee;
-      emit(HrHomeState(currentEmployee: currentEmployee));
+      emit(HrHomeState(currentEmployee: _currentEmployee));
     });
   }
 }
