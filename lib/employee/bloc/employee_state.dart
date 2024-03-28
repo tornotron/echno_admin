@@ -1,41 +1,30 @@
-import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:flutter/foundation.dart' show immutable;
 
 @immutable
 abstract class EmployeeState {
-  final Employee? currentEmployee;
-  const EmployeeState({
-    this.currentEmployee,
-  });
+  const EmployeeState();
 }
 
 class EmployeeNotInitializedState extends EmployeeState {
-  const EmployeeNotInitializedState({super.currentEmployee});
+  const EmployeeNotInitializedState();
 }
 
 class EmployeeInitializedState extends EmployeeState {
-  const EmployeeInitializedState({required Employee currentEmployee})
-      : super(currentEmployee: currentEmployee);
+  const EmployeeInitializedState();
 }
 
 class EmployeeHomeState extends EmployeeState {
-  const EmployeeHomeState({required Employee currentEmployee})
-      : super(currentEmployee: currentEmployee);
+  const EmployeeHomeState();
 }
 
 class EmployeeProfileState extends EmployeeState {
-  const EmployeeProfileState({
-    required Employee currentEmployee,
-  }) : super(currentEmployee: currentEmployee);
+  const EmployeeProfileState();
 }
 
 class HrHomeState extends EmployeeState {
-  const HrHomeState({required Employee currentEmployee})
-      : super(currentEmployee: currentEmployee);
+  const HrHomeState();
 }
 
 class EmployeeLeavesState extends EmployeeState {
-  const EmployeeLeavesState({
-    required Employee currentEmployee,
-  }) : super(currentEmployee: currentEmployee);
+  const EmployeeLeavesState();
 }
