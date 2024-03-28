@@ -20,6 +20,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   late final Employee currentEmployee;
+  bool isUpdating = false;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +45,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         body: BlocBuilder<EmployeeBloc, EmployeeState>(
           builder: (context, state) {
+            if (state is EmployeeProfileState) {
+              isUpdating = state.isUpdating;
+            }
             return SingleChildScrollView(
               child: Padding(
                 padding: CustomPaddingStyle.defaultPaddingWithAppbar,
@@ -54,6 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     EmployeeProfilePhoto(
                       currentEmployee: currentEmployee,
                       isDark: isDark,
+                      isUpdating: isUpdating,
                     ),
                     EmployeeProfileForm(
                       currentEmployee: currentEmployee,

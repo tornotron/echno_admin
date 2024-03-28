@@ -19,8 +19,12 @@ class EmployeeHomeState extends EmployeeState {
 }
 
 class EmployeeProfileState extends EmployeeState {
+  final bool isUpdating;
   final Employee currentEmployee;
-  const EmployeeProfileState({required this.currentEmployee});
+  const EmployeeProfileState({
+    required this.isUpdating,
+    required this.currentEmployee,
+  });
 }
 
 class HrHomeState extends EmployeeState {

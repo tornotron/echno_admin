@@ -22,10 +22,13 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
       if (event.section == 'profile_leave_section') {
         emit(const EmployeeLeavesState());
       } else {
-        emit(EmployeeProfileState(currentEmployee: currentEmployee));
+        emit(EmployeeProfileState(
+            isUpdating: false, currentEmployee: currentEmployee));
       }
     });
     on<EmployeeUpdatePhotoEvent>((event, emit) async {
+      emit(EmployeeProfileState(
+          isUpdating: true, currentEmployee: currentEmployee));
       final imagePicker = ImagePicker();
       final XFile? image = await imagePicker.pickImage(
           source: ImageSource.camera,
@@ -37,7 +40,8 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
             imagePath: 'Profile/', employeeId: event.employeeId, image: image);
       }
       currentEmployee = await basicEmployeeDatabaseHandler.currentEmployee;
-      emit(EmployeeProfileState(currentEmployee: currentEmployee));
+      emit(EmployeeProfileState(
+          isUpdating: false, currentEmployee: currentEmployee));
     });
     on<HrHomeEvent>((event, emit) {
       emit(const HrHomeState());
