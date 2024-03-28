@@ -4,16 +4,11 @@ import 'package:echno_attendance/leave_module/widgets/leave_application_form.dar
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 
-class LeaveApplicationScreen extends StatefulWidget {
+class LeaveApplicationScreen extends StatelessWidget {
   const LeaveApplicationScreen({super.key});
   static const EdgeInsetsGeometry containerPadding =
       EdgeInsets.symmetric(vertical: 30.0, horizontal: 30.0);
 
-  @override
-  State<LeaveApplicationScreen> createState() => _LeaveApplicationScreenState();
-}
-
-class _LeaveApplicationScreenState extends State<LeaveApplicationScreen> {
   @override
   Widget build(context) {
     final isDark = EchnoHelperFunctions.isDarkMode(context);
