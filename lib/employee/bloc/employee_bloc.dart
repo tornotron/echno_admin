@@ -22,7 +22,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
       if (event.section == 'profile_leave_section') {
         emit(const EmployeeLeavesState());
       } else {
-        emit(const EmployeeProfileState());
+        emit(EmployeeProfileState(currentEmployee: currentEmployee));
       }
     });
     on<EmployeeUpdatePhotoEvent>((event, emit) async {
@@ -36,7 +36,8 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
         await basicEmployeeDatabaseHandler.uploadImage(
             imagePath: 'Profile/', employeeId: event.employeeId, image: image);
       }
-      emit(state);
+      currentEmployee = await basicEmployeeDatabaseHandler.currentEmployee;
+      emit(EmployeeProfileState(currentEmployee: currentEmployee));
     });
     on<HrHomeEvent>((event, emit) {
       emit(const HrHomeState());
