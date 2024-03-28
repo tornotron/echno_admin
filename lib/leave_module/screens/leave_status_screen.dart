@@ -4,7 +4,7 @@ import 'package:echno_attendance/constants/leave_module_strings.dart';
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/employee/bloc/employee_bloc.dart';
 import 'package:echno_attendance/employee/bloc/employee_event.dart';
-import 'package:echno_attendance/leave_module/screens/leave_application.dart';
+import 'package:echno_attendance/leave_module/screens/leave_application_screen.dart';
 import 'package:echno_attendance/leave_module/widgets/status_stream_builder.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
