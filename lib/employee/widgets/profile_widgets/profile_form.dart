@@ -2,7 +2,8 @@ import 'package:echno_attendance/auth/bloc/auth_bloc.dart';
 import 'package:echno_attendance/auth/bloc/auth_event.dart';
 import 'package:echno_attendance/auth/utilities/alert_dialogue.dart';
 import 'package:echno_attendance/constants/colors.dart';
-import 'package:echno_attendance/employee/hr_screens/dashboard.dart';
+import 'package:echno_attendance/employee/bloc/employee_bloc.dart';
+import 'package:echno_attendance/employee/bloc/employee_event.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/employee/utilities/employee_role.dart';
 import 'package:echno_attendance/employee/widgets/profile_widgets/profile_field_widget.dart';
@@ -60,9 +61,9 @@ class EmployeeProfileForm extends StatelessWidget {
           icon: Icons.leak_add_outlined,
           title: 'Leaves',
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return const LeaveStatusScreen();
-            }));
+            final employee = currentEmployee;
+            context.read<EmployeeBloc>().add(EmployeeProfileEvent(
+                currentEmployee: employee, section: 'profile_leave_section'));
           },
         ),
         ProfileMenuWidget(
@@ -70,22 +71,6 @@ class EmployeeProfileForm extends StatelessWidget {
             icon: Icons.task_outlined,
             title: 'Tasks',
             onPressed: () {}),
-        Visibility(
-          visible: currentEmployee.employeeRole == EmployeeRole.hr,
-          child: ProfileMenuWidget(
-            isDark: isDark,
-            icon: Icons.dashboard_outlined,
-            title: 'HR Dashboard',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const HRDashboardScreen(),
-                ),
-              );
-            },
-          ),
-        ),
         ProfileMenuWidget(
             isDark: isDark,
             title: 'Log Out',

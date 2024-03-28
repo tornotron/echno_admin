@@ -24,6 +24,18 @@ class EmployeeHomeState extends EmployeeState {
 }
 
 class EmployeeProfileState extends EmployeeState {
-  const EmployeeProfileState({required Employee currentEmployee})
+  const EmployeeProfileState({
+    required Employee currentEmployee,
+  }) : super(currentEmployee: currentEmployee);
+}
+
+class HrHomeState extends EmployeeState {
+  const HrHomeState({required Employee currentEmployee})
       : super(currentEmployee: currentEmployee);
+}
+
+class EmployeeLeavesState extends EmployeeState {
+  const EmployeeLeavesState({
+    required Employee currentEmployee,
+  }) : super(currentEmployee: currentEmployee);
 }

@@ -21,7 +21,11 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     });
     on<EmployeeProfileEvent>((event, emit) async {
       final employee = event.currentEmployee;
-      emit(EmployeeProfileState(currentEmployee: employee));
+      if (event.section == 'profile_leave_section') {
+        emit(EmployeeLeavesState(currentEmployee: employee));
+      } else {
+        emit(EmployeeProfileState(currentEmployee: employee));
+      }
     });
     on<EmployeeUpdatePhotoEvent>((event, emit) async {
       final imagePicker = ImagePicker();
@@ -35,6 +39,10 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
             imagePath: 'Profile/', employeeId: event.employeeId, image: image);
       }
       emit(state);
+    });
+    on<HrHomeEvent>((event, emit) {
+      final currentEmployee = event.currentEmployee;
+      emit(HrHomeState(currentEmployee: currentEmployee));
     });
   }
 }
