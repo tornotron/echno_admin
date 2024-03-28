@@ -4,9 +4,6 @@ import 'package:echno_attendance/constants/leave_module_strings.dart';
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/employee/bloc/employee_bloc.dart';
 import 'package:echno_attendance/employee/bloc/employee_event.dart';
-import 'package:echno_attendance/employee/domain/firestore/database_handler.dart';
-import 'package:echno_attendance/employee/domain/firestore/firestore_database_handler.dart';
-import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/leave_module/screens/leave_application.dart';
 import 'package:echno_attendance/leave_module/widgets/status_stream_builder.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
@@ -31,10 +28,9 @@ class LeaveStatusScreenState extends State<LeaveStatusScreen> {
       appBar: EchnoAppBar(
         leadingIcon: Icons.arrow_back_ios_new,
         leadingOnPressed: () {
-          final Employee employee =
-              context.read<EmployeeBloc>().state.currentEmployee!;
-          context.read<EmployeeBloc>().add(EmployeeProfileEvent(
-              currentEmployee: employee, section: 'profile_home_section'));
+          context
+              .read<EmployeeBloc>()
+              .add(const EmployeeProfileEvent(section: 'profile_home_section'));
         },
         title: Text(
           'Leave Status',

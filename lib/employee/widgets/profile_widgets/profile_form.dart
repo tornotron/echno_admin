@@ -8,7 +8,6 @@ import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/employee/utilities/employee_role.dart';
 import 'package:echno_attendance/employee/widgets/profile_widgets/profile_field_widget.dart';
 import 'package:echno_attendance/employee/widgets/profile_widgets/profile_menu_widget.dart';
-import 'package:echno_attendance/leave_module/screens/leave_status_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -61,9 +60,8 @@ class EmployeeProfileForm extends StatelessWidget {
           icon: Icons.leak_add_outlined,
           title: 'Leaves',
           onPressed: () {
-            final employee = currentEmployee;
-            context.read<EmployeeBloc>().add(EmployeeProfileEvent(
-                currentEmployee: employee, section: 'profile_leave_section'));
+            context.read<EmployeeBloc>().add(
+                const EmployeeProfileEvent(section: 'profile_leave_section'));
           },
         ),
         ProfileMenuWidget(

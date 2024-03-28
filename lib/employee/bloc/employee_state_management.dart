@@ -26,8 +26,10 @@ class _EmployeeStateManagementWidgetState
         listener: (context, state) {},
         builder: (context, state) {
           if (state is EmployeeInitializedState) {
-            if (state.currentEmployee != null &&
-                state.currentEmployee!.employeeRole == EmployeeRole.hr) {
+            final currentEmployee = context.select((EmployeeBloc bloc) {
+              return bloc.currentEmployee;
+            });
+            if (currentEmployee.employeeRole == EmployeeRole.hr) {
               return const HRDashboardScreen();
             } else {
               return const HomePage();

@@ -1,4 +1,3 @@
-import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:flutter/foundation.dart' show immutable;
 
 @immutable
@@ -11,18 +10,12 @@ class EmployeeInitializeEvent extends EmployeeEvent {
 }
 
 class EmployeeHomeEvent extends EmployeeEvent {
-  final Employee currentEmployee;
-
-  const EmployeeHomeEvent({
-    required this.currentEmployee,
-  });
+  const EmployeeHomeEvent();
 }
 
 class EmployeeProfileEvent extends EmployeeEvent {
-  final Employee currentEmployee;
   final String section;
   const EmployeeProfileEvent({
-    required this.currentEmployee,
     required this.section,
   });
 }
@@ -44,9 +37,5 @@ class EmployeeAttendanceEvent extends EmployeeEvent {
 }
 
 class HrHomeEvent extends EmployeeEvent {
-  final Employee currentEmployee;
-
-  const HrHomeEvent({
-    required this.currentEmployee,
-  });
+  const HrHomeEvent();
 }
