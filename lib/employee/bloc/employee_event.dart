@@ -20,8 +20,10 @@ class EmployeeHomeEvent extends EmployeeEvent {
 
 class EmployeeProfileEvent extends EmployeeEvent {
   final Employee currentEmployee;
+  final String section;
   const EmployeeProfileEvent({
     required this.currentEmployee,
+    required this.section,
   });
 }
 
@@ -38,5 +40,13 @@ class EmployeeAttendanceEvent extends EmployeeEvent {
   const EmployeeAttendanceEvent({
     required this.employeeId,
     required this.employeeName,
+  });
+}
+
+class HrHomeEvent extends EmployeeEvent {
+  final Employee currentEmployee;
+
+  const HrHomeEvent({
+    required this.currentEmployee,
   });
 }

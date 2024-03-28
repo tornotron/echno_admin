@@ -43,9 +43,8 @@ class _HomePageState extends State<HomePage> {
           leadingIcon: Icons.menu,
           leadingOnPressed: () {
             final employee = currentEmployee;
-            context
-                .read<EmployeeBloc>()
-                .add(EmployeeProfileEvent(currentEmployee: employee));
+            context.read<EmployeeBloc>().add(EmployeeProfileEvent(
+                currentEmployee: employee, section: 'profile_home_section'));
           },
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
