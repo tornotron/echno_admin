@@ -1,3 +1,4 @@
+import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:flutter/foundation.dart' show immutable;
 
 @immutable
@@ -18,7 +19,8 @@ class EmployeeHomeState extends EmployeeState {
 }
 
 class EmployeeProfileState extends EmployeeState {
-  const EmployeeProfileState();
+  final Employee currentEmployee;
+  const EmployeeProfileState({required this.currentEmployee});
 }
 
 class HrHomeState extends EmployeeState {
