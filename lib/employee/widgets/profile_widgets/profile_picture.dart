@@ -11,13 +11,30 @@ class EmployeeProfilePhoto extends StatelessWidget {
     super.key,
     required this.currentEmployee,
     required this.isDark,
+    required this.isUpdating,
   });
 
   final Employee currentEmployee;
   final bool isDark;
+  final bool isUpdating;
 
   @override
   Widget build(BuildContext context) {
+    Widget content = ClipRRect(
+      borderRadius: BorderRadius.circular(100.00),
+      child: currentEmployee.photoUrl != null
+          ? Image.network(currentEmployee.photoUrl!, fit: BoxFit.cover)
+          : const Image(
+              image: AssetImage(EchnoImages.profilePlaceholder),
+              fit: BoxFit.cover,
+            ),
+    );
+    if (isUpdating) {
+      content = const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
     return Center(
       child: Stack(
         children: [
@@ -37,15 +54,7 @@ class EmployeeProfilePhoto extends StatelessWidget {
           SizedBox(
             height: 120.0,
             width: 120.0,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(100.00),
-              child: currentEmployee.photoUrl != null
-                  ? Image.network(currentEmployee.photoUrl!, fit: BoxFit.cover)
-                  : const Image(
-                      image: AssetImage(EchnoImages.profilePlaceholder),
-                      fit: BoxFit.cover,
-                    ),
-            ),
+            child: content,
           ),
           Positioned(
             bottom: 0,
