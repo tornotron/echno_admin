@@ -8,14 +8,9 @@ import 'package:echno_attendance/utilities/styles/padding_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class PhoneLoginScreen extends StatefulWidget {
+class PhoneLoginScreen extends StatelessWidget {
   const PhoneLoginScreen({super.key});
 
-  @override
-  State<PhoneLoginScreen> createState() => _PhoneLoginScreenState();
-}
-
-class _PhoneLoginScreenState extends State<PhoneLoginScreen> {
   @override
   Widget build(context) {
     final isDark = EchnoHelperFunctions.isDarkMode(context);
