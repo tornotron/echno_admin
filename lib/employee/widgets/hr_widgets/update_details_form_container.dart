@@ -3,7 +3,7 @@ import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/employee/services/hr_employee_service.dart';
 import 'package:echno_attendance/employee/utilities/employee_role.dart';
-import 'package:echno_attendance/employee/widgets/update_details_form.dart';
+import 'package:echno_attendance/employee/widgets/hr_widgets/update_details_form.dart';
 import 'package:flutter/material.dart';
 
 class UpdateDetailsFormContainer extends StatefulWidget {
