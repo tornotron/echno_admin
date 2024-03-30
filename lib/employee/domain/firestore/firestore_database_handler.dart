@@ -236,4 +236,30 @@ class HrFirestoreDatabaseHandler extends BasicEmployeeFirestoreDatabaseHandler
       logs.e('Other Exception: $e');
     }
   }
+
+  @override
+  Stream<List<Employee>> getAllEmployees({required String? siteOfficeName}) {
+    final String? siteOffice = siteOfficeName;
+    try {
+      if (siteOffice != null) {
+        return FirebaseFirestore.instance
+            .collection('employees')
+            .where('site-office', isEqualTo: siteOffice)
+            .snapshots()
+            .map((QuerySnapshot<Map<String, dynamic>> snapshot) => snapshot.docs
+                .map((doc) => Employee.fromDocument(doc))
+                .toList());
+      } else {
+        return FirebaseFirestore.instance
+            .collection('employees')
+            .snapshots()
+            .map((QuerySnapshot<Map<String, dynamic>> snapshot) => snapshot.docs
+                .map((doc) => Employee.fromDocument(doc))
+                .toList());
+      }
+    } catch (e) {
+      logs.e('Error getting all employees: $e');
+      throw Exception('Error getting all employees: $e');
+    }
+  }
 }

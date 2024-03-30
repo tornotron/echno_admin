@@ -16,4 +16,6 @@ abstract class BasicEmployeeDatabaseHandler implements IReadEmployee {
 }
 
 abstract class HrDatabaseHandler extends BasicEmployeeDatabaseHandler
-    implements ICreateEmployee, IUpdateEmployee, IDeleteEmployee {}
+    implements ICreateEmployee, IUpdateEmployee, IDeleteEmployee {
+  Stream<List<Employee>> getAllEmployees({required String? siteOfficeName});
+}

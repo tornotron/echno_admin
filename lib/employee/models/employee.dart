@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:echno_attendance/auth/models/auth_user.dart';
 import 'package:echno_attendance/employee/services/employee_service.dart';
 import 'package:echno_attendance/employee/utilities/employee_role.dart';
@@ -81,5 +82,26 @@ class Employee {
       employeeStatus: false,
       employeeRole: EmployeeRole.emp,
     );
+  }
+
+  // This method is used to create an employee instance from a document snapshot
+  factory Employee.fromDocument(QueryDocumentSnapshot doc) {
+    final employeeDetails = doc.data() as Map<String, dynamic>;
+    final employeePhotoUrl = employeeDetails['photo-url'];
+    final employeeId = employeeDetails['employee-id'];
+    final employeeName = employeeDetails['employee-name'];
+    final companyEmail = employeeDetails['company-email'];
+    final phoneNumber = employeeDetails['phone-number'];
+    final employeeStatus = employeeDetails['employee-status'];
+    final employeeRole = getEmployeeRole(employeeDetails['employee-role']);
+    return Employee._(
+        authUser: null,
+        photoUrl: employeePhotoUrl,
+        employeeId: employeeId,
+        employeeName: employeeName,
+        companyEmail: companyEmail,
+        phoneNumber: phoneNumber,
+        employeeStatus: employeeStatus,
+        employeeRole: employeeRole);
   }
 }
