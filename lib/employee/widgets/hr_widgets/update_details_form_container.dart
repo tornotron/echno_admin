@@ -1,5 +1,6 @@
 import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/sizes.dart';
+import 'package:echno_attendance/constants/static_text.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/employee/services/hr_employee_service.dart';
 import 'package:echno_attendance/employee/utilities/employee_role.dart';
@@ -147,9 +148,10 @@ class _UpdateDetailsFormContainerState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text('Update Details', style: Theme.of(context).textTheme.displaySmall),
+        Text(EchnoText.updateEmployeeTitle,
+            style: Theme.of(context).textTheme.displaySmall),
         Text(
-          'Update the personal details the employee...',
+          EchnoText.updateEmployeeSubtitle,
           style: Theme.of(context).textTheme.titleMedium,
         ),
         const SizedBox(height: EchnoSize.spaceBtwSections),

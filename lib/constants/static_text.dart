@@ -38,6 +38,17 @@ class EchnoText {
       'Please click on the link you\'ve received via your email...';
   static const String emailVerificationButton = 'Resent Verification Mail';
 
+  // HR Screens
+  static const String addEmployeeTitle = 'Add New Employee';
+  static const String addEmployeeSubtitle =
+      'Fill in the details to add a new employee...';
+  static const String employeeRegisterTitle = 'Employee Register';
+  static const String employeeRegisterSubtitle =
+      'List of all employees in the organization...';
+  static const String updateEmployeeTitle = 'Update Details';
+  static const String updateEmployeeSubtitle =
+      'Update the personal details of the employee...';
+
   // Feature Disabled
   static const String featureDisabled =
       'Sorry this feature is currently disabled...';
