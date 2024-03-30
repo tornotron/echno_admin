@@ -1,7 +1,7 @@
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/sizes.dart';
-import 'package:echno_attendance/employee/widgets/add_employee_form.dart';
+import 'package:echno_attendance/employee/widgets/hr_widgets/add_employee_form.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:echno_attendance/utilities/styles/padding_style.dart';
 import 'package:flutter/material.dart';
