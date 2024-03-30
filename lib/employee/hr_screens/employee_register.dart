@@ -1,6 +1,7 @@
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/sizes.dart';
+import 'package:echno_attendance/constants/static_text.dart';
 import 'package:echno_attendance/employee/widgets/hr_widgets/employee_register_stream.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:echno_attendance/utilities/styles/padding_style.dart';
@@ -40,12 +41,12 @@ class _EmployeeRegisterScreenState extends State<EmployeeRegisterScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'Employee Register',
+                EchnoText.employeeRegisterTitle,
                 style: Theme.of(context).textTheme.displaySmall,
                 textAlign: TextAlign.left,
               ),
               Text(
-                'List of all employees in the organization...',
+                EchnoText.employeeRegisterSubtitle,
                 style: Theme.of(context).textTheme.titleMedium,
                 textAlign: TextAlign.left,
               ),
