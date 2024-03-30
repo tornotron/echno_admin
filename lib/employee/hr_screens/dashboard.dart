@@ -1,7 +1,7 @@
 import 'package:echno_attendance/auth/services/auth_services/auth_service.dart';
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/constants/colors.dart';
-import 'package:echno_attendance/employee/models/dashboard_item.dart';
+import 'package:echno_attendance/employee/utilities/dashboard_item.dart';
 import 'package:echno_attendance/employee/utilities/dashboard_item_list.dart';
 import 'package:echno_attendance/employee/widgets/custom_dashboard_tile.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';

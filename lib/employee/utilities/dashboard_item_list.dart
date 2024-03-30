@@ -2,7 +2,7 @@ import 'package:echno_attendance/employee/hr_screens/add_employee.dart';
 import 'package:echno_attendance/employee/hr_screens/attendance_report/employee_attendancereport.dart';
 import 'package:echno_attendance/employee/hr_screens/employee_register.dart';
 import 'package:echno_attendance/employee/hr_screens/update_details_screen.dart';
-import 'package:echno_attendance/employee/models/dashboard_item.dart';
+import 'package:echno_attendance/employee/utilities/dashboard_item.dart';
 import 'package:echno_attendance/leave_module/screens/leave_register_screen.dart';
 import 'package:flutter/material.dart';
 

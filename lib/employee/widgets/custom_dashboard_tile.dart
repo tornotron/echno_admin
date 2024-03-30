@@ -1,5 +1,5 @@
 import 'package:echno_attendance/constants/colors.dart';
-import 'package:echno_attendance/employee/models/dashboard_item.dart';
+import 'package:echno_attendance/employee/utilities/dashboard_item.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 
