@@ -7,14 +7,13 @@ import 'package:echno_attendance/employee/bloc/employee_event.dart';
 import 'package:echno_attendance/leave_module/screens/leave_application_screen.dart';
 import 'package:echno_attendance/leave_module/widgets/status_stream_builder.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
+import 'package:echno_attendance/utilities/styles/padding_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class LeaveStatusScreen extends StatefulWidget {
   const LeaveStatusScreen({super.key});
-  static const EdgeInsetsGeometry containerPadding =
-      EdgeInsets.symmetric(vertical: 30.0, horizontal: 30.0);
 
   @override
   State<LeaveStatusScreen> createState() => LeaveStatusScreenState();
@@ -41,9 +40,8 @@ class LeaveStatusScreenState extends State<LeaveStatusScreen> {
       ),
       body: Column(
         children: [
-          Container(
-            width: double.infinity,
-            padding: LeaveStatusScreen.containerPadding,
+          Padding(
+            padding: CustomPaddingStyle.defaultPaddingWithAppbar,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

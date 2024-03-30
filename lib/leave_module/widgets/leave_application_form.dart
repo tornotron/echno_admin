@@ -8,13 +8,12 @@ import 'package:echno_attendance/leave_module/utilities/leave_type.dart';
 import 'package:echno_attendance/leave_module/widgets/date_selection_field.dart';
 import 'package:echno_attendance/leave_module/widgets/leave_form_field.dart';
 import 'package:echno_attendance/utilities/popups/custom_snackbar.dart';
+import 'package:echno_attendance/utilities/styles/padding_style.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class LeaveApplicationForm extends StatefulWidget {
   const LeaveApplicationForm({super.key});
-  static const EdgeInsetsGeometry containerPadding =
-      EdgeInsets.symmetric(vertical: 30.0, horizontal: 30.0);
 
   @override
   State<LeaveApplicationForm> createState() => _LeaveApplicationFormState();
@@ -197,9 +196,8 @@ class _LeaveApplicationFormState extends State<LeaveApplicationForm> {
   Widget build(BuildContext context) {
     return Form(
       key: _leaveFormKey,
-      child: Container(
-        width: double.infinity,
-        padding: LeaveApplicationForm.containerPadding,
+      child: Padding(
+        padding: CustomPaddingStyle.defaultPaddingWithAppbar,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
