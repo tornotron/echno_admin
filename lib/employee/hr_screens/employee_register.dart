@@ -1,49 +1,61 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:echno_attendance/constants/colors_string.dart';
+import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
+import 'package:echno_attendance/constants/colors.dart';
+import 'package:echno_attendance/constants/sizes.dart';
+import 'package:echno_attendance/employee/widgets/hr_widgets/employee_register_stream.dart';
+import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
+import 'package:echno_attendance/utilities/styles/padding_style.dart';
 import 'package:flutter/material.dart';
 
 class EmployeeRegisterScreen extends StatefulWidget {
   const EmployeeRegisterScreen({super.key});
-  static const EdgeInsetsGeometry containerPadding =
-      EdgeInsets.symmetric(vertical: 30.0, horizontal: 30.0);
 
   @override
   State<EmployeeRegisterScreen> createState() => _EmployeeRegisterScreenState();
 }
 
 class _EmployeeRegisterScreenState extends State<EmployeeRegisterScreen> {
-  final CollectionReference employees =
-      FirebaseFirestore.instance.collection('employees');
   TextEditingController searchController = TextEditingController();
 
-  get isDarkMode => Theme.of(context).brightness == Brightness.dark;
   @override
   Widget build(context) {
+    final isDark = EchnoHelperFunctions.isDarkMode(context);
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: isDarkMode ? echnoLightBlueColor : echnoLogoColor,
-          title: const Text('Employee Register'),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new),
-            onPressed: () {
-              Navigator.pop(context);
-            },
+        appBar: EchnoAppBar(
+          leadingIcon: Icons.arrow_back_ios_new,
+          leadingOnPressed: () {
+            Navigator.pop(context);
+          },
+          title: Text(
+            'Employee Register',
+            style: Theme.of(context).textTheme.headlineSmall?.apply(
+                  color: isDark ? EchnoColors.black : EchnoColors.white,
+                ),
           ),
         ),
-        body: Container(
-          width: double.infinity,
-          padding: EmployeeRegisterScreen.containerPadding,
+        body: Padding(
+          padding: CustomPaddingStyle.defaultPaddingWithAppbar,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              Text(
+                'Employee Register',
+                style: Theme.of(context).textTheme.displaySmall,
+                textAlign: TextAlign.left,
+              ),
+              Text(
+                'List of all employees in the organization...',
+                style: Theme.of(context).textTheme.titleMedium,
+                textAlign: TextAlign.left,
+              ),
+              const SizedBox(height: EchnoSize.spaceBtwSections),
               TextFormField(
                 controller: searchController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(
-                      (15.0),
+                      (EchnoSize.borderRadiusLg),
                     ),
                   ),
                   labelText: 'Filter',
@@ -62,109 +74,12 @@ class _EmployeeRegisterScreenState extends State<EmployeeRegisterScreen> {
                   setState(() {});
                 },
               ),
-              const SizedBox(height: 15.0),
-              Expanded(
-                child: StreamBuilder<QuerySnapshot>(
-                  stream: employees.snapshots(),
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-
-                    var employees = snapshot.data!.docs;
-                    List<Widget> employeeWidgets = [];
-
-                    for (var employee in employees) {
-                      var name = employee['employee-name'];
-                      var employeeId = employee['employee-id'];
-                      var email = employee['company-email'];
-                      var phone = employee['phone-number'];
-                      var status = employee['employee-status'];
-
-                      if (name
-                              .toLowerCase()
-                              .contains(searchController.text.toLowerCase()) ||
-                          employeeId
-                              .toLowerCase()
-                              .contains(searchController.text.toLowerCase()) ||
-                          email
-                              .toLowerCase()
-                              .contains(searchController.text.toLowerCase()) ||
-                          phone
-                              .toLowerCase()
-                              .contains(searchController.text.toLowerCase())) {
-                        employeeWidgets.add(
-                          Card(
-                            color: isDarkMode
-                                ? echnoLightBlueColor
-                                : echnoLogoColor,
-                            elevation: 3,
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 8),
-                            child: ListTile(
-                              title: Text(
-                                name,
-                                style: const TextStyle(
-                                  color: echnoDarkColor,
-                                  fontFamily: 'TT Chocolates Bold',
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 20.0,
-                                ),
-                              ),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Employee ID: $employeeId',
-                                    style: const TextStyle(
-                                      color: echnoDarkColor,
-                                      fontFamily: 'TT Chocolates Bold',
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: 15.0,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Email: $email',
-                                    style: const TextStyle(
-                                      color: echnoDarkColor,
-                                      fontFamily: 'TT Chocolates Bold',
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: 15.0,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Phone: $phone',
-                                    style: const TextStyle(
-                                      color: echnoDarkColor,
-                                      fontFamily: 'TT Chocolates Bold',
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: 15.0,
-                                    ),
-                                  ),
-                                  Text(
-                                      'Status: ${status ? 'Active' : 'Inactive'}',
-                                      style: const TextStyle(
-                                        color: echnoDarkColor,
-                                        fontFamily: 'TT Chocolates Bold',
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: 14.0,
-                                      )),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      }
-                    }
-
-                    return ListView(
-                      children: employeeWidgets,
-                    );
-                  },
-                ),
-              ),
+              const SizedBox(height: EchnoSize.spaceBtwItems),
+              const Divider(height: EchnoSize.dividerHeight),
+              employeeRegisterStreamBuilder(
+                  context: context,
+                  searchController: searchController,
+                  isDarkMode: isDark)
             ],
           ),
         ),

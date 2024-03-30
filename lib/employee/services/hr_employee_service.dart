@@ -54,4 +54,9 @@ class HrEmployeeService extends EmployeeService implements HrDatabaseHandler {
       employeeStatus: employeeStatus,
     );
   }
+
+  @override
+  Stream<List<Employee>> getAllEmployees({required String? siteOfficeName}) {
+    return _handler.getAllEmployees(siteOfficeName: siteOfficeName);
+  }
 }
