@@ -37,7 +37,8 @@ class _MonthlyReportState extends State<MonthlyReport> {
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text('Monthly Attendance Report',
-                style: EchnoTextTheme.lightTextTheme.displaySmall),
+                style: EchnoTextTheme.lightTextTheme.headlineLarge!
+                    .copyWith(fontSize: 29)),
           ),
         ),
         Padding(
@@ -129,7 +130,6 @@ class _MonthlyReportState extends State<MonthlyReport> {
           height: 10,
         ),
         SizedBox(
-          height: 50,
           width: 250,
           child: ElevatedButton(
             onPressed: () {
@@ -145,14 +145,6 @@ class _MonthlyReportState extends State<MonthlyReport> {
                 setState(() {});
               }
             },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: echnoBlueColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              textStyle:
-                  const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-            ),
             child: const Text(
               'Submit',
               style: TextStyle(

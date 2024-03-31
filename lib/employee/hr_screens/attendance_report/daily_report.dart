@@ -37,7 +37,8 @@ class _DailyState extends State<DailyReport> {
           child: Align(
               alignment: Alignment.centerLeft,
               child: Text('Daily Attendance Report',
-                  style: EchnoTextTheme.lightTextTheme.displaySmall)),
+                  style: EchnoTextTheme.lightTextTheme.headlineLarge!
+                      .copyWith(fontSize: 29))),
         ),
         Padding(
           padding: const EdgeInsets.only(left: 13.7),
@@ -91,25 +92,12 @@ class _DailyState extends State<DailyReport> {
             ),
             SizedBox(
               width: 90,
-              height: 40,
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: echnoBlueColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  textStyle: const TextStyle(
-                      fontSize: 15, fontWeight: FontWeight.bold),
-                ),
                 onPressed: () {
                   _scrolltoday();
                 },
                 child: const Text(
                   "Reset",
-                  style: TextStyle(
-                    fontFamily: 'TT Chocolates',
-                    color: Colors.white,
-                  ),
                 ),
               ),
             ),
@@ -119,7 +107,6 @@ class _DailyState extends State<DailyReport> {
           height: 10,
         ),
         SizedBox(
-          height: 50,
           width: 250,
           child: ElevatedButton(
             onPressed: () {
@@ -128,20 +115,8 @@ class _DailyState extends State<DailyReport> {
                 dateFromUI;
               });
             },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: echnoBlueColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              textStyle:
-                  const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-            ),
             child: const Text(
               'Submit',
-              style: TextStyle(
-                fontFamily: 'TT Chocolates',
-                color: Colors.white,
-              ),
             ),
           ),
         ),
