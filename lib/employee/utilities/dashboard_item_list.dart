@@ -1,3 +1,4 @@
+import 'package:echno_attendance/attendance/screens/site_management_screen.dart';
 import 'package:echno_attendance/employee/hr_screens/add_employee.dart';
 import 'package:echno_attendance/employee/hr_screens/attendance_report/employee_attendancereport.dart';
 import 'package:echno_attendance/employee/hr_screens/employee_register.dart';
@@ -52,6 +53,24 @@ class DashboardItemList {
         onTap: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return const LeaveRegisterScreen();
+          }));
+        },
+      ),
+      DashboardItem(
+        icon: Icons.location_on_outlined,
+        text: 'Site Management',
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return const SiteManage();
+          }));
+        },
+      ),
+      DashboardItem(
+        icon: Icons.task_rounded,
+        text: 'Task Managament',
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return const AttendanceReportScreen();
           }));
         },
       ),
