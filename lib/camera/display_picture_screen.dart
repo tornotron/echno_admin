@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:echno_attendance/common_widgets/loading_screen.dart';
-import 'package:echno_attendance/constants/colors_string.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/employee/services/employee_service.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -46,8 +45,9 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
     try {
       final employeeid = currentEmployee.employeeId;
       DateTime attdate = DateTime.now();
-      Reference firebaseStorageRef =
-          FirebaseStorage.instance.ref().child('attendance/$employeeid/$attdate');
+      Reference firebaseStorageRef = FirebaseStorage.instance
+          .ref()
+          .child('attendance/$employeeid/$attdate');
       UploadTask uploadTask = firebaseStorageRef.putFile(imageFile);
       LoadingScreen().show(context: context, text: "Uploading Image");
       TaskSnapshot taskSnapshot = await uploadTask
@@ -63,10 +63,9 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                   actions: <Widget>[
                     TextButton(
                         onPressed: () {
-                          // Navigator.pushReplacement(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => const HomePage()));
+                          int popCount = 0;
+                          Navigator.of(context)
+                              .popUntil((route) => popCount++ == 3);
                         },
                         child: const Text('OK'))
                   ],
@@ -120,18 +119,8 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                       final imgUrl = await uploadImage(widget.imagePath);
                       saveImageUrlToFirestore(imgUrl);
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: echnoBlueColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      textStyle: const TextStyle(
-                          fontSize: 15, fontWeight: FontWeight.bold),
-                    ),
                     child: const Text(
                       'Upload',
-                      style: TextStyle(
-                          fontFamily: 'TT Chocolates', color: Colors.white),
                     ),
                   ),
                 ),
@@ -143,18 +132,8 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: echnoBlueColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      textStyle: const TextStyle(
-                          fontSize: 15, fontWeight: FontWeight.bold),
-                    ),
                     child: const Text(
                       'Retake',
-                      style: TextStyle(
-                          fontFamily: 'TT Chocolates', color: Colors.white),
                     ),
                   ),
                 ),
