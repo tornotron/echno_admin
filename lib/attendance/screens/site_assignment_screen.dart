@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:echno_attendance/attendance/services/siteEmpAdd_service.dart';
 import 'package:echno_attendance/attendance/services/siteassiagnment_service.dart';
+import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
+import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/colors_string.dart';
 import 'package:echno_attendance/employee/widgets/texts.dart';
+import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -119,25 +122,21 @@ class _AssignSiteScreenState extends State<AssignSiteScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = EchnoHelperFunctions.isDarkMode(context);
     final mediaQuery = MediaQuery.of(context);
     final screenSize = mediaQuery.size;
     final screenWidth = screenSize.width;
     return Scaffold(
-      appBar: AppBar(
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: Color(0xFF004AAD),
-        ),
-        backgroundColor: echnoBlueColor,
-        title: Texts(
-          textData: widget.sitename,
-          textFontSize: 23,
-        ),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back_ios_new),
-          color: Colors.white,
+      appBar: EchnoAppBar(
+        leadingIcon: Icons.arrow_back_ios_new,
+        leadingOnPressed: () {
+          Navigator.pop(context);
+        },
+        title: Text(
+          widget.sitename,
+          style: Theme.of(context).textTheme.headlineSmall?.apply(
+                color: isDark ? EchnoColors.black : EchnoColors.white,
+              ),
         ),
       ),
       body: Column(
@@ -154,20 +153,8 @@ class _AssignSiteScreenState extends State<AssignSiteScreen> {
                     onPressed: () {
                       _showBottomSheet(context);
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: echnoBlueColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      textStyle: const TextStyle(
-                          fontSize: 15, fontWeight: FontWeight.bold),
-                    ),
                     child: const Text(
                       'Add Employee',
-                      style: TextStyle(
-                        fontFamily: 'TT Chocolates',
-                        color: Colors.white,
-                      ),
                     ),
                   ),
                 ),
@@ -177,20 +164,8 @@ class _AssignSiteScreenState extends State<AssignSiteScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
                   onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: echnoBlueColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    textStyle: const TextStyle(
-                        fontSize: 15, fontWeight: FontWeight.bold),
-                  ),
                   child: const Text(
                     '',
-                    style: TextStyle(
-                      fontFamily: 'TT Chocolates',
-                      color: Colors.white,
-                    ),
                   ),
                 ),
               )),

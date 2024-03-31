@@ -1,7 +1,10 @@
+import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
+import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/colors_string.dart';
 import 'package:echno_attendance/employee/hr_screens/attendance_report/monthlyreport.dart';
 import 'package:echno_attendance/employee/hr_screens/attendance_report/daily_report.dart';
 import 'package:echno_attendance/employee/widgets/texts.dart';
+import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -49,19 +52,10 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
                   height: 40,
                 ),
                 SizedBox(
-                  height: 60,
                   width: 250,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: echnoBlueColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        textStyle: const TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold),
-                      ),
                       onPressed: () {
                         setState(() {
                           showMainContent = true;
@@ -70,28 +64,15 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
                       },
                       child: const Text(
                         'Get Monthly Report',
-                        style: TextStyle(
-                          fontFamily: 'TT Chocolates',
-                          color: Colors.white,
-                        ),
                       ),
                     ),
                   ),
                 ),
                 SizedBox(
-                  height: 60,
                   width: 250,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: echnoBlueColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        textStyle: const TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold),
-                      ),
                       onPressed: () {
                         setState(() {
                           showMainContent = false;
@@ -100,10 +81,6 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
                       },
                       child: const Text(
                         'Get Daily Report',
-                        style: TextStyle(
-                          fontFamily: 'TT Chocolates',
-                          color: Colors.white,
-                        ),
                       ),
                     ),
                   ),
@@ -116,22 +93,18 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = EchnoHelperFunctions.isDarkMode(context);
     return Scaffold(
-      appBar: AppBar(
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: Color(0xFF004AAD),
-        ),
-        backgroundColor: echnoBlueColor,
-        title: const Texts(
-          textData: "Attendance Report",
-          textFontSize: 23,
-        ),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back_ios_new),
-          color: Colors.white,
+      appBar: EchnoAppBar(
+        leadingIcon: Icons.arrow_back_ios_new,
+        leadingOnPressed: () {
+          Navigator.pop(context);
+        },
+        title: Text(
+          'Attendance Report',
+          style: Theme.of(context).textTheme.headlineSmall?.apply(
+                color: isDark ? EchnoColors.black : EchnoColors.white,
+              ),
         ),
       ),
       body: showMainContent
@@ -154,11 +127,14 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
           ),
           textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
         ),
-        child: const Text(
-          "Change report type",
-          style: TextStyle(
-            fontFamily: 'TT Chocolates',
-            color: echnoBlueColor,
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Text(
+            "Change report type",
+            style: Theme.of(context)
+                .textTheme
+                .labelSmall!
+                .apply(fontWeightDelta: 1),
           ),
         ),
       ),

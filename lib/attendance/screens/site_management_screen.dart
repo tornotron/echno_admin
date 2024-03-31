@@ -1,7 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:echno_attendance/attendance/screens/site_assignment_screen.dart';
+import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
+import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/colors_string.dart';
+import 'package:echno_attendance/echno.dart';
 import 'package:echno_attendance/employee/widgets/texts.dart';
+import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -34,22 +38,18 @@ class _SiteManageState extends State<SiteManage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = EchnoHelperFunctions.isDarkMode(context);
     return Scaffold(
-      appBar: AppBar(
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: Color(0xFF004AAD),
-        ),
-        backgroundColor: echnoBlueColor,
-        title: const Texts(
-          textData: "Site Management",
-          textFontSize: 23,
-        ),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back_ios_new),
-          color: Colors.white,
+      appBar: EchnoAppBar(
+        leadingIcon: Icons.arrow_back_ios_new,
+        leadingOnPressed: () {
+          Navigator.pop(context);
+        },
+        title: Text(
+          'Site Management',
+          style: Theme.of(context).textTheme.headlineSmall?.apply(
+                color: isDark ? EchnoColors.black : EchnoColors.white,
+              ),
         ),
       ),
       body: FutureBuilder(
@@ -70,7 +70,7 @@ class _SiteManageState extends State<SiteManage> {
                 itemBuilder: (context, index) {
                   final String siteName = documents[index].id;
                   return Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(20.0),
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
