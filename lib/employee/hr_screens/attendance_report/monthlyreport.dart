@@ -1,5 +1,4 @@
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:echno_attendance/constants/colors_string.dart';
 import 'package:echno_attendance/global_theme/text_theme.dart';
 import 'package:echno_attendance/employee/widgets/attcard_monthly.dart';
 import 'package:flutter/material.dart';

@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:echno_attendance/common_widgets/loading_screen.dart';
 import 'package:echno_attendance/constants/colors_string.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
-import 'package:echno_attendance/employee/screens/homepage_screen.dart';
 import 'package:echno_attendance/employee/services/employee_service.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';

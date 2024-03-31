@@ -2,12 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:echno_attendance/attendance/screens/site_assignment_screen.dart';
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/constants/colors.dart';
-import 'package:echno_attendance/constants/colors_string.dart';
-import 'package:echno_attendance/echno.dart';
-import 'package:echno_attendance/employee/widgets/texts.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class SiteManage extends StatefulWidget {
   const SiteManage({super.key});
