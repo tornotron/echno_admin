@@ -4,10 +4,8 @@ import 'package:echno_attendance/attendance/services/siteassiagnment_service.dar
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/colors_string.dart';
-import 'package:echno_attendance/employee/widgets/texts.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class AssignSiteScreen extends StatefulWidget {
   const AssignSiteScreen({super.key, required this.sitename});
