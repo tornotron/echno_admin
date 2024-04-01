@@ -1,3 +1,4 @@
+import 'package:echno_attendance/task_module/screens/add_new_task.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -28,7 +29,11 @@ class TaskHomeHeader extends StatelessWidget {
         SizedBox(
           width: 130.00,
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const AddTaskScreen();
+              }));
+            },
             child: const Text(
               '+ Add Task',
             ),
