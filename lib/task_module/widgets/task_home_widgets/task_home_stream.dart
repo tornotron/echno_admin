@@ -1,4 +1,5 @@
 import 'package:echno_attendance/task_module/models/task_model.dart';
+import 'package:echno_attendance/task_module/screens/task_details_screen.dart';
 import 'package:echno_attendance/task_module/services/task_service.dart';
 import 'package:echno_attendance/task_module/utilities/task_status.dart';
 import 'package:echno_attendance/task_module/utilities/task_ui_helpers.dart';
@@ -59,7 +60,12 @@ class TaskHomeStreamWidget extends StatelessWidget {
                   final taskData = tasks?[index];
                   return InkWell(
                     child: TaskCard(taskData),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return TaskDetailsScreen(task: taskData);
+                      }));
+                    },
                   );
                 },
               ),
