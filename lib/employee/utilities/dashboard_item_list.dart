@@ -5,6 +5,7 @@ import 'package:echno_attendance/employee/screens/hr_screens/employee_register.d
 import 'package:echno_attendance/employee/screens/hr_screens/update_details_screen.dart';
 import 'package:echno_attendance/employee/utilities/dashboard_item.dart';
 import 'package:echno_attendance/leave_module/screens/leave_register_screen.dart';
+import 'package:echno_attendance/task_module/screens/task_home_screen.dart';
 import 'package:flutter/material.dart';
 
 class DashboardItemList {
@@ -70,7 +71,7 @@ class DashboardItemList {
         text: 'Task Managament',
         onTap: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return const AttendanceReportScreen();
+            return const TaskHomeScreen();
           }));
         },
       ),
