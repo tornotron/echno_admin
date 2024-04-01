@@ -71,4 +71,11 @@ class EchnoColors {
   static const Color leaveRejected = Color(0xFFE53935);
   static const Color leaveText = Colors.white;
   static const Color leaveCancelButton = Color(0xFFAB47BC);
+
+  // Task Module Colors
+  static const Color taskOnhold = Color(0xFFFB8C00);
+  static const Color taskCompleted = Color(0xFF45A834);
+  static const Color taskDisposed = Color(0xFFE53935);
+  static const Color taskTodo = Color.fromARGB(255, 17, 53, 104);
+  static const Color taskInprogress = Color.fromARGB(255, 104, 29, 118);
 }
