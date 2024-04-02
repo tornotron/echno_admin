@@ -4,6 +4,8 @@ import 'package:echno_attendance/attendance/services/siteassiagnment_service.dar
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/colors_string.dart';
+import 'package:echno_attendance/constants/sizes.dart';
+import 'package:echno_attendance/utilities/helpers/device_helper.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +20,7 @@ class AssignSiteScreen extends StatefulWidget {
 class _AssignSiteScreenState extends State<AssignSiteScreen> {
   late final TextEditingController _addEmpcontroller;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -32,40 +35,34 @@ class _AssignSiteScreenState extends State<AssignSiteScreen> {
   }
 
   void _showBottomSheet(BuildContext context) {
-    final double keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
-    final double adjustedMaxChildSize =
-        1.0 - (keyboardHeight / MediaQuery.of(context).size.height);
     showModalBottomSheet(
-      isScrollControlled: true,
-      useSafeArea: true,
-      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(EchnoSize.borderRadiusLg),
+      ),
       context: context,
-      builder: (context) => DraggableScrollableSheet(
-        expand: false,
-        initialChildSize: 0.33,
-        maxChildSize: keyboardHeight > 0 ? adjustedMaxChildSize : 1.0,
-        minChildSize: 0.32,
-        builder: (context, scrollController) => SingleChildScrollView(
-          controller: scrollController,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            padding: EdgeInsets.only(bottom: keyboardHeight),
-            child: SizedBox(
-              height: 200,
-              width: double.infinity,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(
-                    height: 70,
-                  ),
-                  SizedBox(
-                    height: 60,
-                    width: 250,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextFormField(
+      builder: (context) => StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+          return Padding(
+            padding: EdgeInsets.only(
+              bottom: DeviceUtilityHelpers.getKeyboardHeight(context),
+            ),
+            child: SingleChildScrollView(
+              child: Container(
+                padding: const EdgeInsets.only(
+                    top: 40, left: 20, right: 20, bottom: 40),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextFormField(
                         controller: _addEmpcontroller,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter the employee ID';
+                          }
+                          return null;
+                        },
                         enableSuggestions: false,
                         autocorrect: false,
                         maxLines: 1,
@@ -73,48 +70,70 @@ class _AssignSiteScreenState extends State<AssignSiteScreen> {
                           prefixIcon: const Icon(Icons.person_outline_outlined),
                           labelText: 'Employee ID',
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
+                            borderRadius:
+                                BorderRadius.circular(EchnoSize.borderRadiusLg),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 60,
-                    width: 250,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ElevatedButton(
+                      const SizedBox(height: EchnoSize.spaceBtwItems),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
                           onPressed: () {
-                            SiteEmpAdd(
-                                    empId: _addEmpcontroller.text,
-                                    siteOfficeName: widget.sitename)
-                                .assignment();
-                            setState(() {});
+                            if (formKey.currentState!.validate()) {
+                              SiteEmpAdd(
+                                      empId: _addEmpcontroller.text,
+                                      siteOfficeName: widget.sitename)
+                                  .assignment();
+                              setState(() {});
+                              Navigator.pop(context);
+                            }
                           },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: echnoBlueColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            textStyle: const TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
-                          ),
                           child: const Text(
                             'Submit',
-                            style: TextStyle(
-                              fontFamily: 'TT Chocolates',
-                              color: Colors.white,
-                            ),
-                          )),
-                    ),
-                  )
-                ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
+          );
+        },
       ),
+    );
+  }
+
+  Future showDeleteDialog(
+      BuildContext context, List<String> empString, String siteName) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Delete'),
+          content: const Text('Are you sure you want to delete the employee?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                SiteAssignment(
+                  employeeId: empString,
+                  siteOfficeName: widget.sitename,
+                ).assignment();
+                Navigator.of(context).pop(true);
+                setState(() {});
+              },
+              child: const Text('Delete'),
+            )
+          ],
+        );
+      },
     );
   }
 
@@ -238,18 +257,14 @@ class _AssignSiteScreenState extends State<AssignSiteScreen> {
                                         borderRadius: BorderRadius.circular(20),
                                       ),
                                       child: InkWell(
-                                        onTap: () {
+                                        onTap: () async {
                                           empList.removeAt(index);
                                           List<String> empString = empList
                                               .map((dynamic item) =>
                                                   item.toString())
                                               .toList();
-                                          SiteAssignment(
-                                                  employeeId: empString,
-                                                  siteOfficeName:
-                                                      widget.sitename)
-                                              .assignment();
-                                          setState(() {});
+                                          await showDeleteDialog(context,
+                                              empString, widget.sitename);
                                         },
                                         child: const Center(
                                           child: Icon(Icons.delete_outline),

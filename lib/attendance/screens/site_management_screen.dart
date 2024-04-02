@@ -79,10 +79,14 @@ class _SiteManageState extends State<SiteManage> {
                         children: [
                           InkWell(
                             onTap: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return AssignSiteScreen(sitename: siteName);
-                              }));
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return AssignSiteScreen(sitename: siteName);
+                                  },
+                                ),
+                              );
                             },
                           ),
                           Text(
