@@ -141,7 +141,8 @@ class _UpdateTaskProgessScreenState extends State<UpdateTaskProgessScreen> {
                       onPressed: () async {
                         await _taskProvider.updateTaskProgress(
                           taskId: task!.id,
-                          newTaskStatus: _selectedTaskStatus.toString(),
+                          newTaskStatus:
+                              _selectedTaskStatus.toString().split('.').last,
                           newTaskProgress: _progressSliderValue,
                         );
                         if (context.mounted) {
