@@ -55,7 +55,6 @@ class TaskHomeStreamWidget extends StatelessWidget {
             return Expanded(
               child: ListView.builder(
                 itemCount: tasks.length,
-                itemExtent: 170.0,
                 itemBuilder: (context, index) {
                   final taskData = tasks?[index];
                   return InkWell(
