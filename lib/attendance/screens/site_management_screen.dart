@@ -6,7 +6,6 @@ import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/utilities/helpers/device_helper.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SiteManage extends StatefulWidget {

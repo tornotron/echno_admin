@@ -10,6 +10,7 @@ class SiteOffice {
   final String status;
   final double longitude;
   final double latitude;
+  final double radius;
   List<Employee> membersList;
 
   SiteOffice({
@@ -18,6 +19,7 @@ class SiteOffice {
     required this.longitude,
     required this.latitude,
     required this.membersList,
+    required this.radius,
   });
 
   Future<void> populateMemberlist() async {
