@@ -50,6 +50,11 @@ class EmployeeProfileForm extends StatelessWidget {
             value: getEmloyeeRoleName(currentEmployee.employeeRole),
             icon: Icons.work_outline),
         const Divider(),
+        ProfileFieldsWidget(
+            title: 'Sites',
+            value: currentEmployee.sites?.join(', ') ?? 'No site assigned',
+            icon: Icons.work_outline),
+        const Divider(),
         ProfileMenuWidget(
             isDark: isDark,
             icon: Icons.settings,

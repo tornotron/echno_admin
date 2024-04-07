@@ -13,6 +13,7 @@ class Employee {
     required this.phoneNumber,
     required this.employeeStatus,
     required this.employeeRole,
+    this.sites,
   });
   final AuthUser? authUser;
   final String? photoUrl;
@@ -22,6 +23,7 @@ class Employee {
   final String phoneNumber;
   final bool employeeStatus;
   final EmployeeRole employeeRole;
+  final List<String>? sites;
 
   dynamic authUserProperty(String property) {
     if (authUser == null) {
@@ -46,6 +48,7 @@ class Employee {
     required this.phoneNumber,
     required this.employeeStatus,
     required this.employeeRole,
+    required this.sites,
   });
 
   static final EmployeeService employeeService = EmployeeService.firestore();
@@ -60,6 +63,7 @@ class Employee {
     final phoneNumber = employeeDetails['phone-number'];
     final employeeStatus = employeeDetails['employee-status'];
     final employeeRole = getEmployeeRole(employeeDetails['employee-role']);
+    final sites = List<String>.from(employeeDetails['site-office'] ?? []);
     return Employee._(
         authUser: authUser,
         photoUrl: employeePhotoUrl,
@@ -68,7 +72,8 @@ class Employee {
         companyEmail: companyEmail,
         phoneNumber: phoneNumber,
         employeeStatus: employeeStatus,
-        employeeRole: employeeRole);
+        employeeRole: employeeRole,
+        sites: sites);
   }
 
   // This method is used to create an empty employee instance
@@ -94,6 +99,7 @@ class Employee {
     final phoneNumber = employeeDetails['phone-number'];
     final employeeStatus = employeeDetails['employee-status'];
     final employeeRole = getEmployeeRole(employeeDetails['employee-role']);
+    final sites = List<String>.from(employeeDetails['site-office'] ?? []);
     return Employee._(
         authUser: null,
         photoUrl: employeePhotoUrl,
@@ -102,6 +108,7 @@ class Employee {
         companyEmail: companyEmail,
         phoneNumber: phoneNumber,
         employeeStatus: employeeStatus,
-        employeeRole: employeeRole);
+        employeeRole: employeeRole,
+        sites: sites);
   }
 }
