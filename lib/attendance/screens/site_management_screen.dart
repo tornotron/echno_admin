@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:echno_attendance/attendance/screens/create_site_screen.dart';
 import 'package:echno_attendance/attendance/screens/site_assignment_screen.dart';
 import 'package:echno_attendance/attendance/services/sitecreation_service.dart';
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
@@ -110,7 +111,9 @@ class _SiteManageState extends State<SiteManage> {
   void selectedItem(BuildContext context, item) {
     switch (item) {
       case 0:
-        _showBottomSheet(context);
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return const CreateSiteScreen();
+        }));
         break;
       case 1:
         print("clicked 1");
