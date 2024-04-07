@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:echno_attendance/attendance/utilities/site_status.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/employee/services/employee_service.dart';
 import 'package:echno_attendance/logger.dart';
@@ -7,7 +8,7 @@ import 'package:logger/logger.dart';
 class SiteOffice {
   final logs = logger(SiteOffice, Level.info);
   final String siteOfficeName;
-  final String status;
+  final SiteStatus status;
   final double longitude;
   final double latitude;
   final double radius;
