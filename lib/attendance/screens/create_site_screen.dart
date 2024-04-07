@@ -5,6 +5,8 @@ import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
+import 'package:echno_attendance/employee/utilities/employee_role.dart';
+import 'package:echno_attendance/site_module/services/site_service.dart';
 import 'package:echno_attendance/utilities/helpers/form_validators.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:echno_attendance/utilities/popups/custom_snackbar.dart';
@@ -26,6 +28,7 @@ class _CreateSiteScreenState extends State<CreateSiteScreen> {
   final TextEditingController _siteLatitudeController = TextEditingController();
   final TextEditingController _siteLongitudeController =
       TextEditingController();
+  final TextEditingController _siteRadiusController = TextEditingController();
 
   SiteStatus? _selectedSiteStatus;
 
@@ -155,7 +158,7 @@ class _CreateSiteScreenState extends State<CreateSiteScreen> {
                       return employees.where((employee) {
                         return employee.employeeName.toLowerCase().contains(
                                 textEditingValue.text.toLowerCase()) ||
-                            employee.employeeId
+                            getEmloyeeRoleName(employee.employeeRole)
                                 .toLowerCase()
                                 .contains(textEditingValue.text.toLowerCase());
                       }).toList();
@@ -215,7 +218,8 @@ class _CreateSiteScreenState extends State<CreateSiteScreen> {
                                     : null,
                               ),
                               title: Text(option.employeeName),
-                              subtitle: Text(option.employeeId),
+                              subtitle:
+                                  Text(getEmloyeeRoleName(option.employeeRole)),
                               onTap: () => onSelected(option),
                             );
                           },
@@ -332,7 +336,7 @@ class _CreateSiteScreenState extends State<CreateSiteScreen> {
                 ),
                 const SizedBox(height: 5.0),
                 TextFormField(
-                  controller: _siteNameController,
+                  controller: _siteRadiusController,
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
                     hintText: 'Enter Radius...',
@@ -341,24 +345,6 @@ class _CreateSiteScreenState extends State<CreateSiteScreen> {
                   validator: (value) => EchnoValidator.defaultValidator(
                     value,
                     'Site Radius is required',
-                  ),
-                ),
-                const SizedBox(height: EchnoSize.spaceBtwItems),
-                Text(
-                  'Project Manager',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-                const SizedBox(height: 5.0),
-                TextFormField(
-                  controller: _siteNameController,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    hintText: 'Select Project Manager...',
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (value) => EchnoValidator.defaultValidator(
-                    value,
-                    'Project Manager is required',
                   ),
                 ),
                 const SizedBox(height: EchnoSize.spaceBtwItems),
@@ -393,7 +379,28 @@ class _CreateSiteScreenState extends State<CreateSiteScreen> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      final siteName = _siteNameController.text;
+                      final siteStatus =
+                          _selectedSiteStatus.toString().split('.').last;
+                      final siteAddress = _siteAddressController.text;
+                      final siteLatitude =
+                          double.parse(_siteLatitudeController.text);
+                      final siteLongitude =
+                          double.parse(_siteLongitudeController.text);
+                      final siteRadius =
+                          double.parse(_siteRadiusController.text);
+                      final memberList = firestoreEmployeeIdList;
+
+                      await SiteService.firestore().createSiteOffice(
+                          siteName: siteName,
+                          siteStatus: siteStatus,
+                          siteAddress: siteAddress,
+                          siteLatitude: siteLatitude,
+                          siteLongitude: siteLongitude,
+                          siteRadius: siteRadius,
+                          memberList: memberList);
+                    },
                     child: const Text('Create Site'),
                   ),
                 ),
