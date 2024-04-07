@@ -1,3 +1,4 @@
+import 'package:echno_attendance/site_module/models/site_model.dart';
 import 'package:echno_attendance/site_module/utilities/site_status.dart';
 
 abstract class SiteHandler {
@@ -30,4 +31,6 @@ abstract class SiteHandler {
     required String siteName,
     required List<String>? memberList,
   });
+
+  Stream<List<SiteOffice>> fetchSiteOffices();
 }

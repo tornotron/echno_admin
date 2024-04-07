@@ -1,3 +1,4 @@
+import 'package:echno_attendance/site_module/models/site_model.dart';
 import 'package:echno_attendance/site_module/utilities/site_status.dart';
 import 'package:echno_attendance/site_module/domain/firestore/firestore_site_handler.dart';
 import 'package:echno_attendance/site_module/domain/firestore/site_handler.dart';
@@ -65,5 +66,10 @@ class SiteService implements SiteHandler {
       siteName: siteName,
       memberList: memberList,
     );
+  }
+
+  @override
+  Stream<List<SiteOffice>> fetchSiteOffices() {
+    return _handler.fetchSiteOffices();
   }
 }

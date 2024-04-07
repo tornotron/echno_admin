@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:echno_attendance/site_module/models/site_model.dart';
 import 'package:echno_attendance/site_module/utilities/site_status.dart';
 import 'package:echno_attendance/site_module/domain/firestore/site_handler.dart';
 import 'package:echno_attendance/utilities/exceptions/firebase_exceptions.dart';
@@ -72,5 +73,25 @@ class FirestoreSiteHandler implements SiteHandler {
       {required String siteName, required List<String>? memberList}) {
     // TODO: implement removeSiteMember
     throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<SiteOffice>> fetchSiteOffices() {
+    try {
+      return _firestore.collection('site').snapshots().map(
+        (QuerySnapshot<Object?> querySnapshot) {
+          return querySnapshot.docs.map((doc) {
+            return SiteOffice.fromFirestore(
+                doc as QueryDocumentSnapshot<Map<String, dynamic>>);
+          }).toList();
+        },
+      );
+    } on FirebaseException catch (e) {
+      throw EchnoFirebaseException(e.code).message;
+    } on PlatformException catch (e) {
+      throw EchnoPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong.! Please try again.';
+    }
   }
 }
