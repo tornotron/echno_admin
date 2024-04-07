@@ -1,4 +1,4 @@
-import 'package:echno_attendance/attendance/screens/site_management_screen.dart';
+import 'package:echno_attendance/site_module/screens/site_management_screen.dart';
 import 'package:echno_attendance/employee/hr_screens/add_employee.dart';
 import 'package:echno_attendance/employee/hr_screens/attendance_report/employee_attendancereport.dart';
 import 'package:echno_attendance/employee/hr_screens/employee_register.dart';

@@ -1,4 +1,4 @@
-import 'package:echno_attendance/attendance/utilities/site_status.dart';
+import 'package:echno_attendance/site_module/utilities/site_status.dart';
 import 'package:echno_attendance/site_module/domain/firestore/firestore_site_handler.dart';
 import 'package:echno_attendance/site_module/domain/firestore/site_handler.dart';
 

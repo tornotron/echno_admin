@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:echno_attendance/attendance/screens/create_site_screen.dart';
-import 'package:echno_attendance/attendance/screens/site_assignment_screen.dart';
+import 'package:echno_attendance/site_module/screens/create_site_screen.dart';
 import 'package:echno_attendance/attendance/services/sitecreation_service.dart';
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/sizes.dart';
+import 'package:echno_attendance/site_module/screens/site_assignment_screen.dart';
 import 'package:echno_attendance/utilities/helpers/device_helper.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';

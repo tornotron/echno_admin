@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:echno_attendance/attendance/utilities/site_status.dart';
+import 'package:echno_attendance/site_module/utilities/site_status.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/employee/services/employee_service.dart';
 import 'package:echno_attendance/logger.dart';

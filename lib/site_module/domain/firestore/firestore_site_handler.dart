@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:echno_attendance/attendance/utilities/site_status.dart';
+import 'package:echno_attendance/site_module/utilities/site_status.dart';
 import 'package:echno_attendance/site_module/domain/firestore/site_handler.dart';
 import 'package:echno_attendance/utilities/exceptions/firebase_exceptions.dart';
 import 'package:echno_attendance/utilities/exceptions/platform_exceptions.dart';

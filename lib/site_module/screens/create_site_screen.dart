@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:echno_attendance/attendance/services/location_service.dart';
-import 'package:echno_attendance/attendance/utilities/site_status.dart';
+import 'package:echno_attendance/site_module/utilities/site_status.dart';
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/sizes.dart';
