@@ -3,7 +3,7 @@ import 'package:echno_attendance/attendance/domain/firestore/attendance_firestor
 import 'package:echno_attendance/constants/colors_string.dart';
 import 'package:flutter/material.dart';
 
-class AttendanceCardMonthly extends StatefulWidget {
+class AttendanceCardMonthly extends StatelessWidget {
   final String employeeId;
   final String attendanceMonth;
   final String attYear;
@@ -12,11 +12,6 @@ class AttendanceCardMonthly extends StatefulWidget {
       required this.employeeId,
       required this.attendanceMonth,
       required this.attYear});
-  @override
-  State<AttendanceCardMonthly> createState() => _AttendanceCardMonthlyState();
-}
-
-class _AttendanceCardMonthlyState extends State<AttendanceCardMonthly> {
   Future<Map<String, dynamic>> getAttData(
       {required String employeeId,
       required String attendanceMonth,
@@ -42,9 +37,9 @@ class _AttendanceCardMonthlyState extends State<AttendanceCardMonthly> {
     return Expanded(
       child: FutureBuilder(
         future: getAttData(
-            employeeId: widget.employeeId,
-            attendanceMonth: widget.attendanceMonth,
-            attYear: widget.attYear),
+            employeeId: employeeId,
+            attendanceMonth: attendanceMonth,
+            attYear: attYear),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
