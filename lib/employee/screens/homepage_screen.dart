@@ -12,7 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final int? index;
+  const HomePage({super.key, this.index});
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -24,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    pageController = PageController(initialPage: 2);
+    pageController = PageController(initialPage: widget.index ?? 2);
   }
 
   @override
