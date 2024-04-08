@@ -19,12 +19,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late final Employee currentEmployee;
-  final _pageController = PageController();
+  late PageController pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    pageController = PageController(initialPage: 2);
+  }
 
   @override
   void dispose() {
     super.dispose();
-    _pageController.dispose();
+    pageController.dispose();
   }
 
   @override
@@ -62,7 +68,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
-        controller: _pageController,
+        controller: pageController,
         children: const <Widget>[
           MainAttendanceReportScreen(),
           Placeholder(),
@@ -73,6 +79,7 @@ class _HomePageState extends State<HomePage> {
       ),
       bottomNavigationBar: CurvedNavigationBar(
         height: 60,
+        index: 2,
         backgroundColor: Colors.transparent,
         color: isDark ? EchnoColors.secondary : EchnoColors.primary,
         items: [
@@ -108,7 +115,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
         onTap: (value) {
-          _pageController.animateToPage(value,
+          pageController.animateToPage(value,
               duration: const Duration(microseconds: 100),
               curve: Curves.easeOut);
         },
