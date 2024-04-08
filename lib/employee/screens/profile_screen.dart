@@ -1,11 +1,9 @@
-import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
-import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/employee/bloc/employee_bloc.dart';
-import 'package:echno_attendance/employee/bloc/employee_event.dart';
 import 'package:echno_attendance/employee/bloc/employee_state.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/employee/widgets/profile_widgets/profile_form.dart';
 import 'package:echno_attendance/employee/widgets/profile_widgets/profile_picture.dart';
+import 'package:echno_attendance/utilities/helpers/device_helper.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:echno_attendance/utilities/styles/padding_style.dart';
 import 'package:flutter/material.dart';
@@ -28,48 +26,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final currentEmployee = context.select((EmployeeBloc bloc) {
       return bloc.currentEmployee;
     });
-    return Directionality(
-      textDirection: TextDirection.ltr,
-      child: Scaffold(
-        appBar: EchnoAppBar(
-          leadingIcon: Icons.arrow_back_ios_new,
-          leadingOnPressed: () {
-            context.read<EmployeeBloc>().add(const EmployeeHomeEvent());
-          },
-          title: Text(
-            'Profile',
-            style: Theme.of(context).textTheme.headlineSmall?.apply(
-                  color: isDark ? EchnoColors.black : EchnoColors.white,
-                ),
-          ),
-        ),
-        body: BlocBuilder<EmployeeBloc, EmployeeState>(
-          builder: (context, state) {
-            if (state is EmployeeProfileState) {
-              isUpdating = state.isUpdating;
-            }
-            return SingleChildScrollView(
-              child: Padding(
-                padding: CustomPaddingStyle.defaultPaddingWithAppbar,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    EmployeeProfilePhoto(
-                      currentEmployee: currentEmployee,
-                      isDark: isDark,
-                      isUpdating: isUpdating,
-                    ),
-                    EmployeeProfileForm(
-                      currentEmployee: currentEmployee,
-                      isDark: isDark,
-                    )
-                  ],
-                ),
+    return Material(
+      child: BlocBuilder<EmployeeBloc, EmployeeState>(
+        builder: (context, state) {
+          if (state is EmployeeProfileState) {
+            isUpdating = state.isUpdating;
+          }
+          return SingleChildScrollView(
+            child: Padding(
+              padding: CustomPaddingStyle.defaultPaddingWithAppbar,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  EmployeeProfilePhoto(
+                    currentEmployee: currentEmployee,
+                    isDark: isDark,
+                    isUpdating: isUpdating,
+                  ),
+                  EmployeeProfileForm(
+                    currentEmployee: currentEmployee,
+                    isDark: isDark,
+                  ),
+                  SizedBox(
+                    height: DeviceUtilityHelpers.getBottomNavigationBarHeight(),
+                  )
+                ],
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }
