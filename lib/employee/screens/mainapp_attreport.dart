@@ -60,10 +60,14 @@ class _MainAttendanceReportScreenState
     final currentEmployee = context.select((EmployeeBloc bloc) {
       return bloc.currentEmployee;
     });
-    return AttendanceCardMonthly(
-        employeeId: currentEmployee.employeeId,
-        attendanceMonth: currentMonth,
-        attYear: currentDate.year.toString());
+    return Column(
+      children: [
+        AttendanceCardMonthly(
+            employeeId: currentEmployee.employeeId,
+            attendanceMonth: currentMonth,
+            attYear: currentDate.year.toString()),
+      ],
+    );
     //     delegate: SliverChildBuilderDelegate(
     //       (BuildContext context, int index) {
     //         return Column(
