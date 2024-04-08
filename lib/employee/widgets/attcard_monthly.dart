@@ -71,7 +71,8 @@ class AttendanceCardMonthly extends StatelessWidget {
                     attendanceData['attendance_month'].toString();
                 String varattendanceTime =
                     attendanceData['attendance_time'].toString();
-                Image employeeImg = Image.network(attendanceData['image-url']!) ;
+                ImageProvider employeeImg =
+                    NetworkImage(attendanceData['image-url']!);
                 varattendanceTime = varattendanceTime.substring(0, 5);
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -199,7 +200,10 @@ class AttendanceCardMonthly extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: echnoBlueLightColor,
                               borderRadius: BorderRadius.circular(20),
-                              image: DecorationImage(image: employeeImg,fit: BoxFit.cover)
+                              image: DecorationImage(
+                                image: employeeImg,
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
                         ),
