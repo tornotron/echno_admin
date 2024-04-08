@@ -1,5 +1,6 @@
 import 'package:echno_attendance/attendance/services/attendance_controller.dart';
 import 'package:echno_attendance/attendance/domain/firestore/attendance_firestore_handler.dart';
+import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/colors_string.dart';
 import 'package:flutter/material.dart';
 
@@ -70,12 +71,13 @@ class AttendanceCardMonthly extends StatelessWidget {
                     attendanceData['attendance_month'].toString();
                 String varattendanceTime =
                     attendanceData['attendance_time'].toString();
+                Image employeeImg = Image.network(attendanceData['image-url']!) ;
                 varattendanceTime = varattendanceTime.substring(0, 5);
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: echnoBlueColor,
+                      color: EchnoColors.attendanceCard,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     height: 120,
@@ -181,6 +183,25 @@ class AttendanceCardMonthly extends StatelessWidget {
                               ],
                             ),
                           ],
+                        ),
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            constraints: const BoxConstraints(
+                              maxHeight: 100,
+                              maxWidth: 105,
+                            ),
+                            width: 95,
+                            height: 80,
+                            decoration: BoxDecoration(
+                              color: echnoBlueLightColor,
+                              borderRadius: BorderRadius.circular(20),
+                              image: DecorationImage(image: employeeImg,fit: BoxFit.cover)
+                            ),
+                          ),
                         ),
                       ],
                     ),

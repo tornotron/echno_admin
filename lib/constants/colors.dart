@@ -8,6 +8,9 @@ class EchnoColors {
   static const Color secondaryDark = Color(0xFF6D498E);
   static const Color accent = Color(0xFFB0C7FF);
 
+  // Attendance Colors
+  static const Color attendanceCard = Colors.indigoAccent;
+
   // Text colors
   static const Color textPrimary = Color(0xFF333333);
   static const Color textSecondary = Color(0xFF6C757D);
