@@ -34,7 +34,7 @@ class _EmployeeStateManagementWidgetState
               return const HomePage();
             }
           } else if (state is EmployeeProfileState) {
-            return const HomePage(index: 2);
+            return const HomePage();
           } else if (state is EmployeeHomeState) {
             return const HomePage();
           } else if (state is HrHomeState) {

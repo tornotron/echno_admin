@@ -19,11 +19,9 @@ class EmployeeHomeState extends EmployeeState {
 }
 
 class EmployeeProfileState extends EmployeeState {
-  final int? index;
   final bool isUpdating;
   final Employee currentEmployee;
   const EmployeeProfileState({
-    this.index,
     required this.isUpdating,
     required this.currentEmployee,
   });

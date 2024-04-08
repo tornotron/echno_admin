@@ -23,7 +23,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
         emit(const EmployeeLeavesState());
       } else {
         emit(EmployeeProfileState(
-            isUpdating: false, currentEmployee: currentEmployee, index: 2));
+            isUpdating: false, currentEmployee: currentEmployee));
       }
     });
     on<EmployeeUpdatePhotoEvent>((event, emit) async {
@@ -41,7 +41,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
       }
       currentEmployee = await basicEmployeeDatabaseHandler.currentEmployee;
       emit(EmployeeProfileState(
-          isUpdating: false, currentEmployee: currentEmployee, index: 2));
+          isUpdating: false, currentEmployee: currentEmployee));
     });
     on<HrHomeEvent>((event, emit) {
       emit(const HrHomeState());
