@@ -42,11 +42,11 @@ class _MainHomeState extends State<MainHome> {
                     bottomRight: Radius.circular(20),
                   ),
                 ),
-                flexibleSpace: const FlexibleSpaceBar(
+                flexibleSpace: FlexibleSpaceBar(
                   background: Align(
                     alignment: Alignment.topLeft,
                     child: Padding(
-                      padding: EdgeInsets.only(left: 20, top: 20),
+                      padding: const EdgeInsets.only(left: 20, top: 20),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -54,21 +54,36 @@ class _MainHomeState extends State<MainHome> {
                         children: [
                           Text(
                             "Welcome",
-                            style: TextStyle(fontSize: 28),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineLarge
+                                ?.apply(
+                                  color: isDark
+                                      ? EchnoColors.black
+                                      : EchnoColors.white,
+                                ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Text(
                             "Site Name",
-                            style: TextStyle(fontSize: 20),
+                            style: Theme.of(context).textTheme.bodyLarge?.apply(
+                                  color: isDark
+                                      ? EchnoColors.black
+                                      : EchnoColors.white,
+                                ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 2.5,
                           ),
                           Text(
                             "Site Location",
-                            style: TextStyle(fontSize: 20),
+                            style: Theme.of(context).textTheme.bodyLarge?.apply(
+                                  color: isDark
+                                      ? EchnoColors.black
+                                      : EchnoColors.white,
+                                ),
                           )
                         ],
                       ),
