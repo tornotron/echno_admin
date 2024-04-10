@@ -1,5 +1,7 @@
 import 'package:echno_attendance/attendance/domain/firestore/attendance_firestore_handler.dart';
 import 'package:echno_attendance/attendance/services/attendance_controller.dart';
+import 'package:echno_attendance/constants/colors.dart';
+import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/employee/bloc/employee_bloc.dart';
 import 'package:echno_attendance/employee/widgets/attcard_monthly.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
@@ -62,35 +64,42 @@ class _MainAttendanceReportScreenState
     });
     return Column(
       children: [
+        Container(
+          height: 80,
+          decoration: const BoxDecoration(
+            color: EchnoColors.attendanceCard,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
+            ),
+          ),
+          child: Center(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: EchnoSize.xs,
+                ),
+                Text(
+                  "Attendance Report",
+                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                        color: isDark ? EchnoColors.black : EchnoColors.white,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                const SizedBox(
+                  height: EchnoSize.xs,
+                ),
+                Text(formattedDate),
+              ],
+            ),
+          ),
+        ),
         AttendanceCardMonthly(
             employeeId: currentEmployee.employeeId,
             attendanceMonth: currentMonth,
             attYear: currentDate.year.toString()),
       ],
     );
-    //     delegate: SliverChildBuilderDelegate(
-    //       (BuildContext context, int index) {
-    //         return Column(
-    //           children: [
-    //             Padding(
-    //               padding: const EdgeInsets.only(
-    //                 left: 5,
-    //                 right: 5,
-    //               ),
-    //               child: AttendanceCardMonthly(
-    //                   employeeId: currentEmployee.employeeId,
-    //                   attendanceMonth: currentMonth,
-    //                   attYear: currentDate.year.toString()),
-    //             ),
-    //             const SizedBox(
-    //               height: 5,
-    //             )
-    //           ],
-    //         );
-    //       },
-    //       childCount: ,
-    //     ),
-    //   ),
-    // )
   }
 }
