@@ -3,16 +3,22 @@ import 'package:echno_attendance/employee/bloc/employee_event.dart';
 import 'package:echno_attendance/employee/bloc/employee_state.dart';
 import 'package:echno_attendance/employee/domain/firestore/database_handler.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
+import 'package:echno_attendance/site_module/models/site_model.dart';
+import 'package:echno_attendance/site_module/services/site_service.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
   final BasicEmployeeDatabaseHandler basicEmployeeDatabaseHandler;
+  final SiteService siteService = SiteService.firestore();
   late Employee currentEmployee;
+  late List<SiteOffice> siteOffices;
 
   EmployeeBloc(this.basicEmployeeDatabaseHandler)
       : super(const EmployeeNotInitializedState()) {
     on<EmployeeInitializeEvent>((event, emit) async {
       currentEmployee = await basicEmployeeDatabaseHandler.currentEmployee;
+      siteOffices = await siteService.populateSiteOfficeList(
+          siteNameList: currentEmployee.sites!);
       emit(const EmployeeInitializedState());
     });
     on<EmployeeHomeEvent>((event, emit) {
