@@ -33,20 +33,20 @@ class SiteService implements SiteHandler {
   @override
   Future<void> updateSiteOffice(
       {required String siteName,
-      required SiteStatus? siteStatus,
-      required String? siteAddress,
-      required double? siteLatitude,
-      required double? siteLongitude,
-      required double? siteRadius,
-      required List<String>? memberList}) {
+      required SiteStatus? newSiteStatus,
+      required String? newSiteAddress,
+      required double? newSiteLatitude,
+      required double? newSiteLongitude,
+      required double? newSiteRadius,
+      required List<String>? newMemberList}) {
     return _handler.updateSiteOffice(
       siteName: siteName,
-      siteStatus: siteStatus,
-      siteAddress: siteAddress,
-      siteLatitude: siteLatitude,
-      siteLongitude: siteLongitude,
-      siteRadius: siteRadius,
-      memberList: memberList,
+      newSiteStatus: newSiteStatus,
+      newSiteAddress: newSiteAddress,
+      newSiteLatitude: newSiteLatitude,
+      newSiteLongitude: newSiteLongitude,
+      newSiteRadius: newSiteRadius,
+      newMemberList: newMemberList,
     );
   }
 
