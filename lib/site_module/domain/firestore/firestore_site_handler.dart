@@ -167,4 +167,26 @@ class FirestoreSiteHandler implements SiteHandler {
       throw 'Something went wrong.! Please try again.';
     }
   }
+
+  @override
+  Future<List<SiteOffice>> populateSiteOfficeList(
+      {required List<String> siteNameList}) async {
+    try {
+      final List<SiteOffice> siteList = [];
+      for (String siteName in siteNameList) {
+        final DocumentSnapshot doc =
+            await _firestore.collection('site').doc(siteName).get();
+        if (doc.exists) {
+          siteList.add(SiteOffice.fromDocumentSnapshot(doc));
+        }
+      }
+      return siteList;
+    } on FirebaseException catch (e) {
+      throw EchnoFirebaseException(e.code).message;
+    } on PlatformException catch (e) {
+      throw EchnoPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong! Please try again.';
+    }
+  }
 }

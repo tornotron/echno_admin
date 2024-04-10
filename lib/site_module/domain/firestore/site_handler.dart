@@ -33,4 +33,7 @@ abstract class SiteHandler {
   });
 
   Stream<List<SiteOffice>> fetchSiteOffices();
+
+  Future<List<SiteOffice>> populateSiteOfficeList(
+      {required List<String> siteNameList});
 }

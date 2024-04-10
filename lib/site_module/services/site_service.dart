@@ -72,4 +72,10 @@ class SiteService implements SiteHandler {
   Stream<List<SiteOffice>> fetchSiteOffices() {
     return _handler.fetchSiteOffices();
   }
+
+  @override
+  Future<List<SiteOffice>> populateSiteOfficeList(
+      {required List<String> siteNameList}) {
+    return _handler.populateSiteOfficeList(siteNameList: siteNameList);
+  }
 }
