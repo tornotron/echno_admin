@@ -16,13 +16,15 @@ class DailyReport extends StatefulWidget {
 class _DailyState extends State<DailyReport> {
   TextEditingController siteController = TextEditingController();
   DatePickerController datevisualController = DatePickerController();
+  DateTime currentDate = DateTime.now();
+  late String currentDateString = DateFormat('yyyy-MM-dd').format(currentDate);
 
   void _scrolltoday() {
     datevisualController.animateToDate(DateTime.now());
   }
 
   String siteNamefromUI = '';
-  String dateFromUI = '';
+  late String dateFromUI = currentDateString;
 
   @override
   Widget build(BuildContext context) {
@@ -72,18 +74,20 @@ class _DailyState extends State<DailyReport> {
         ),
         Row(
           children: [
-            SizedBox(
-              height: 90,
-              width: 300,
-              child: DatePicker(
-                DateTime.now().subtract(const Duration(days: 30)),
-                initialSelectedDate: DateTime.now(),
-                controller: datevisualController,
-                selectionColor: Colors.black,
-                selectedTextColor: Colors.white,
-                onDateChange: (selectedDate) {
-                  dateFromUI = DateFormat('yyyy-MM-dd').format(selectedDate);
-                },
+            Expanded(
+              child: SizedBox(
+                height: 90,
+                width: 300,
+                child: DatePicker(
+                  DateTime.now().subtract(const Duration(days: 30)),
+                  initialSelectedDate: DateTime.now(),
+                  controller: datevisualController,
+                  selectionColor: Colors.black,
+                  selectedTextColor: Colors.white,
+                  onDateChange: (selectedDate) {
+                    dateFromUI = DateFormat('yyyy-MM-dd').format(selectedDate);
+                  },
+                ),
               ),
             ),
             const SizedBox(
@@ -99,6 +103,9 @@ class _DailyState extends State<DailyReport> {
                   "Reset",
                 ),
               ),
+            ),
+            const SizedBox(
+              width: 5,
             ),
           ],
         ),

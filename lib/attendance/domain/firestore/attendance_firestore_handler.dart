@@ -50,6 +50,7 @@ class AttendanceFirestoreRepository implements AttendanceRepositoryInterface {
           "attendance_time": attendanceTime,
           "attendance_status": attendanceStatus,
           "site_name": siteName,
+          "employee_name": employeeName
         },
       );
     } on FirebaseException catch (error) {
