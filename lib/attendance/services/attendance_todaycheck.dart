@@ -22,9 +22,10 @@ class AttendanceCheck {
       return attRef;
     } on FirebaseException catch (error) {
       logs.e('Firebase Exception: ${error.message}');
+      throw Exception('Firebase Exception: ${error.message}');
     } catch (e) {
       logs.e('Other Exception: $e');
+      throw Exception('Other Exception: $e');
     }
-    return false;
   }
 }
