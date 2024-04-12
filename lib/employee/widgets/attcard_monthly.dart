@@ -62,15 +62,15 @@ class AttendanceCardMonthly extends StatelessWidget {
                 final Map<String, String> attendanceData =
                     attendanceMapList[index];
                 String varemployeeName =
-                    attendanceData['employee_name'].toString();
+                    attendanceData['employee-name'].toString();
                 String varattendanceDate =
-                    attendanceData['attendance_date'].toString();
+                    attendanceData['attendance-date'].toString();
                 String varattendanceDay = varattendanceDate.substring(8, 10);
 
                 String varattendanceMonth =
-                    attendanceData['attendance_month'].toString();
+                    attendanceData['attendance-month'].toString();
                 String varattendanceTime =
-                    attendanceData['attendance_time'].toString();
+                    attendanceData['attendance-time'].toString();
                 ImageProvider employeeImg =
                     NetworkImage(attendanceData['image-url']!);
                 varattendanceTime = varattendanceTime.substring(0, 5);

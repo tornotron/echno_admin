@@ -49,7 +49,7 @@ class AttendanceFirestoreRepository implements AttendanceRepositoryInterface {
           "attendance-month": attendanceMonth,
           "attendance-time": attendanceTime,
           "attendance-status": attendanceStatus,
-          "site_name": siteName,
+          "site-name": siteName,
           "employee-name": employeeName
         },
       );
