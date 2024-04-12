@@ -10,7 +10,7 @@ class EchnoElevatedButtonTheme {
     style: ElevatedButton.styleFrom(
       elevation: 0,
       foregroundColor: EchnoColors.light,
-      backgroundColor: EchnoColors.primary,
+      backgroundColor: EchnoColors.buttonPrimary,
       disabledForegroundColor: EchnoColors.darkGrey,
       disabledBackgroundColor: EchnoColors.buttonDisabled,
       side: const BorderSide(color: EchnoColors.primary),

@@ -61,36 +61,17 @@ class _MainHomeState extends State<MainHome> {
                         children: [
                           Text(
                             "Welcome",
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineLarge
-                                ?.apply(
-                                  color: isDark
-                                      ? EchnoColors.black
-                                      : EchnoColors.white,
-                                ),
+                            style: Theme.of(context).textTheme.headlineLarge,
                           ),
-                          const SizedBox(
-                            height: 10,
-                          ),
+                          const SizedBox(height: 10),
                           Text(
                             "Site Name",
-                            style: Theme.of(context).textTheme.bodyLarge?.apply(
-                                  color: isDark
-                                      ? EchnoColors.black
-                                      : EchnoColors.white,
-                                ),
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
-                          const SizedBox(
-                            height: 2.5,
-                          ),
+                          const SizedBox(height: 2.5),
                           Text(
                             "Site Location",
-                            style: Theme.of(context).textTheme.bodyLarge?.apply(
-                                  color: isDark
-                                      ? EchnoColors.black
-                                      : EchnoColors.white,
-                                ),
+                            style: Theme.of(context).textTheme.bodyLarge,
                           )
                         ],
                       ),
@@ -138,7 +119,7 @@ class _MainHomeState extends State<MainHome> {
                 elevation: 0,
                 innerColor: EchnoColors.white,
                 outerColor:
-                    isDark ? EchnoColors.secondary : EchnoColors.primary,
+                    isDark ? EchnoColors.secondary : EchnoColors.lightCard,
                 text: 'Slide to mark attendance',
                 textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: isDark ? EchnoColors.black : EchnoColors.white,

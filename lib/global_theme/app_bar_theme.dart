@@ -11,7 +11,7 @@ class EchnoAppBarTheme {
     scrolledUnderElevation: 0,
     backgroundColor: EchnoColors.primary,
     surfaceTintColor: Colors.transparent,
-    iconTheme: IconThemeData(color: EchnoColors.white, size: EchnoSize.iconMd),
+    iconTheme: IconThemeData(color: EchnoColors.black, size: EchnoSize.iconMd),
     actionsIconTheme:
         IconThemeData(color: EchnoColors.white, size: EchnoSize.iconMd),
     titleTextStyle: TextStyle(

@@ -21,6 +21,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late final Employee currentEmployee;
   late PageController pageController;
+  late Color iconColor = EchnoColors.black;
 
   @override
   void initState() {
@@ -41,6 +42,7 @@ class _HomePageState extends State<HomePage> {
       return bloc.currentEmployee;
     });
     return Scaffold(
+      // backgroundColor: const Color(0xFFFFE3CA),
       extendBody: true,
       appBar: EchnoAppBar(
         leadingIcon: Icons.menu,
@@ -54,15 +56,11 @@ class _HomePageState extends State<HomePage> {
           children: [
             Text(
               EchnoHelperFunctions.greetEmployeeBasedOnTime(),
-              style: Theme.of(context).textTheme.bodySmall?.apply(
-                    color: isDark ? EchnoColors.black : EchnoColors.white,
-                  ),
+              style: Theme.of(context).textTheme.bodySmall,
             ),
             Text(
               currentEmployee.employeeName,
-              style: Theme.of(context).textTheme.headlineSmall?.apply(
-                    color: isDark ? EchnoColors.black : EchnoColors.white,
-                  ),
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
           ],
         ),
@@ -88,30 +86,35 @@ class _HomePageState extends State<HomePage> {
             child: Image.asset(
               'assets/icons/Calendar.png',
               scale: 50,
+              color: EchnoColors.black,
             ),
           ),
           SizedBox(
             child: Image.asset(
               'assets/icons/Checkmark.png',
               scale: 50,
+              color: EchnoColors.black,
             ),
           ),
           SizedBox(
             child: Image.asset(
               'assets/icons/Home.png',
               scale: 50,
+              color: EchnoColors.black,
             ),
           ),
           SizedBox(
             child: Image.asset(
               'assets/icons/Uparrow.png',
               scale: 50,
+              color: EchnoColors.black,
             ),
           ),
           SizedBox(
             child: Image.asset(
               'assets/icons/Profile.png',
               scale: 50,
+              color: EchnoColors.black,
             ),
           ),
         ],
