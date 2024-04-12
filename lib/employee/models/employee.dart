@@ -90,7 +90,33 @@ class Employee {
   }
 
   // This method is used to create an employee instance from a document snapshot
-  factory Employee.fromDocument(QueryDocumentSnapshot doc) {
+  factory Employee.fromQueryDocumentSnapshot(QueryDocumentSnapshot doc) {
+    final employeeDetails = doc.data() as Map<String, dynamic>;
+    final employeePhotoUrl = employeeDetails['photo-url'];
+    final employeeId = employeeDetails['employee-id'];
+    final employeeName = employeeDetails['employee-name'];
+    final companyEmail = employeeDetails['company-email'];
+    final phoneNumber = employeeDetails['phone-number'];
+    final employeeStatus = employeeDetails['employee-status'];
+    final employeeRole = getEmployeeRole(employeeDetails['employee-role']);
+    final sites = List<String>.from(employeeDetails['site-office'] ?? []);
+    return Employee._(
+        authUser: null,
+        photoUrl: employeePhotoUrl,
+        employeeId: employeeId,
+        employeeName: employeeName,
+        companyEmail: companyEmail,
+        phoneNumber: phoneNumber,
+        employeeStatus: employeeStatus,
+        employeeRole: employeeRole,
+        sites: sites);
+  }
+
+  factory Employee.fromDocumentSnapshot(DocumentSnapshot doc) {
+    if (!doc.exists) {
+      throw ArgumentError("DocumentSnapshot doesn't exist");
+    }
+
     final employeeDetails = doc.data() as Map<String, dynamic>;
     final employeePhotoUrl = employeeDetails['photo-url'];
     final employeeId = employeeDetails['employee-id'];

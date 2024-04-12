@@ -6,7 +6,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/employee/utilities/employee_role.dart';
 import 'package:echno_attendance/logger.dart';
+import 'package:echno_attendance/utilities/exceptions/firebase_exceptions.dart';
+import 'package:echno_attendance/utilities/exceptions/platform_exceptions.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
 
@@ -247,19 +250,43 @@ class HrFirestoreDatabaseHandler extends BasicEmployeeFirestoreDatabaseHandler
             .where('site-office', isEqualTo: siteOffice)
             .snapshots()
             .map((QuerySnapshot<Map<String, dynamic>> snapshot) => snapshot.docs
-                .map((doc) => Employee.fromDocument(doc))
+                .map((doc) => Employee.fromQueryDocumentSnapshot(doc))
                 .toList());
       } else {
         return FirebaseFirestore.instance
             .collection('employees')
             .snapshots()
             .map((QuerySnapshot<Map<String, dynamic>> snapshot) => snapshot.docs
-                .map((doc) => Employee.fromDocument(doc))
+                .map((doc) => Employee.fromQueryDocumentSnapshot(doc))
                 .toList());
       }
     } catch (e) {
       logs.e('Error getting all employees: $e');
       throw Exception('Error getting all employees: $e');
+    }
+  }
+
+  @override
+  Future<List<Employee>> populateMemberList(
+      {required List<String> employeeIdList}) async {
+    try {
+      final List<Employee> employeeList = [];
+      for (String employeeId in employeeIdList) {
+        final DocumentSnapshot doc = await FirebaseFirestore.instance
+            .collection('employees')
+            .doc(employeeId)
+            .get();
+        if (doc.exists) {
+          employeeList.add(Employee.fromDocumentSnapshot(doc));
+        }
+      }
+      return employeeList;
+    } on FirebaseException catch (e) {
+      throw EchnoFirebaseException(e.code).message;
+    } on PlatformException catch (e) {
+      throw EchnoPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong! Please try again.';
     }
   }
 }
