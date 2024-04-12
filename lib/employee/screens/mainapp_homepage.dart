@@ -19,11 +19,18 @@ class MainHome extends StatefulWidget {
 
 class _MainHomeState extends State<MainHome> {
   late final Employee currentEmployee;
+
   @override
   Widget build(BuildContext context) {
     final isDark = EchnoHelperFunctions.isDarkMode(context);
     final currentEmployee = context.select((EmployeeBloc bloc) {
       return bloc.currentEmployee;
+    });
+    final siteOfficeList = context.select((EmployeeBloc bloc) {
+      return bloc.siteOffices;
+    });
+    final isAttendanceMarked = context.select((EmployeeBloc bloc) {
+      return bloc.isAttendanceMarked;
     });
     return Stack(
       children: [
@@ -125,34 +132,38 @@ class _MainHomeState extends State<MainHome> {
           right: 0,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(15.0, 0, 15.0, 85),
-            child: SlideAction(
-              elevation: 0,
-              innerColor: EchnoColors.white,
-              outerColor: isDark ? EchnoColors.secondary : EchnoColors.primary,
-              text: 'Slide to mark attendance',
-              textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: isDark ? EchnoColors.black : EchnoColors.white,
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w600),
-              sliderRotate: false,
-              borderRadius: 20,
-              sliderButtonIcon: const Icon(
-                Icons.camera_alt,
-                color: EchnoColors.black,
+            child: Visibility(
+              visible: !isAttendanceMarked,
+              child: SlideAction(
+                elevation: 0,
+                innerColor: EchnoColors.white,
+                outerColor:
+                    isDark ? EchnoColors.secondary : EchnoColors.primary,
+                text: 'Slide to mark attendance',
+                textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: isDark ? EchnoColors.black : EchnoColors.white,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w600),
+                sliderRotate: false,
+                borderRadius: 20,
+                sliderButtonIcon: const Icon(
+                  Icons.camera_alt,
+                  color: EchnoColors.black,
+                ),
+                onSubmit: () async {
+                  await AttendanceInsertionService().attendanceTrigger(
+                      employeeId: currentEmployee.employeeId,
+                      employeeName: currentEmployee.employeeName,
+                      siteName: "delhi");
+                  final frontCamera = await cameraObjectProvider();
+                  await Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          TakePictureScreen(camera: frontCamera),
+                    ),
+                  );
+                },
               ),
-              onSubmit: () async {
-                await AttendanceInsertionService().attendanceTrigger(
-                    employeeId: currentEmployee.employeeId,
-                    employeeName: currentEmployee.employeeName,
-                    siteName: "delhi");
-                final frontCamera = await cameraObjectProvider();
-                await Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        TakePictureScreen(camera: frontCamera),
-                  ),
-                );
-              },
             ),
           ),
         ),

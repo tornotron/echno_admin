@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:echno_attendance/attendance/services/attendance_todaycheck.dart';
 import 'package:echno_attendance/employee/bloc/employee_event.dart';
 import 'package:echno_attendance/employee/bloc/employee_state.dart';
 import 'package:echno_attendance/employee/domain/firestore/database_handler.dart';
@@ -6,12 +7,15 @@ import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/site_module/models/site_model.dart';
 import 'package:echno_attendance/site_module/services/site_service.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
   final BasicEmployeeDatabaseHandler basicEmployeeDatabaseHandler;
   final SiteService siteService = SiteService.firestore();
   late Employee currentEmployee;
   late List<SiteOffice> siteOffices;
+  late bool isAttendanceMarked;
+  final String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
   EmployeeBloc(this.basicEmployeeDatabaseHandler)
       : super(const EmployeeNotInitializedState()) {
@@ -19,6 +23,8 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
       currentEmployee = await basicEmployeeDatabaseHandler.currentEmployee;
       siteOffices = await siteService.populateSiteOfficeList(
           siteNameList: currentEmployee.sites!);
+      isAttendanceMarked = await AttendanceCheck()
+          .attendanceTodayCheck(currentEmployee.employeeId, formattedDate);
       emit(const EmployeeInitializedState());
     });
     on<EmployeeHomeEvent>((event, emit) {
