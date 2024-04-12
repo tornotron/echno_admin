@@ -35,8 +35,8 @@ class AttendanceFirestoreRepository implements AttendanceRepositoryInterface {
           FirebaseFirestore.instance.collection('attendance');
       await firestoreattendance.doc(employeeId).set(
         {
-          "employee_id": employeeId,
-          "employee_name": employeeName,
+          "employee-id": employeeId,
+          "employee-name": employeeName,
         },
       );
       firestoreattendance
@@ -45,12 +45,12 @@ class AttendanceFirestoreRepository implements AttendanceRepositoryInterface {
           .doc(attendanceDate)
           .set(
         {
-          "attendance_date": combinedDate,
-          "attendance_month": attendanceMonth,
-          "attendance_time": attendanceTime,
-          "attendance_status": attendanceStatus,
+          "attendance-date": combinedDate,
+          "attendance-month": attendanceMonth,
+          "attendance-time": attendanceTime,
+          "attendance-status": attendanceStatus,
           "site_name": siteName,
-          "employee_name": employeeName
+          "employee-name": employeeName
         },
       );
     } on FirebaseException catch (error) {
@@ -111,21 +111,21 @@ class AttendanceFirestoreRepository implements AttendanceRepositoryInterface {
       final dateData = snapshot.collection('attendancedate');
 
       QuerySnapshot querySnapshot = await dateData
-          .where('attendance_date', isGreaterThanOrEqualTo: startDate)
-          .where('attendance_date', isLessThanOrEqualTo: endDate)
+          .where('attendance-date', isGreaterThanOrEqualTo: startDate)
+          .where('attendance-date', isLessThanOrEqualTo: endDate)
           .get();
       QuerySnapshot querySnapshotname = await firestoreattendance
-          .where('employee_id', isEqualTo: employeeId)
+          .where('employee-id', isEqualTo: employeeId)
           .get();
       querySnapshotname.docs.forEach((DocumentSnapshot document) {
         namedata = document.data() as Map<String, dynamic>;
       });
       querySnapshot.docs.forEach((DocumentSnapshot document) {
         Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-        Timestamp t = data['attendance_date'];
+        Timestamp t = data['attendance-date'];
         DateTime d = t.toDate();
         final dateString = d.toString();
-        data['attendance_date'] = dateString;
+        data['attendance-date'] = dateString;
         final combinedata = {...namedata, ...data};
         attendanceList.add(combinedata);
       });
@@ -160,16 +160,16 @@ class AttendanceFirestoreRepository implements AttendanceRepositoryInterface {
       List<Map<String, dynamic>> attendancedailyList = [];
       QuerySnapshot querySnapshotDaily = await firestoredaily
           .collectionGroup('attendancedate')
-          .where('site_name', isEqualTo: siteName)
-          .where('attendance_date', isGreaterThanOrEqualTo: timestampStart)
-          .where('attendance_date', isLessThanOrEqualTo: timestampEnd)
+          .where('site-name', isEqualTo: siteName)
+          .where('attendance-date', isGreaterThanOrEqualTo: timestampStart)
+          .where('attendance-date', isLessThanOrEqualTo: timestampEnd)
           .get();
       querySnapshotDaily.docs.forEach((DocumentSnapshot document) {
         Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-        Timestamp t = data['attendance_date'];
+        Timestamp t = data['attendance-date'];
         DateTime d = t.toDate();
         final dateString = d.toString();
-        data['attendance_date'] = dateString;
+        data['attendance-date'] = dateString;
         attendancedailyList.add(data);
       });
       List<Map<String, String>> attendancedailyFormatted = attendancedailyList
