@@ -166,6 +166,10 @@ class AttendanceFirestoreRepository implements AttendanceRepositoryInterface {
           .get();
       querySnapshotDaily.docs.forEach((DocumentSnapshot document) {
         Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+        Timestamp t = data['attendance_date'];
+        DateTime d = t.toDate();
+        final dateString = d.toString();
+        data['attendance_date'] = dateString;
         attendancedailyList.add(data);
       });
       List<Map<String, String>> attendancedailyFormatted = attendancedailyList
