@@ -49,7 +49,7 @@ class _CreateSiteScreenState extends State<CreateSiteScreen> {
         .then((QuerySnapshot snapshot) {
       setState(() {
         employees = snapshot.docs.map((doc) {
-          return Employee.fromDocument(doc);
+          return Employee.fromQueryDocumentSnapshot(doc);
         }).toList();
       });
     }).catchError((error) {
