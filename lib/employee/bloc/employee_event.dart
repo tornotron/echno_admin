@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart' show immutable;
 
 @immutable
@@ -38,4 +40,15 @@ class EmployeeAttendanceEvent extends EmployeeEvent {
 
 class HrHomeEvent extends EmployeeEvent {
   const HrHomeEvent();
+}
+
+class MarkAttendanceEvent extends EmployeeEvent {
+  final bool isPictureTaken;
+  final bool isPictureUploaded;
+  final File? imagePath;
+  const MarkAttendanceEvent({
+    this.imagePath,
+    required this.isPictureTaken,
+    required this.isPictureUploaded,
+  });
 }

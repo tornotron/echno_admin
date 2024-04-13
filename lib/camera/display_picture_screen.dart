@@ -1,11 +1,14 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:echno_attendance/common_widgets/loading_screen.dart';
+import 'package:echno_attendance/employee/bloc/employee_bloc.dart';
+import 'package:echno_attendance/employee/bloc/employee_event.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/employee/services/employee_service.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class DisplayPictureScreen extends StatefulWidget {
@@ -41,7 +44,7 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
     }
   }
 
-  Future<String> uploadImage(File imageFile) async {
+  Future<String> uploadImage(BuildContext ctx, File imageFile) async {
     try {
       final employeeid = currentEmployee.employeeId;
       DateTime attdate = DateTime.now();
@@ -63,9 +66,11 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                   actions: <Widget>[
                     TextButton(
                         onPressed: () {
-                          int popCount = 0;
-                          Navigator.of(context)
-                              .popUntil((route) => popCount++ == 3);
+                          ctx.read<EmployeeBloc>().add(
+                              const MarkAttendanceEvent(
+                                  isPictureTaken: true,
+                                  isPictureUploaded: true));
+                          Navigator.of(context).pop();
                         },
                         child: const Text('OK'))
                   ],
@@ -116,7 +121,8 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () async {
-                      final imgUrl = await uploadImage(widget.imagePath);
+                      final imgUrl =
+                          await uploadImage(context, widget.imagePath);
                       saveImageUrlToFirestore(imgUrl);
                     },
                     child: const Text(
@@ -130,7 +136,12 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      context
+                          .read<EmployeeBloc>()
+                          .add(const MarkAttendanceEvent(
+                            isPictureTaken: false,
+                            isPictureUploaded: false,
+                          ));
                     },
                     child: const Text(
                       'Retake',

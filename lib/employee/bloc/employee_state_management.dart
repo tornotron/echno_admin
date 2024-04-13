@@ -1,3 +1,5 @@
+import 'package:echno_attendance/camera/display_picture_screen.dart';
+import 'package:echno_attendance/camera/take_picture_screen.dart';
 import 'package:echno_attendance/employee/bloc/employee_bloc.dart';
 import 'package:echno_attendance/employee/bloc/employee_event.dart';
 import 'package:echno_attendance/employee/bloc/employee_state.dart';
@@ -41,6 +43,12 @@ class _EmployeeStateManagementWidgetState
             return const HRDashboardScreen();
           } else if (state is EmployeeLeavesState) {
             return const LeaveStatusScreen();
+          } else if (state is TakePictureState) {
+            return TakePictureScreen(camera: state.frontCamera);
+          } else if (state is DisplayPictureState) {
+            return DisplayPictureScreen(imagePath: state.imagePath);
+          } else if (state is AttendanceAlreadyMarkedState) {
+            return const HomePage();
           } else {
             return const Scaffold(
               body: Center(

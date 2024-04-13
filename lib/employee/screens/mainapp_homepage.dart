@@ -1,8 +1,6 @@
-import 'package:echno_attendance/attendance/services/attendance_insertservice.dart';
-import 'package:echno_attendance/camera/camera_provider.dart';
-import 'package:echno_attendance/camera/take_picture_screen.dart';
 import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/employee/bloc/employee_bloc.dart';
+import 'package:echno_attendance/employee/bloc/employee_event.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/employee/widgets/rounded_card.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
@@ -132,17 +130,11 @@ class _MainHomeState extends State<MainHome> {
                   color: EchnoColors.black,
                 ),
                 onSubmit: () async {
-                  await AttendanceInsertionService().attendanceTrigger(
-                      employeeId: currentEmployee.employeeId,
-                      employeeName: currentEmployee.employeeName,
-                      siteName: "delhi");
-                  final frontCamera = await cameraObjectProvider();
-                  await Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          TakePictureScreen(camera: frontCamera),
-                    ),
-                  );
+                  context.read<EmployeeBloc>().add(const MarkAttendanceEvent(
+                        imagePath: null,
+                        isPictureTaken: false,
+                        isPictureUploaded: false,
+                      ));
                 },
               ),
             ),

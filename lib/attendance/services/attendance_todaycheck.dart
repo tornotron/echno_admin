@@ -6,20 +6,25 @@ class AttendanceCheck {
   Future<bool> attendanceTodayCheck(String employeeId, String date) async {
     final logs = logger(AttendanceCheck, Level.info);
     try {
-      var attRef = FirebaseFirestore.instance
+      DocumentSnapshot<Map<String, dynamic>> att = await FirebaseFirestore
+          .instance
           .collection('attendance')
           .doc(employeeId)
           .collection('attendancedate')
           .doc(date)
-          .get()
-          .then((value) {
-        if (value.exists) {
-          return true;
-        } else {
-          return false;
-        }
-      });
-      return attRef;
+          .get();
+
+      Map<String, dynamic>? data = att.data();
+
+      if (data == null) {
+        return false;
+      }
+
+      if (data.containsKey('employee-name')) {
+        return true;
+      } else {
+        return false;
+      }
     } on FirebaseException catch (error) {
       logs.e('Firebase Exception: ${error.message}');
       throw Exception('Firebase Exception: ${error.message}');

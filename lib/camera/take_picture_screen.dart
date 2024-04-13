@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:camera/camera.dart';
-import 'package:echno_attendance/camera/display_picture_screen.dart';
+import 'package:echno_attendance/employee/bloc/employee_bloc.dart';
+import 'package:echno_attendance/employee/bloc/employee_event.dart';
 import 'package:echno_attendance/employee/widgets/texts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TakePictureScreen extends StatefulWidget {
   const TakePictureScreen({
@@ -70,13 +72,10 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
             if (!mounted) return;
 
-            await Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => DisplayPictureScreen(
-                  imagePath: File(image.path),
-                ),
-              ),
-            );
+            context.read<EmployeeBloc>().add(MarkAttendanceEvent(
+                isPictureTaken: true,
+                isPictureUploaded: false,
+                imagePath: File(image.path)));
           } catch (e) {
             print(e);
           }
@@ -86,4 +85,3 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     );
   }
 }
-

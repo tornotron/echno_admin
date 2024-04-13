@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:echno_attendance/attendance/services/attendance_insertservice.dart';
 import 'package:echno_attendance/attendance/services/attendance_todaycheck.dart';
+import 'package:echno_attendance/camera/camera_provider.dart';
 import 'package:echno_attendance/employee/bloc/employee_event.dart';
 import 'package:echno_attendance/employee/bloc/employee_state.dart';
 import 'package:echno_attendance/employee/domain/firestore/database_handler.dart';
@@ -57,6 +59,27 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     });
     on<HrHomeEvent>((event, emit) {
       emit(const HrHomeState());
+    });
+    on<MarkAttendanceEvent>((event, emit) async {
+      isAttendanceMarked = await AttendanceCheck()
+          .attendanceTodayCheck(currentEmployee.employeeId, formattedDate);
+      if (!isAttendanceMarked) {
+        final frontCamera = await cameraObjectProvider();
+        if (!event.isPictureTaken && !event.isPictureUploaded) {
+          emit(TakePictureState(frontCamera: frontCamera));
+        } else if (!event.isPictureUploaded) {
+          emit(DisplayPictureState(imagePath: event.imagePath!));
+        } else {
+          await AttendanceInsertionService().attendanceTrigger(
+              employeeId: currentEmployee.employeeId,
+              employeeName: currentEmployee.employeeName,
+              siteName: "delhi");
+          isAttendanceMarked = true;
+          emit(const AttendanceAlreadyMarkedState());
+        }
+      } else {
+        emit(const AttendanceAlreadyMarkedState());
+      }
     });
   }
 }
