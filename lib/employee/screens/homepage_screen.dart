@@ -1,4 +1,3 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/employee/bloc/employee_bloc.dart';
@@ -21,7 +20,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late final Employee currentEmployee;
   late PageController pageController;
-  late Color iconColor = EchnoColors.black;
+  int _selectedIndex = 2;
 
   @override
   void initState() {
@@ -76,53 +75,44 @@ class _HomePageState extends State<HomePage> {
           ProfileScreen(),
         ],
       ),
-      bottomNavigationBar: CurvedNavigationBar(
-        height: 60,
-        index: 2,
-        backgroundColor: Colors.transparent,
-        color: isDark ? EchnoColors.secondary : EchnoColors.primary,
-        items: [
-          SizedBox(
-            child: Image.asset(
-              'assets/icons/Calendar.png',
-              scale: 50,
-              color: EchnoColors.black,
-            ),
-          ),
-          SizedBox(
-            child: Image.asset(
-              'assets/icons/Checkmark.png',
-              scale: 50,
-              color: EchnoColors.black,
-            ),
-          ),
-          SizedBox(
-            child: Image.asset(
-              'assets/icons/Home.png',
-              scale: 50,
-              color: EchnoColors.black,
-            ),
-          ),
-          SizedBox(
-            child: Image.asset(
-              'assets/icons/Uparrow.png',
-              scale: 50,
-              color: EchnoColors.black,
-            ),
-          ),
-          SizedBox(
-            child: Image.asset(
-              'assets/icons/Profile.png',
-              scale: 50,
-              color: EchnoColors.black,
-            ),
-          ),
-        ],
+      bottomNavigationBar: BottomNavigationBar(
+        elevation: 3,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: isDark ? EchnoColors.secondary : EchnoColors.primary,
+        selectedItemColor: EchnoColors.buttonPrimary,
+        currentIndex: _selectedIndex,
         onTap: (value) {
           pageController.animateToPage(value,
               duration: const Duration(microseconds: 100),
-              curve: Curves.easeOut);
+              curve: Curves.easeIn);
+          setState(() {
+            _selectedIndex = value;
+          });
         },
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.calendar_today,
+            ),
+            label: 'Attendance',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.check),
+            label: 'Check In/Out',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.arrow_upward),
+            label: 'Request',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
       ),
     );
   }
