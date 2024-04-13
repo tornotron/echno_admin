@@ -2,13 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:echno_attendance/attendance/services/location_service.dart';
 import 'package:echno_attendance/site_module/utilities/site_status.dart';
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
-import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/employee/utilities/employee_role.dart';
 import 'package:echno_attendance/site_module/services/site_service.dart';
 import 'package:echno_attendance/utilities/helpers/form_validators.dart';
-import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:echno_attendance/utilities/popups/custom_snackbar.dart';
 import 'package:echno_attendance/utilities/styles/padding_style.dart';
 import 'package:flutter/material.dart';
@@ -80,19 +78,14 @@ class _CreateSiteScreenState extends State<CreateSiteScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = EchnoHelperFunctions.isDarkMode(context);
     return Scaffold(
       appBar: EchnoAppBar(
         leadingIcon: Icons.arrow_back_ios_new,
         leadingOnPressed: () {
           Navigator.pop(context);
         },
-        title: Text(
-          'Create Site',
-          style: Theme.of(context).textTheme.headlineSmall?.apply(
-                color: isDark ? EchnoColors.black : EchnoColors.white,
-              ),
-        ),
+        title: Text('Create Site',
+            style: Theme.of(context).textTheme.headlineSmall),
       ),
       body: SafeArea(
         child: SingleChildScrollView(

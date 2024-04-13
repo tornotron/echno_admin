@@ -1,5 +1,4 @@
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
-import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/constants/static_text.dart';
 import 'package:echno_attendance/employee/widgets/hr_widgets/employee_register_stream.dart';
@@ -28,12 +27,8 @@ class _EmployeeRegisterScreenState extends State<EmployeeRegisterScreen> {
           leadingOnPressed: () {
             Navigator.pop(context);
           },
-          title: Text(
-            'Employee Register',
-            style: Theme.of(context).textTheme.headlineSmall?.apply(
-                  color: isDark ? EchnoColors.black : EchnoColors.white,
-                ),
-          ),
+          title: Text('Employee Register',
+              style: Theme.of(context).textTheme.headlineSmall),
         ),
         body: Padding(
           padding: CustomPaddingStyle.defaultPaddingWithAppbar,

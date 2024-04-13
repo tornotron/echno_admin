@@ -1,5 +1,4 @@
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
-import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/leave_module_strings.dart';
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
@@ -98,12 +97,8 @@ class LeaveRegisterScreenState extends State<LeaveRegisterScreen> {
         leadingOnPressed: () {
           Navigator.pop(context);
         },
-        title: Text(
-          'Leave Register',
-          style: Theme.of(context).textTheme.headlineSmall?.apply(
-                color: isDark ? EchnoColors.black : EchnoColors.white,
-              ),
-        ),
+        title: Text('Leave Register',
+            style: Theme.of(context).textTheme.headlineSmall),
       ),
       body: Padding(
         padding: CustomPaddingStyle.defaultPaddingWithAppbar,

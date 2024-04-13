@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:echno_attendance/attendance/services/siteassiagnment_service.dart';
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
-import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/colors_string.dart';
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/site_module/services/siteEmpAdd_service.dart';
 import 'package:echno_attendance/utilities/helpers/device_helper.dart';
-import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 
 class AssignSiteScreen extends StatefulWidget {
@@ -139,7 +137,6 @@ class _AssignSiteScreenState extends State<AssignSiteScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = EchnoHelperFunctions.isDarkMode(context);
     final mediaQuery = MediaQuery.of(context);
     final screenSize = mediaQuery.size;
     final screenWidth = screenSize.width;
@@ -149,12 +146,8 @@ class _AssignSiteScreenState extends State<AssignSiteScreen> {
         leadingOnPressed: () {
           Navigator.pop(context);
         },
-        title: Text(
-          widget.sitename,
-          style: Theme.of(context).textTheme.headlineSmall?.apply(
-                color: isDark ? EchnoColors.black : EchnoColors.white,
-              ),
-        ),
+        title: Text('${widget.sitename} Members',
+            style: Theme.of(context).textTheme.headlineSmall),
       ),
       body: Column(
         children: [

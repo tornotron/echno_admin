@@ -1,9 +1,7 @@
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
-import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/constants/static_text.dart';
 import 'package:echno_attendance/employee/widgets/hr_widgets/add_employee_form.dart';
-import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:echno_attendance/utilities/styles/padding_style.dart';
 import 'package:flutter/material.dart';
 
@@ -12,8 +10,6 @@ class AddNewEmployee extends StatelessWidget {
 
   @override
   Widget build(context) {
-    final isDark = EchnoHelperFunctions.isDarkMode(context);
-
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Scaffold(
@@ -22,12 +18,8 @@ class AddNewEmployee extends StatelessWidget {
           leadingOnPressed: () {
             Navigator.pop(context);
           },
-          title: Text(
-            'Add Employee',
-            style: Theme.of(context).textTheme.headlineSmall?.apply(
-                  color: isDark ? EchnoColors.black : EchnoColors.white,
-                ),
-          ),
+          title: Text('Add Employee',
+              style: Theme.of(context).textTheme.headlineSmall),
         ),
         body: SafeArea(
           child: SingleChildScrollView(

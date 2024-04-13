@@ -1,12 +1,10 @@
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
-import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/leave_module_strings.dart';
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/employee/bloc/employee_bloc.dart';
 import 'package:echno_attendance/employee/bloc/employee_event.dart';
 import 'package:echno_attendance/leave_module/screens/leave_application_screen.dart';
 import 'package:echno_attendance/leave_module/widgets/status_stream_builder.dart';
-import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:echno_attendance/utilities/styles/padding_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,7 +20,6 @@ class LeaveStatusScreen extends StatefulWidget {
 class LeaveStatusScreenState extends State<LeaveStatusScreen> {
   @override
   Widget build(BuildContext context) {
-    final isDark = EchnoHelperFunctions.isDarkMode(context);
     return Scaffold(
       appBar: EchnoAppBar(
         leadingIcon: Icons.arrow_back_ios_new,
@@ -31,12 +28,8 @@ class LeaveStatusScreenState extends State<LeaveStatusScreen> {
               .read<EmployeeBloc>()
               .add(const EmployeeProfileEvent(section: 'profile_home_section'));
         },
-        title: Text(
-          'Leave Status',
-          style: Theme.of(context).textTheme.headlineSmall?.apply(
-                color: isDark ? EchnoColors.black : EchnoColors.white,
-              ),
-        ),
+        title: Text('Leave Status',
+            style: Theme.of(context).textTheme.headlineSmall),
       ),
       body: Column(
         children: [

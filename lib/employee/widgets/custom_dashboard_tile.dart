@@ -23,7 +23,6 @@ class CustomDashboardTile extends StatelessWidget {
               Icon(
                 item.icon,
                 size: 48.0,
-                color: isDark ? EchnoColors.black : EchnoColors.white,
               ),
               const SizedBox(height: 8.0),
               Text(
@@ -31,7 +30,6 @@ class CustomDashboardTile extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       fontSize: 15.0,
                       fontWeight: FontWeight.w600,
-                      color: isDark ? EchnoColors.black : EchnoColors.white,
                     ),
                 textAlign: TextAlign.center,
               ),

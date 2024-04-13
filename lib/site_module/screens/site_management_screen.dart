@@ -2,10 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:echno_attendance/site_module/models/site_model.dart';
 import 'package:echno_attendance/site_module/screens/create_site_screen.dart';
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
-import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/site_module/screens/site_home_screen.dart';
 import 'package:echno_attendance/site_module/services/site_service.dart';
-import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 
 class SiteManage extends StatefulWidget {
@@ -50,39 +48,26 @@ class _SiteManageState extends State<SiteManage> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = EchnoHelperFunctions.isDarkMode(context);
     return Scaffold(
       appBar: EchnoAppBar(
         leadingIcon: Icons.arrow_back_ios_new,
         leadingOnPressed: () {
           Navigator.pop(context);
         },
-        title: Text(
-          'Site Management',
-          style: Theme.of(context).textTheme.headlineSmall?.apply(
-                color: isDark ? EchnoColors.black : EchnoColors.white,
-              ),
-        ),
+        title: Text('Site Management',
+            style: Theme.of(context).textTheme.headlineSmall),
         actions: [
           PopupMenuButton<int>(
             itemBuilder: (context) => [
               PopupMenuItem<int>(
                 value: 0,
-                child: Text(
-                  'Create new site',
-                  style: Theme.of(context).textTheme.bodyLarge?.apply(
-                        color: isDark ? EchnoColors.white : EchnoColors.black,
-                      ),
-                ),
+                child: Text('Create new site',
+                    style: Theme.of(context).textTheme.bodyLarge),
               ),
               PopupMenuItem<int>(
                 value: 1,
-                child: Text(
-                  'Delete site',
-                  style: Theme.of(context).textTheme.bodyLarge?.apply(
-                        color: isDark ? EchnoColors.white : EchnoColors.black,
-                      ),
-                ),
+                child: Text('Delete site',
+                    style: Theme.of(context).textTheme.bodyLarge),
               ),
             ],
             onSelected: (item) {

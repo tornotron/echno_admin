@@ -1,5 +1,4 @@
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
-import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/leave_module/screens/leave_register_screen.dart';
 import 'package:echno_attendance/site_module/models/site_model.dart';
@@ -31,12 +30,8 @@ class _SiteHomeScreenState extends State<SiteHomeScreen> {
           leadingOnPressed: () {
             Navigator.pop(context);
           },
-          title: Text(
-            siteOffice.siteOfficeName,
-            style: Theme.of(context).textTheme.headlineSmall?.apply(
-                  color: isDark ? EchnoColors.black : EchnoColors.white,
-                ),
-          ),
+          title: Text(siteOffice.siteOfficeName,
+              style: Theme.of(context).textTheme.headlineSmall),
         ),
         body: SingleChildScrollView(
           child: Padding(

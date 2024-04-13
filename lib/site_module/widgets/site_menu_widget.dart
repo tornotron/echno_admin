@@ -26,7 +26,7 @@ class SiteMenuWidget extends StatelessWidget {
                 Theme.of(context).textTheme.titleSmall?.copyWith().color),
       ),
       leading: Icon(icon,
-          color: isDark ? EchnoColors.secondary : EchnoColors.primary),
+          color: isDark ? EchnoColors.iconSecondary : EchnoColors.iconPrimary),
       trailing: endIcon
           ? Icon(
               Icons.arrow_forward_ios,

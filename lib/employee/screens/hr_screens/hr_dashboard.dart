@@ -1,10 +1,8 @@
 import 'package:echno_attendance/auth/services/auth_services/auth_service.dart';
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
-import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/employee/utilities/dashboard_item.dart';
 import 'package:echno_attendance/employee/utilities/dashboard_item_list.dart';
 import 'package:echno_attendance/employee/widgets/custom_dashboard_tile.dart';
-import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 
 class HRDashboardScreen extends StatefulWidget {
@@ -25,19 +23,14 @@ class _HRDashboardScreenState extends State<HRDashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = EchnoHelperFunctions.isDarkMode(context);
     return Scaffold(
       appBar: EchnoAppBar(
         leadingIcon: Icons.menu,
         leadingOnPressed: () {
           AuthService.firebase().logOut();
         },
-        title: Text(
-          'HR Dashboard',
-          style: Theme.of(context).textTheme.headlineSmall?.apply(
-                color: isDark ? EchnoColors.black : EchnoColors.white,
-              ),
-        ),
+        title: Text('HR Dashboard',
+            style: Theme.of(context).textTheme.headlineSmall),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
