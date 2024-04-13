@@ -28,9 +28,8 @@ Widget leaveRow(
       boxShadow: <BoxShadow>[
         BoxShadow(
           color: isDarkMode ? EchnoColors.darkShadow : EchnoColors.lightShadow,
-          blurRadius: 10.0,
-          spreadRadius: 2.0,
-          offset: const Offset(0, 5),
+          blurRadius: 0.5,
+          offset: const Offset(0, 1),
         ),
       ],
     ),
@@ -55,9 +54,6 @@ Widget leaveRow(
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w700,
-                    color: isDarkMode
-                        ? EchnoColors.leaveText
-                        : EchnoColors.leaveText,
                   ),
             ),
             const SizedBox(height: 5.0),
@@ -66,9 +62,6 @@ Widget leaveRow(
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontSize: 17.0,
                     fontWeight: FontWeight.normal,
-                    color: isDarkMode
-                        ? EchnoColors.leaveText
-                        : EchnoColors.leaveText,
                   ),
             ),
             const SizedBox(height: 5.0),
@@ -77,9 +70,6 @@ Widget leaveRow(
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     fontSize: 15.0,
                     fontWeight: FontWeight.w400,
-                    color: isDarkMode
-                        ? EchnoColors.leaveText
-                        : EchnoColors.leaveText,
                   ),
             ),
             const SizedBox(height: 5.0),
@@ -91,19 +81,13 @@ Widget leaveRow(
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontSize: 14.0,
                         fontWeight: FontWeight.w300,
-                        color: isDarkMode
-                            ? EchnoColors.leaveText
-                            : EchnoColors.leaveText,
                       ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(2.0),
+                const Padding(
+                  padding: EdgeInsets.all(2.0),
                   child: Icon(
                     Icons.calendar_today,
                     size: 14.0,
-                    color: isDarkMode
-                        ? EchnoColors.leaveText
-                        : EchnoColors.leaveText,
                   ),
                 ),
                 Text(
@@ -113,9 +97,6 @@ Widget leaveRow(
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         fontSize: 15.0,
                         fontWeight: FontWeight.w400,
-                        color: isDarkMode
-                            ? EchnoColors.leaveText
-                            : EchnoColors.leaveText,
                       ),
                 ),
               ],
@@ -127,9 +108,6 @@ Widget leaveRow(
                     fontSize: 13.0,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 1.0,
-                    color: isDarkMode
-                        ? EchnoColors.leaveText
-                        : EchnoColors.leaveText,
                   ),
             ),
           ],

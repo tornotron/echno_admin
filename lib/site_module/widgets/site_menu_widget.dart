@@ -30,7 +30,8 @@ class SiteMenuWidget extends StatelessWidget {
       trailing: endIcon
           ? Icon(
               Icons.arrow_forward_ios,
-              color: isDark ? EchnoColors.secondary : EchnoColors.primary,
+              color:
+                  isDark ? EchnoColors.iconSecondary : EchnoColors.iconPrimary,
               size: 15.0,
             )
           : const SizedBox(

@@ -21,9 +21,8 @@ Widget employeeCard(
       boxShadow: <BoxShadow>[
         BoxShadow(
           color: isDarkMode ? EchnoColors.darkShadow : EchnoColors.lightShadow,
-          blurRadius: 10.0,
-          spreadRadius: 2.0,
-          offset: const Offset(0, 5),
+          blurRadius: 0.5,
+          offset: const Offset(0, 1),
         ),
       ],
     ),
@@ -39,9 +38,6 @@ Widget employeeCard(
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontSize: 18.0,
                   fontWeight: FontWeight.w700,
-                  color: isDarkMode
-                      ? EchnoColors.leaveText
-                      : EchnoColors.leaveText,
                 ),
           ),
           const SizedBox(height: 5.0),
@@ -50,9 +46,6 @@ Widget employeeCard(
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontSize: 17.0,
                   fontWeight: FontWeight.normal,
-                  color: isDarkMode
-                      ? EchnoColors.leaveText
-                      : EchnoColors.leaveText,
                 ),
           ),
           const SizedBox(height: 5.0),
@@ -61,9 +54,6 @@ Widget employeeCard(
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   fontSize: 15.0,
                   fontWeight: FontWeight.w400,
-                  color: isDarkMode
-                      ? EchnoColors.leaveText
-                      : EchnoColors.leaveText,
                 ),
           ),
           const SizedBox(height: 5.0),
@@ -72,9 +62,6 @@ Widget employeeCard(
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   fontSize: 15.0,
                   fontWeight: FontWeight.w400,
-                  color: isDarkMode
-                      ? EchnoColors.leaveText
-                      : EchnoColors.leaveText,
                 ),
           ),
           const SizedBox(height: 5.0),
@@ -83,9 +70,6 @@ Widget employeeCard(
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   fontSize: 15.0,
                   fontWeight: FontWeight.w400,
-                  color: isDarkMode
-                      ? EchnoColors.leaveText
-                      : EchnoColors.leaveText,
                 ),
           ),
         ],
