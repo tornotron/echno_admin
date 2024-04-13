@@ -4,8 +4,8 @@ class EchnoColors {
   // App theme colors
   static const Color primary = Color(0xFFFFE3CA);
   static const Color primaryLight = Color(0xFFF6F5F7);
-  static const Color secondary = Color(0xFFE4C1F9);
-  static const Color secondaryDark = Color(0xFF6D498E);
+  static const Color secondary = Color(0xFF6C757D);
+  static const Color secondaryDark = Color.fromARGB(255, 74, 78, 82);
   static const Color accent = Color(0xFFB0C7FF);
 
   // Attendance Colors
@@ -16,6 +16,14 @@ class EchnoColors {
   static const Color textSecondary = Color(0xFF6C757D);
   static const Color textWhite = Colors.white;
   static const Color textBlack = Colors.black;
+
+  // Icon colors
+  static const Color iconPrimary = Colors.indigoAccent;
+  static const Color iconSecondary = Color(0xFF6C757D);
+
+  // Bottom Navigation Bar colors
+  static const Color selectedNavDark = Colors.black;
+  static const Color selectedNavLight = Colors.indigoAccent;
 
   // Background colors
   static const Color light = Color(0xFFF6F6F6);

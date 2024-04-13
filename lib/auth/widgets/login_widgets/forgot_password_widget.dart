@@ -131,8 +131,11 @@ class ForgotPasswordWidget extends StatelessWidget {
         child: Text(
           EchnoText.forgotPasswordButton,
           style: Theme.of(context).textTheme.labelLarge?.copyWith(
-              fontSize: 14.5,
-              color: isDark ? EchnoColors.secondary : EchnoColors.primary),
+                fontSize: 14.5,
+                color: isDark
+                    ? EchnoColors.buttonSecondary
+                    : EchnoColors.buttonPrimary,
+              ),
         ),
       ),
     );

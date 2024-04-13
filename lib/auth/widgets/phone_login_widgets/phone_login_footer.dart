@@ -88,8 +88,10 @@ class PhoneLoginFooter extends StatelessWidget {
                 TextSpan(
                   text: 'Register',
                   style: TextStyle(
-                      color:
-                          isDark ? EchnoColors.secondary : EchnoColors.primary),
+                    color: isDark
+                        ? EchnoColors.buttonSecondary
+                        : EchnoColors.buttonPrimary,
+                  ),
                 ),
               ],
             ),

@@ -74,7 +74,9 @@ class RegistrationScreenFooter extends StatelessWidget {
                 TextSpan(
                   text: 'Login',
                   style: TextStyle(
-                    color: isDark ? EchnoColors.secondary : EchnoColors.primary,
+                    color: isDark
+                        ? EchnoColors.buttonSecondary
+                        : EchnoColors.buttonPrimary,
                   ),
                 ),
               ],

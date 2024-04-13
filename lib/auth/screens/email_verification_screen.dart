@@ -69,8 +69,8 @@ class EmailVerification extends StatelessWidget {
                   EchnoText.backToLogin,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         color: isDark
-                            ? EchnoColors.secondary
-                            : EchnoColors.primary,
+                            ? EchnoColors.buttonSecondary
+                            : EchnoColors.buttonPrimary,
                       ),
                 ),
               ),

@@ -73,8 +73,9 @@ class ForgotPasswordForm extends StatelessWidget {
             },
             child: Text(EchnoText.backToLogin,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color:
-                          isDark ? EchnoColors.secondary : EchnoColors.primary,
+                      color: isDark
+                          ? EchnoColors.buttonSecondary
+                          : EchnoColors.buttonPrimary,
                     )),
           ),
         ],

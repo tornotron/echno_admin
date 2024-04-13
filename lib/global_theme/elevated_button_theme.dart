@@ -13,7 +13,7 @@ class EchnoElevatedButtonTheme {
       backgroundColor: EchnoColors.buttonPrimary,
       disabledForegroundColor: EchnoColors.darkGrey,
       disabledBackgroundColor: EchnoColors.buttonDisabled,
-      side: const BorderSide(color: EchnoColors.primary),
+      side: const BorderSide(color: EchnoColors.buttonPrimary),
       padding: const EdgeInsets.symmetric(vertical: EchnoSize.buttonHeight),
       textStyle: const TextStyle(
           fontSize: 16,
@@ -29,10 +29,10 @@ class EchnoElevatedButtonTheme {
     style: ElevatedButton.styleFrom(
       elevation: 0,
       foregroundColor: EchnoColors.dark,
-      backgroundColor: EchnoColors.secondary,
+      backgroundColor: EchnoColors.buttonSecondary,
       disabledForegroundColor: EchnoColors.darkGrey,
       disabledBackgroundColor: EchnoColors.darkerGrey,
-      side: const BorderSide(color: EchnoColors.secondary),
+      side: const BorderSide(color: EchnoColors.buttonSecondary),
       padding: const EdgeInsets.symmetric(vertical: EchnoSize.buttonHeight),
       textStyle: const TextStyle(
           fontSize: 16,
