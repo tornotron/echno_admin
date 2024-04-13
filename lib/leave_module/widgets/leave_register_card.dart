@@ -20,9 +20,7 @@ Widget leaveRow(
     height: 170.0,
     margin: const EdgeInsets.only(left: 16.0, right: 16.0),
     decoration: BoxDecoration(
-      color: isDarkMode
-          ? EchnoColors.black.withOpacity(0.9)
-          : EchnoColors.lightCard,
+      color: isDarkMode ? EchnoColors.darkCard : EchnoColors.lightCard,
       shape: BoxShape.rectangle,
       borderRadius: BorderRadius.circular(EchnoSize.borderRadiusMd),
       boxShadow: <BoxShadow>[

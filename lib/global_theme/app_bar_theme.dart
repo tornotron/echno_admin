@@ -7,6 +7,7 @@ class EchnoAppBarTheme {
 
   static const lightAppBarTheme = AppBarTheme(
     elevation: 0,
+    shape: Border(bottom: BorderSide(color: EchnoColors.black, width: 0.2)),
     centerTitle: false,
     scrolledUnderElevation: 0,
     backgroundColor: EchnoColors.primary,
@@ -19,6 +20,7 @@ class EchnoAppBarTheme {
   );
   static const darkAppBarTheme = AppBarTheme(
     elevation: 0,
+    shape: Border(bottom: BorderSide(color: EchnoColors.white, width: 0.2)),
     centerTitle: false,
     scrolledUnderElevation: 0,
     backgroundColor: EchnoColors.secondary,

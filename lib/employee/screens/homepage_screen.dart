@@ -75,41 +75,41 @@ class _HomePageState extends State<HomePage> {
           ProfileScreen(),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 3,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: isDark ? EchnoColors.secondary : EchnoColors.primary,
-        selectedItemColor:
+      bottomNavigationBar: NavigationBar(
+        indicatorColor:
             isDark ? EchnoColors.selectedNavDark : EchnoColors.selectedNavLight,
-        currentIndex: _selectedIndex,
-        onTap: (value) {
-          pageController.animateToPage(value,
+        height: 70,
+        elevation: 4,
+        backgroundColor: isDark ? EchnoColors.secondary : EchnoColors.primary,
+        selectedIndex: _selectedIndex,
+        onDestinationSelected: (index) {
+          pageController.animateToPage(index,
               duration: const Duration(microseconds: 100),
               curve: Curves.easeIn);
           setState(() {
-            _selectedIndex = value;
+            _selectedIndex = index;
           });
         },
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
+        destinations: const [
+          NavigationDestination(
             icon: Icon(
               Icons.calendar_today,
             ),
             label: 'Attendance',
           ),
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: Icon(Icons.check),
             label: 'Check In/Out',
           ),
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: Icon(Icons.home),
             label: 'Home',
           ),
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: Icon(Icons.arrow_upward),
             label: 'Request',
           ),
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: Icon(Icons.person),
             label: 'Profile',
           ),

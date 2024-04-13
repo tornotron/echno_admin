@@ -46,8 +46,7 @@ Widget leaveStatusCard(
     height: 200,
     margin: const EdgeInsets.only(left: 45.0, right: 20.0),
     decoration: BoxDecoration(
-      color:
-          isDark ? EchnoColors.black.withOpacity(0.9) : EchnoColors.lightCard,
+      color: isDark ? EchnoColors.darkCard : EchnoColors.lightCard,
       shape: BoxShape.rectangle,
       borderRadius: BorderRadius.circular(8.0),
       boxShadow: <BoxShadow>[

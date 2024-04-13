@@ -30,9 +30,8 @@ class _MainHomeState extends State<MainHome> {
         CustomScrollView(
           slivers: [
             SliverAppBar(
-                backgroundColor: isDark
-                    ? EchnoColors.secondaryDark
-                    : EchnoColors.primaryLight,
+                backgroundColor:
+                    isDark ? EchnoColors.secondaryDark : EchnoColors.grey,
                 expandedHeight: 200,
                 floating: true,
                 pinned: true,
@@ -110,19 +109,20 @@ class _MainHomeState extends State<MainHome> {
               visible: !isAttendanceMarked,
               child: SlideAction(
                 elevation: 0,
-                innerColor: EchnoColors.white,
+                innerColor:
+                    isDark ? EchnoColors.black : EchnoColors.selectedNavLight,
                 outerColor:
                     isDark ? EchnoColors.secondary : EchnoColors.lightCard,
                 text: 'Slide to mark attendance',
                 textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: isDark ? EchnoColors.black : EchnoColors.white,
+                    color: isDark ? EchnoColors.black : EchnoColors.black,
                     fontSize: 16.0,
                     fontWeight: FontWeight.w600),
                 sliderRotate: false,
                 borderRadius: 20,
                 sliderButtonIcon: const Icon(
                   Icons.camera_alt,
-                  color: EchnoColors.black,
+                  color: EchnoColors.white,
                 ),
                 onSubmit: () async {
                   context.read<EmployeeBloc>().add(const MarkAttendanceEvent(

@@ -4,7 +4,6 @@ import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/employee/bloc/employee_bloc.dart';
 import 'package:echno_attendance/employee/widgets/attcard_monthly.dart';
-import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -58,7 +57,6 @@ class _MainAttendanceReportScreenState
     DateTime currentDate = DateTime.now();
     String currentMonth = monthMap[currentDate.month]!;
     String formattedDate = DateFormat('dd MMM yyyy').format(currentDate);
-    final isDark = EchnoHelperFunctions.isDarkMode(context);
     final currentEmployee = context.select((EmployeeBloc bloc) {
       return bloc.currentEmployee;
     });
@@ -67,7 +65,7 @@ class _MainAttendanceReportScreenState
         Container(
           height: 80,
           decoration: const BoxDecoration(
-            color: EchnoColors.attendanceCard,
+            color: EchnoColors.grey,
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(20),
               bottomRight: Radius.circular(20),
@@ -82,8 +80,7 @@ class _MainAttendanceReportScreenState
                 Text(
                   "Attendance Report",
                   style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                        color: isDark ? EchnoColors.black : EchnoColors.white,
-                        fontSize: 30,
+                        fontSize: 25,
                         fontWeight: FontWeight.bold,
                       ),
                 ),
