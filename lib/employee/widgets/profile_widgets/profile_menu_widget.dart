@@ -26,11 +26,12 @@ class ProfileMenuWidget extends StatelessWidget {
                 Theme.of(context).textTheme.titleSmall?.copyWith().color),
       ),
       leading: Icon(icon,
-          color: isDark ? EchnoColors.secondary : EchnoColors.primary),
+          color: isDark ? EchnoColors.iconSecondary : EchnoColors.iconPrimary),
       trailing: endIcon
           ? Icon(
               Icons.arrow_forward_ios,
-              color: isDark ? EchnoColors.secondary : EchnoColors.primary,
+              color:
+                  isDark ? EchnoColors.iconSecondary : EchnoColors.iconPrimary,
               size: 15.0,
             )
           : const SizedBox(

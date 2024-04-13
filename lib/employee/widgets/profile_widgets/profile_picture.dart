@@ -67,10 +67,7 @@ class EmployeeProfilePhoto extends StatelessWidget {
                   color: isDark ? EchnoColors.secondary : EchnoColors.primary,
                   borderRadius: BorderRadius.circular(100.00),
                 ),
-                child: Icon(
-                  Icons.camera_alt_outlined,
-                  color: isDark ? EchnoColors.black : EchnoColors.white,
-                ),
+                child: const Icon(Icons.camera_alt_outlined),
               ),
               onTap: () async {
                 context.read<EmployeeBloc>().add(

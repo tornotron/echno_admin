@@ -79,7 +79,8 @@ class _HomePageState extends State<HomePage> {
         elevation: 3,
         type: BottomNavigationBarType.fixed,
         backgroundColor: isDark ? EchnoColors.secondary : EchnoColors.primary,
-        selectedItemColor: EchnoColors.buttonPrimary,
+        selectedItemColor:
+            isDark ? EchnoColors.selectedNavDark : EchnoColors.selectedNavLight,
         currentIndex: _selectedIndex,
         onTap: (value) {
           pageController.animateToPage(value,
