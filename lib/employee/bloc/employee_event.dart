@@ -46,8 +46,10 @@ class MarkAttendanceEvent extends EmployeeEvent {
   final bool isPictureTaken;
   final bool isPictureUploaded;
   final File? imagePath;
+  final String? imageUrl;
   const MarkAttendanceEvent({
     this.imagePath,
+    this.imageUrl,
     required this.isPictureTaken,
     required this.isPictureUploaded,
   });

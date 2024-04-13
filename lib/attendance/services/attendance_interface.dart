@@ -1,12 +1,14 @@
 abstract class AttendanceRepositoryInterface {
-  Future<void> insertIntoDatabase(
-      {required String employeeId,
-      required String employeeName,
-      required String attendanceDate,
-      required String attendanceMonth,
-      required String attendanceTime,
-      required String attendanceStatus,
-      required String siteName});
+  Future<void> insertIntoDatabase({
+    required String employeeId,
+    required String employeeName,
+    required String attendanceDate,
+    required String attendanceMonth,
+    required String attendanceTime,
+    required String attendanceStatus,
+    required String siteName,
+    required String imageUrl,
+  });
   Future<List<Map<String, String>>> fetchFromDatabase(
       {required String employeeId,
       required String attendanceMonth,

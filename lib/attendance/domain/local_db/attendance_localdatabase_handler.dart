@@ -19,14 +19,16 @@ class AttendanceLocalRepository implements AttendanceRepositoryInterface {
   }
 
   @override
-  Future<void> insertIntoDatabase(
-      {required String employeeId,
-      required String employeeName,
-      required String attendanceDate,
-      required String? attendanceMonth,
-      required String attendanceTime,
-      required String attendanceStatus,
-      required String siteName}) async {
+  Future<void> insertIntoDatabase({
+    required String employeeId,
+    required String employeeName,
+    required String attendanceDate,
+    required String? attendanceMonth,
+    required String attendanceTime,
+    required String attendanceStatus,
+    required String siteName,
+    required String imageUrl,
+  }) async {
     final path = await getAttendanceDatabasePath();
     try {
       final db = await openDatabase(path);
@@ -38,6 +40,7 @@ class AttendanceLocalRepository implements AttendanceRepositoryInterface {
         'attendance_time': attendanceTime,
         'attendance_status': attendanceStatus,
         'site_name': siteName,
+        'image_url': imageUrl
       });
     } catch (e) {
       logs.e('Error inserting');

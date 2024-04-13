@@ -15,6 +15,7 @@ class AttendanceFirestoreRepository implements AttendanceRepositoryInterface {
     required String attendanceTime,
     required String attendanceStatus,
     required String siteName,
+    required String imageUrl,
   }) async {
     try {
       List<int> dateComponents =
@@ -50,7 +51,8 @@ class AttendanceFirestoreRepository implements AttendanceRepositoryInterface {
           "attendance-time": attendanceTime,
           "attendance-status": attendanceStatus,
           "site-name": siteName,
-          "employee-name": employeeName
+          "employee-name": employeeName,
+          "image-url": imageUrl
         },
       );
     } on FirebaseException catch (error) {

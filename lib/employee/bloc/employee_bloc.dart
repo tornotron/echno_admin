@@ -73,6 +73,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
           await AttendanceInsertionService().attendanceTrigger(
               employeeId: currentEmployee.employeeId,
               employeeName: currentEmployee.employeeName,
+              imageUrl: event.imageUrl!,
               siteName: "delhi");
           isAttendanceMarked = true;
           emit(const AttendanceAlreadyMarkedState());

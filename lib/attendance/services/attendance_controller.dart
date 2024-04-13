@@ -5,22 +5,26 @@ class AttendanceDatabaseController {
 
   AttendanceDatabaseController(this.repository);
 
-  Future<void> insertIntoDatabase(
-      {required String employeeId,
-      required String employeeName,
-      required String attendanceDate,
-      required String attendanceMonth,
-      required String attendanceTime,
-      required String attendanceStatus,
-      required String siteName}) {
+  Future<void> insertIntoDatabase({
+    required String employeeId,
+    required String employeeName,
+    required String attendanceDate,
+    required String attendanceMonth,
+    required String attendanceTime,
+    required String attendanceStatus,
+    required String siteName,
+    required String imageUrl,
+  }) {
     return repository.insertIntoDatabase(
-        employeeId: employeeId,
-        employeeName: employeeName,
-        attendanceDate: attendanceDate,
-        attendanceMonth: attendanceMonth,
-        attendanceTime: attendanceTime,
-        attendanceStatus: attendanceStatus,
-        siteName: siteName);
+      employeeId: employeeId,
+      employeeName: employeeName,
+      attendanceDate: attendanceDate,
+      attendanceMonth: attendanceMonth,
+      attendanceTime: attendanceTime,
+      attendanceStatus: attendanceStatus,
+      siteName: siteName,
+      imageUrl: imageUrl,
+    );
   }
 
   Future<List<Map<String, String>>> fetchFromDatabase(

@@ -23,6 +23,7 @@ class AttendanceInsertionService {
   Future<void> attendanceTrigger(
       {required String employeeId,
       required String employeeName,
+      required String imageUrl,
       required String siteName}) async {
     DateTime now = DateTime.now();
     String formattedTime = DateFormat('HH:mm:ss').format(now);
@@ -35,6 +36,7 @@ class AttendanceInsertionService {
     await AttendanceFirestoreRepository().insertIntoDatabase(
         employeeId: employeeId,
         employeeName: employeeName,
+        imageUrl: imageUrl,
         attendanceDate: formattedDate,
         attendanceMonth: month,
         attendanceTime: formattedTime,
