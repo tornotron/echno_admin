@@ -21,12 +21,7 @@ class _MainHomeState extends State<MainHome> {
   @override
   Widget build(BuildContext context) {
     final isDark = EchnoHelperFunctions.isDarkMode(context);
-    final currentEmployee = context.select((EmployeeBloc bloc) {
-      return bloc.currentEmployee;
-    });
-    final siteOfficeList = context.select((EmployeeBloc bloc) {
-      return bloc.siteOffices;
-    });
+
     final isAttendanceMarked = context.select((EmployeeBloc bloc) {
       return bloc.isAttendanceMarked;
     });

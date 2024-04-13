@@ -28,7 +28,7 @@ class EchnoElevatedButtonTheme {
   static final darkElevatedButtonTheme = ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       elevation: 0,
-      foregroundColor: EchnoColors.dark,
+      foregroundColor: EchnoColors.light,
       backgroundColor: EchnoColors.buttonSecondary,
       disabledForegroundColor: EchnoColors.darkGrey,
       disabledBackgroundColor: EchnoColors.darkerGrey,
