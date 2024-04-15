@@ -6,7 +6,7 @@ class LocationService {
   late bool servicePermission = false;
   late LocationPermission permission;
 
-  Future<Position> getCurrentLocation() async {
+  Future<Map<String, double>> getCurrentLocation() async {
     servicePermission = await Geolocator.isLocationServiceEnabled();
     if (!servicePermission) {
       devtools.log('Location Service is not enabled');
@@ -15,8 +15,19 @@ class LocationService {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
     }
-    return await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+
+    Position currentPosition = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+
+    double currentLatitude = currentPosition.latitude;
+    double currentLongitude = currentPosition.longitude;
+
+    Map<String, double> location = {
+      'latitude': currentLatitude,
+      'longitude': currentLongitude,
+    };
+    return location;
   }
 
   Future<bool> isEmployeeWithinSite({
@@ -24,6 +35,7 @@ class LocationService {
     required double siteLongitude,
     required double currentLattitude,
     required double currentLongitude,
+    required double siteRadius,
   }) async {
     // Calculate Distance
     final double distance = Geolocator.distanceBetween(
@@ -33,7 +45,7 @@ class LocationService {
       siteLongitude,
     );
     devtools.log('Distance: $distance');
-    if (distance <= 100) {
+    if (distance <= siteRadius) {
       devtools.log('You are in the range');
       return true;
     } else {
