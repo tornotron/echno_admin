@@ -1,4 +1,3 @@
-import 'package:echno_attendance/auth/bloc/auth_bloc.dart';
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/employee/bloc/employee_bloc.dart';
@@ -80,9 +79,9 @@ class _HomePageState extends State<HomePage> {
           controller: pageController,
           children: const <Widget>[
             MainAttendanceReportScreen(),
-            Placeholder(),
+            Center(child: Text('Under Development!')),
             MainHome(),
-            Placeholder(),
+            Center(child: Text('Under Development!')),
             ProfileScreen(),
           ],
         ),
@@ -110,8 +109,8 @@ class _HomePageState extends State<HomePage> {
             label: 'Attendance',
           ),
           NavigationDestination(
-            icon: Icon(Icons.check),
-            label: 'Check In/Out',
+            icon: Icon(Icons.task_alt_outlined),
+            label: 'Tasks',
           ),
           NavigationDestination(
             icon: Icon(Icons.home),
