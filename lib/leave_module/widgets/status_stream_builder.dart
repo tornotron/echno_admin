@@ -1,4 +1,3 @@
-import 'package:echno_attendance/constants/leave_module_strings.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/employee/services/employee_service.dart';
 import 'package:echno_attendance/leave_module/models/leave_model.dart';
@@ -49,7 +48,7 @@ class _LeaveStatusStreamWidgetState extends State<LeaveStatusStreamWidget> {
                   const Center(child: LinearProgressIndicator()),
                   const SizedBox(height: 10),
                   Text(
-                    leaveStatusLoadingText,
+                    'Loading Leave History...',
                     style: Theme.of(context).textTheme.titleMedium,
                     textAlign: TextAlign.center,
                   ),
@@ -61,7 +60,7 @@ class _LeaveStatusStreamWidgetState extends State<LeaveStatusStreamWidget> {
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return Center(
               child: Text(
-                leaveStatusNoLeaveData,
+                'No Leave History Yet...',
                 style: Theme.of(context).textTheme.titleMedium,
                 textAlign: TextAlign.center,
               ),

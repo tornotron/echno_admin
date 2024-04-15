@@ -1,4 +1,3 @@
-import 'package:echno_attendance/constants/leave_module_strings.dart';
 import 'package:echno_attendance/leave_module/models/leave_model.dart';
 import 'package:echno_attendance/leave_module/services/leave_services.dart';
 import 'package:echno_attendance/leave_module/utilities/leave_type.dart';
@@ -26,7 +25,7 @@ Widget leaveRegisterStreamBuilder({
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
           return Center(
             child: Text(
-              leaveRegisterNoLeaveData,
+              'No Leave Data Found...',
               style: Theme.of(context).textTheme.titleMedium,
               textAlign: TextAlign.center,
             ),

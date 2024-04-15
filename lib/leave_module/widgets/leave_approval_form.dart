@@ -1,4 +1,3 @@
-import 'package:echno_attendance/constants/leave_module_strings.dart';
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/employee/services/employee_service.dart';
@@ -52,12 +51,12 @@ class _LeaveApprovalFormState extends State<LeaveApprovalForm> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          leaveApprovalScreenTitle,
+          'Leave Sanction Form...',
           style: Theme.of(context).textTheme.displaySmall,
           textAlign: TextAlign.left,
         ),
         Text(
-          leaveApprovalSubtitle,
+          'Update the status of the applied leave here...',
           style: Theme.of(context).textTheme.titleMedium,
           textAlign: TextAlign.left,
         ),
@@ -103,7 +102,7 @@ class _LeaveApprovalFormState extends State<LeaveApprovalForm> {
         ),
         const SizedBox(height: EchnoSize.spaceBtwItems),
         Text(
-          leaveApprovalStatusFieldLabel,
+          'Leave Status',
           style: Theme.of(context).textTheme.titleMedium,
         ),
         const SizedBox(height: 5.0),
@@ -144,7 +143,7 @@ class _LeaveApprovalFormState extends State<LeaveApprovalForm> {
               }
             },
             child: const Text(
-              leaveApprovalButtonLabel,
+              'Update Leave Status',
             ),
           ),
         ),

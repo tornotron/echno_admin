@@ -1,5 +1,4 @@
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
-import 'package:echno_attendance/constants/leave_module_strings.dart';
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/employee/bloc/employee_bloc.dart';
 import 'package:echno_attendance/employee/bloc/employee_event.dart';
@@ -79,12 +78,12 @@ class LeaveStatusScreenState extends State<LeaveStatusScreen> {
                 ),
                 const SizedBox(height: EchnoSize.spaceBtwSections),
                 Text(
-                  leaveStatusScreenTitle,
+                  'Leave Status...',
                   style: Theme.of(context).textTheme.displaySmall,
                   textAlign: TextAlign.left,
                 ),
                 Text(
-                  leaveStatusSubtitle,
+                  'List of all the leaves applied by you...',
                   style: Theme.of(context).textTheme.titleMedium,
                   textAlign: TextAlign.left,
                 ),

@@ -1,5 +1,4 @@
 import 'package:echno_attendance/constants/colors.dart';
-import 'package:echno_attendance/constants/leave_module_strings.dart';
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/leave_module/models/leave_model.dart';
 import 'package:echno_attendance/leave_module/screens/leave_approval_screen.dart';
@@ -64,7 +63,7 @@ Widget leaveRow(
             ),
             const SizedBox(height: 5.0),
             Text(
-              '$leaveRegisterDurationFieldLabel $startDate  --  $endDate',
+              'Duration :  $startDate  --  $endDate',
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     fontSize: 15.0,
                     fontWeight: FontWeight.w400,
@@ -75,7 +74,7 @@ Widget leaveRow(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  leaveRegisterStatusFieldLabel,
+                  'Status : ',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontSize: 14.0,
                         fontWeight: FontWeight.w300,
@@ -91,7 +90,7 @@ Widget leaveRow(
                 Text(
                   leave.isCancelled == false
                       ? getLeaveStatusName(leave.leaveStatus)
-                      : leaveRegisterCancelledStatus,
+                      : 'Cancelled',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         fontSize: 15.0,
                         fontWeight: FontWeight.w400,
@@ -101,7 +100,7 @@ Widget leaveRow(
             ),
             const SizedBox(height: 10.0),
             Text(
-              "$leaveRegisterAppliedFieldLabel $appliedDate",
+              "'Applied On:  $appliedDate",
               style: Theme.of(context).textTheme.labelLarge?.copyWith(
                     fontSize: 13.0,
                     fontWeight: FontWeight.w600,

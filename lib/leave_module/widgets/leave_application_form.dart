@@ -1,5 +1,4 @@
 import 'package:echno_attendance/constants/colors.dart';
-import 'package:echno_attendance/constants/leave_module_strings.dart';
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/employee/services/employee_service.dart';
@@ -46,7 +45,7 @@ class _LeaveApplicationFormState extends State<LeaveApplicationForm> {
     if (picked != null) {
       if (picked.isBefore(DateTime.now())) {
         // Show error dialog for start date before current date
-        _showErrorDialog(startDateErrorMessage);
+        _showErrorDialog('Start date cannot be earlier than the current date');
       } else {
         setState(() {
           startDate = picked;
@@ -68,7 +67,7 @@ class _LeaveApplicationFormState extends State<LeaveApplicationForm> {
     );
     if (picked != null && startDate != null) {
       if (picked.isBefore(startDate!)) {
-        _showErrorDialog(endDateErrorMessage);
+        _showErrorDialog('End date cannot be earlier than the start date');
       } else {
         setState(() {
           endDate = picked;
@@ -202,12 +201,12 @@ class _LeaveApplicationFormState extends State<LeaveApplicationForm> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              leaveApplicationScreenTitle,
+              'Leave Application Form...',
               style: Theme.of(context).textTheme.displaySmall,
               textAlign: TextAlign.left,
             ),
             Text(
-              leaveApplicationSubtitle,
+              'Application to request leave...',
               style: Theme.of(context).textTheme.titleMedium,
               textAlign: TextAlign.left,
             ),
@@ -217,7 +216,7 @@ class _LeaveApplicationFormState extends State<LeaveApplicationForm> {
 
             // The immediate supervisor of the employee
             const LeaveFormField(
-              mainLabel: coordinatorFieldLabel,
+              mainLabel: 'Site Co-Ordinator',
               isReadOnly: true,
               hintText: 'Alex Mercer', // This should be fetched from DB
             ),
@@ -225,7 +224,7 @@ class _LeaveApplicationFormState extends State<LeaveApplicationForm> {
 
             // Current Date
             LeaveFormField(
-              mainLabel: currentDateFieldLabel,
+              mainLabel: "Today's Date",
               isReadOnly: true,
               hintText: DateFormat('dd-MM-yyyy').format(DateTime.now()),
             ),
@@ -236,7 +235,7 @@ class _LeaveApplicationFormState extends State<LeaveApplicationForm> {
               controller: _startDateController,
               label: 'Start Date',
               hintText: startDate == null
-                  ? startDateFieldHint
+                  ? 'Select Start Date'
                   : DateFormat('dd-MM-yyyy').format(startDate!),
               onTap: () {
                 _selectStartDate(context);
@@ -250,7 +249,7 @@ class _LeaveApplicationFormState extends State<LeaveApplicationForm> {
               controller: _endDateController,
               label: 'End Date',
               hintText: endDate == null
-                  ? endDateFieldHint
+                  ? 'Select End Date'
                   : DateFormat('dd-MM-yyyy').format(endDate!),
               onTap: () {
                 _selectEndDate(context);
@@ -261,14 +260,14 @@ class _LeaveApplicationFormState extends State<LeaveApplicationForm> {
 
             // Number of days on leave calculated from start and end date
             Text(
-              "$calculateDaysFieldLabel ${calculateLeaveDays()}",
+              "Nuber of days on leave :  ${calculateLeaveDays()}",
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: EchnoSize.spaceBtwItems),
 
             // Dropdoen to select Leave Type
             Text(
-              leaveTypeFieldLabel,
+              'Leave Type',
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 5.0),
@@ -296,7 +295,7 @@ class _LeaveApplicationFormState extends State<LeaveApplicationForm> {
 
             // Text field to enter remarks
             Text(
-              remarksFieldLabel,
+              'Remarks',
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 5.0),
@@ -305,7 +304,7 @@ class _LeaveApplicationFormState extends State<LeaveApplicationForm> {
               minLines: 5,
               maxLines: null, // Allows for an adjustable number of lines
               decoration: const InputDecoration(
-                hintText: remarksFieldHint,
+                hintText: 'Alternate Arrangements...',
                 border: OutlineInputBorder(),
               ),
               validator: _validateRemarks,
@@ -319,7 +318,7 @@ class _LeaveApplicationFormState extends State<LeaveApplicationForm> {
               child: ElevatedButton(
                 onPressed: _submitLeaveApplication,
                 child: const Text(
-                  submitButtonLabel,
+                  'APPLY FOR LEAVE',
                 ),
               ),
             ),

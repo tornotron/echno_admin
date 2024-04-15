@@ -1,5 +1,4 @@
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
-import 'package:echno_attendance/constants/leave_module_strings.dart';
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/employee/services/employee_service.dart';
@@ -41,12 +40,12 @@ class LeaveRegisterScreenState extends State<LeaveRegisterScreen> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          leaveRegisterScreenTitle,
+          'Employee Leave Register...',
           style: Theme.of(context).textTheme.displaySmall,
           textAlign: TextAlign.left,
         ),
         Text(
-          leaveRegisterSubtitle,
+          'List of all the leaves applied by the employees...',
           style: Theme.of(context).textTheme.titleMedium,
           textAlign: TextAlign.left,
         ),
@@ -57,8 +56,8 @@ class LeaveRegisterScreenState extends State<LeaveRegisterScreen> {
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(EchnoSize.borderRadiusLg),
             ),
-            labelText: leaveRegisterFilterFieldLabel,
-            hintText: leaveRegisterFilterFieldHint,
+            labelText: 'Filter',
+            hintText: 'Start Typing...',
             suffixIcon: IconButton(
               icon: const Icon(Icons.clear),
               onPressed: () {

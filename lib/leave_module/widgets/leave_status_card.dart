@@ -1,5 +1,4 @@
 import 'package:echno_attendance/constants/colors.dart';
-import 'package:echno_attendance/constants/leave_module_strings.dart';
 import 'package:echno_attendance/leave_module/models/leave_model.dart';
 import 'package:echno_attendance/leave_module/services/leave_services.dart';
 import 'package:echno_attendance/leave_module/utilities/leave_cancel_dialog.dart';
@@ -134,7 +133,7 @@ Widget leaveStatusCard(
                               size: 20.0,
                             ),
                             Text(
-                              leaveStatusCancelButtonLabel,
+                              'Cancel',
                               style: Theme.of(context)
                                   .textTheme
                                   .labelLarge
@@ -152,7 +151,7 @@ Widget leaveStatusCard(
           ),
           const SizedBox(height: 5.0),
           Text(
-            "$leaveAppliedOnFieldLabel $appliedDate",
+            "Applied On:  $appliedDate",
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   fontSize: 13.0,
                   fontWeight: FontWeight.w600,
