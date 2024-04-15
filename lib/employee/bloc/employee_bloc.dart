@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:echno_attendance/attendance/services/attendance_insertservice.dart';
 import 'package:echno_attendance/attendance/services/attendance_todaycheck.dart';
+import 'package:echno_attendance/attendance/services/location_service.dart';
 import 'package:echno_attendance/camera/camera_provider.dart';
 import 'package:echno_attendance/employee/bloc/employee_event.dart';
 import 'package:echno_attendance/employee/bloc/employee_state.dart';
@@ -63,6 +64,41 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     on<MarkAttendanceEvent>((event, emit) async {
       isAttendanceMarked = await AttendanceCheck()
           .attendanceTodayCheck(currentEmployee.employeeId, formattedDate);
+      if (currentEmployee.sites == null || currentEmployee.sites!.isEmpty) {
+        emit(EmployeeHomeState(
+            exception: Exception("No site assigned to this employee")));
+      }
+      final location = await LocationService().getCurrentLocation();
+
+      if (location['latitue'] == null || location['longitude'] == null) {
+        emit(EmployeeHomeState(exception: Exception("Location not found")));
+      }
+
+      double currentLatitude = location['latitude']!;
+      double currentLongitude = location['longitude']!;
+
+      siteOffices = await siteService.populateSiteOfficeList(
+          siteNameList: currentEmployee.sites!);
+      SiteOffice? currentSiteOffice;
+
+      bool isEmployeeWithinSite = false;
+      for (final siteOffice in siteOffices) {
+        isEmployeeWithinSite = await LocationService().isEmployeeWithinSite(
+          siteLattitude: siteOffice.siteLatitude,
+          siteLongitude: siteOffice.siteLongitude,
+          currentLattitude: currentLatitude,
+          currentLongitude: currentLongitude,
+          siteRadius: siteOffice.siteRadius,
+        );
+        if (isEmployeeWithinSite) {
+          currentSiteOffice = siteOffice;
+          break;
+        }
+      }
+      if (!isEmployeeWithinSite) {
+        emit(EmployeeHomeState(
+            exception: Exception("You are not within any site radius")));
+      }
       if (!isAttendanceMarked) {
         final frontCamera = await cameraObjectProvider();
         if (!event.isPictureTaken && !event.isPictureUploaded) {
@@ -74,7 +110,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
               employeeId: currentEmployee.employeeId,
               employeeName: currentEmployee.employeeName,
               imageUrl: event.imageUrl!,
-              siteName: "delhi");
+              siteName: currentSiteOffice!.siteOfficeName);
           isAttendanceMarked = true;
           emit(const AttendanceAlreadyMarkedState());
         }

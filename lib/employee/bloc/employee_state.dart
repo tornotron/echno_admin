@@ -18,7 +18,8 @@ class EmployeeInitializedState extends EmployeeState {
 }
 
 class EmployeeHomeState extends EmployeeState {
-  const EmployeeHomeState();
+  final Exception? exception;
+  const EmployeeHomeState({this.exception});
 }
 
 class EmployeeProfileState extends EmployeeState {
