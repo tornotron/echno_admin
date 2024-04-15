@@ -1,12 +1,15 @@
+import 'package:echno_attendance/auth/bloc/auth_bloc.dart';
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/employee/bloc/employee_bloc.dart';
 import 'package:echno_attendance/employee/bloc/employee_event.dart';
+import 'package:echno_attendance/employee/bloc/employee_state.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/employee/screens/mainapp_attreport.dart';
 import 'package:echno_attendance/employee/screens/mainapp_homepage.dart';
 import 'package:echno_attendance/employee/screens/profile_screen.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
+import 'package:echno_attendance/utilities/show_error_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -64,16 +67,25 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: PageView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: pageController,
-        children: const <Widget>[
-          MainAttendanceReportScreen(),
-          Placeholder(),
-          MainHome(),
-          Placeholder(),
-          ProfileScreen(),
-        ],
+      body: BlocListener<EmployeeBloc, EmployeeState>(
+        listener: (context, state) async {
+          if (state is EmployeeHomeState) {
+            if (state.exception != null) {
+              await showErrorDialog(context, state.exception!.toString());
+            }
+          }
+        },
+        child: PageView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: pageController,
+          children: const <Widget>[
+            MainAttendanceReportScreen(),
+            Placeholder(),
+            MainHome(),
+            Placeholder(),
+            ProfileScreen(),
+          ],
+        ),
       ),
       bottomNavigationBar: NavigationBar(
         indicatorColor:
