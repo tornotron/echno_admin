@@ -289,4 +289,21 @@ class HrFirestoreDatabaseHandler extends BasicEmployeeFirestoreDatabaseHandler
       throw 'Something went wrong! Please try again.';
     }
   }
+
+  @override
+  Future<List<Employee>> getEmployeeAutoComplete() async {
+    try {
+      QuerySnapshot employeeList =
+          await FirebaseFirestore.instance.collection('employees').get();
+      return employeeList.docs
+          .map((doc) => Employee.fromQueryDocumentSnapshot(doc))
+          .toList();
+    } on FirebaseException catch (e) {
+      throw EchnoFirebaseException(e.code).message;
+    } on PlatformException catch (e) {
+      throw EchnoPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong! Please try again.';
+    }
+  }
 }

@@ -20,4 +20,5 @@ abstract class HrDatabaseHandler extends BasicEmployeeDatabaseHandler
   Stream<List<Employee>> getAllEmployees({required String? siteOfficeName});
   Future<List<Employee>> populateMemberList(
       {required List<String> employeeIdList});
+  Future<List<Employee>> getEmployeeAutoComplete();
 }

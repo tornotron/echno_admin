@@ -65,4 +65,9 @@ class HrEmployeeService extends EmployeeService implements HrDatabaseHandler {
       {required List<String> employeeIdList}) {
     return _handler.populateMemberList(employeeIdList: employeeIdList);
   }
+
+  @override
+  Future<List<Employee>> getEmployeeAutoComplete() {
+    return _handler.getEmployeeAutoComplete();
+  }
 }
