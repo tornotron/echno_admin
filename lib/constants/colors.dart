@@ -33,7 +33,7 @@ class EchnoColors {
   // Background Container colors
   static const Color lightContainer = Color(0xFF6C757D);
   static Color darkContainer = EchnoColors.white.withOpacity(0.1);
-  static const Color lightCard = Color(0xFFF6F5F7);
+  static const Color lightCard = Color(0xFFFEFDFF);
   static const Color darkCard = Color(0xFF6C757D);
 
   // Button colors

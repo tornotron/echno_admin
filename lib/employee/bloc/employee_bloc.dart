@@ -70,7 +70,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
       }
       final location = await LocationService().getCurrentLocation();
 
-      if (location['latitue'] == null || location['longitude'] == null) {
+      if (location['latitude'] == null || location['longitude'] == null) {
         emit(EmployeeHomeState(exception: Exception("Location not found")));
       }
 

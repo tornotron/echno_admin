@@ -44,7 +44,7 @@ Icon getIcon(LeaveStatus? leaveStatus, bool isCancelled) {
 // Returns the color based on the leave status and isCancelled
 Color getColor(LeaveStatus? leaveStatus, bool isCancelled) {
   if (isCancelled) {
-    return EchnoColors.leavePending;
+    return EchnoColors.leaveCancelled;
   }
   switch (leaveStatus) {
     case LeaveStatus.approved:

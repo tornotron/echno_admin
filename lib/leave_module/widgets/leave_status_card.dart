@@ -58,7 +58,7 @@ Widget leaveStatusCard(
       ],
     ),
     child: Container(
-      margin: const EdgeInsets.only(top: 16.0, left: 72.0),
+      margin: const EdgeInsets.only(top: 16.0, left: 65.0),
       constraints: const BoxConstraints.expand(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,13 +99,11 @@ Widget leaveStatusCard(
                       fontWeight: FontWeight.w300,
                     ),
               ),
-              Container(width: 40.0),
+              const SizedBox(width: 100.0),
               leave.leaveStatus == LeaveStatus.approved ||
                       leave.leaveStatus == LeaveStatus.rejected ||
                       leave.isCancelled
-                  ? Container(
-                      height: 35,
-                    )
+                  ? const SizedBox(height: 50)
                   : GestureDetector(
                       onTap: () async {
                         final shouldCancel = await showCancelDialog(context);
@@ -122,7 +120,7 @@ Widget leaveStatusCard(
                         }
                       },
                       child: Container(
-                        width: 90.0,
+                        width: 80.0,
                         padding: const EdgeInsets.symmetric(vertical: 4),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.0),
@@ -132,6 +130,7 @@ Widget leaveStatusCard(
                           children: <Widget>[
                             const Icon(
                               Icons.arrow_upward,
+                              color: EchnoColors.white,
                               size: 20.0,
                             ),
                             Text(
@@ -140,6 +139,7 @@ Widget leaveStatusCard(
                                   .textTheme
                                   .labelLarge
                                   ?.copyWith(
+                                    color: EchnoColors.white,
                                     fontSize: 11.0,
                                     fontWeight: FontWeight.w600,
                                   ),
