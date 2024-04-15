@@ -12,6 +12,8 @@ import 'package:echno_attendance/utilities/styles/padding_style.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer' as devtools show log;
 
+import 'package:geolocator/geolocator.dart';
+
 class CreateSiteScreen extends StatefulWidget {
   const CreateSiteScreen({super.key});
 
@@ -304,16 +306,13 @@ class _CreateSiteScreenState extends State<CreateSiteScreen> {
                             width: double.infinity,
                             child: ElevatedButton(
                                 onPressed: () async {
-                                  await LocationService()
-                                      .getCurrentLocation()
-                                      .then(
-                                    (location) {
-                                      _siteLatitudeController.text =
-                                          location.latitude.toString();
-                                      _siteLongitudeController.text =
-                                          location.longitude.toString();
-                                    },
-                                  );
+                                  Map<String, double> location =
+                                      await LocationService()
+                                          .getCurrentLocation();
+                                  _siteLatitudeController.text =
+                                      location['latitude'].toString();
+                                  _siteLongitudeController.text =
+                                      location['longitude'].toString();
                                 },
                                 child: const Text('Get Location')),
                           ),
