@@ -1,11 +1,16 @@
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/constants/sizes.dart';
+import 'package:echno_attendance/site_module/models/site_model.dart';
 import 'package:echno_attendance/task_module/widgets/add_task_form.dart';
 import 'package:echno_attendance/utilities/styles/padding_style.dart';
 import 'package:flutter/material.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  const AddTaskScreen({super.key});
+  final SiteOffice siteOffice;
+  const AddTaskScreen({
+    required this.siteOffice,
+    super.key,
+  });
 
   @override
   Widget build(context) {
@@ -34,7 +39,9 @@ class AddTaskScreen extends StatelessWidget {
               const SizedBox(height: EchnoSize.spaceBtwItems),
               const Divider(height: EchnoSize.dividerHeight),
               const SizedBox(height: EchnoSize.spaceBtwItems),
-              const AddTaskForm(),
+              AddTaskForm(
+                siteOffice: siteOffice,
+              ),
             ],
           ),
         ),

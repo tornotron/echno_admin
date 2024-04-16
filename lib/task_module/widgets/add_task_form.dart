@@ -1,4 +1,5 @@
 import 'package:echno_attendance/constants/sizes.dart';
+import 'package:echno_attendance/site_module/models/site_model.dart';
 import 'package:echno_attendance/task_module/services/task_service.dart';
 import 'package:echno_attendance/task_module/utilities/task_status.dart';
 import 'package:echno_attendance/task_module/utilities/task_types.dart';
@@ -9,7 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class AddTaskForm extends StatefulWidget {
-  const AddTaskForm({super.key});
+  final SiteOffice siteOffice;
+  const AddTaskForm({
+    required this.siteOffice,
+    super.key,
+  });
 
   @override
   State<AddTaskForm> createState() => _AddTaskFormState();
@@ -410,8 +415,7 @@ class _AddTaskFormState extends State<AddTaskForm> {
                       _selectedTaskStatus.toString().split('.').last;
                   final taskProgress = _taskProgress;
                   final assignedEmployee = _assignedEmployeeController.text;
-                  const siteOffice =
-                      'Ernakulam'; // From the currentEmployye function
+                  final siteOffice = widget.siteOffice.siteOfficeName;
                   try {
                     await _taskProvider.addNewTask(
                       title: title,

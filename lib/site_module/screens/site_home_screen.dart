@@ -1,9 +1,9 @@
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/constants/sizes.dart';
-import 'package:echno_attendance/leave_module/screens/leave_register_screen.dart';
 import 'package:echno_attendance/site_module/models/site_model.dart';
 import 'package:echno_attendance/site_module/screens/site_assignment_screen.dart';
 import 'package:echno_attendance/site_module/widgets/site_menu_widget.dart';
+import 'package:echno_attendance/task_module/screens/task_home_screen.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:echno_attendance/utilities/styles/padding_style.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +49,25 @@ class _SiteHomeScreenState extends State<SiteHomeScreen> {
                 const SizedBox(height: EchnoSize.spaceBtwItems),
                 SiteMenuWidget(
                   isDark: isDark,
+                  icon: Icons.playlist_add_check_circle_sharp,
+                  title: 'Attendance',
+                  onPressed: () {},
+                ),
+                SiteMenuWidget(
+                  isDark: isDark,
+                  icon: Icons.task_outlined,
+                  title: 'Tasks',
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return TaskHomeScreen(
+                        siteOffice: siteOffice,
+                      );
+                    }));
+                  },
+                ),
+                SiteMenuWidget(
+                  isDark: isDark,
                   icon: Icons.people_outline,
                   title: 'Site Members',
                   onPressed: () {
@@ -59,29 +78,6 @@ class _SiteHomeScreenState extends State<SiteHomeScreen> {
                       );
                     }));
                   },
-                ),
-                SiteMenuWidget(
-                  isDark: isDark,
-                  icon: Icons.playlist_add_check_circle_sharp,
-                  title: 'Attendance',
-                  onPressed: () {},
-                ),
-                SiteMenuWidget(
-                  isDark: isDark,
-                  icon: Icons.leak_add_outlined,
-                  title: 'Leaves',
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return const LeaveRegisterScreen();
-                    }));
-                  },
-                ),
-                SiteMenuWidget(
-                  isDark: isDark,
-                  icon: Icons.task_outlined,
-                  title: 'Tasks',
-                  onPressed: () {},
                 ),
                 SiteMenuWidget(
                   isDark: isDark,

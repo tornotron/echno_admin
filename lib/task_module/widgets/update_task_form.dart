@@ -1,6 +1,5 @@
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/task_module/models/task_model.dart';
-import 'package:echno_attendance/task_module/screens/task_home_screen.dart';
 import 'package:echno_attendance/task_module/services/task_service.dart';
 import 'package:echno_attendance/task_module/utilities/task_status.dart';
 import 'package:echno_attendance/task_module/utilities/task_types.dart';
@@ -384,18 +383,12 @@ class _UpdateTaskFormWidgetState extends State<UpdateTaskFormWidget> {
                   newAssignedEmployee: assignedEmployee,
                 );
                 if (context.mounted) {
+                  int popCount = 0;
                   EchnoSnackBar.successSnackBar(
                       context: context,
                       title: 'Success...!',
                       message: 'Task updated successfully.');
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => TaskHomeScreen(
-                          index: TaskUiHelpers.getTaskHomeIndex(
-                              _selectedTaskStatus.toString())),
-                    ),
-                  );
+                  Navigator.of(context).popUntil((route) => popCount++ == 2);
                 }
               } catch (e) {
                 if (context.mounted) {

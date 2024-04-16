@@ -11,15 +11,17 @@ class TaskHomeStreamWidget extends StatelessWidget {
     super.key,
     required this.taskService,
     required int selectedIndex,
+    required this.siteOffice,
   }) : _selectedIndex = selectedIndex;
 
   final TaskService taskService;
   final int _selectedIndex;
+  final String siteOffice;
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<Task>>(
-      stream: taskService.streamTasksBySiteOffice(siteOffice: 'Ernakulam'),
+      stream: taskService.streamTasksBySiteOffice(siteOffice: siteOffice),
       builder: (BuildContext context, AsyncSnapshot<List<Task>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Expanded(

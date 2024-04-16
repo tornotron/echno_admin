@@ -1,3 +1,4 @@
+import 'package:echno_attendance/site_module/models/site_model.dart';
 import 'package:echno_attendance/task_module/screens/add_new_task.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -5,7 +6,10 @@ import 'package:intl/intl.dart';
 class TaskHomeHeader extends StatelessWidget {
   const TaskHomeHeader({
     super.key,
+    required this.siteOffice,
   });
+
+  final SiteOffice siteOffice;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +35,9 @@ class TaskHomeHeader extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return const AddTaskScreen();
+                return AddTaskScreen(
+                  siteOffice: siteOffice,
+                );
               }));
             },
             child: const Text(

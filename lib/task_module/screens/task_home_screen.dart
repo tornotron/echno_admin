@@ -1,6 +1,7 @@
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/sizes.dart';
+import 'package:echno_attendance/site_module/models/site_model.dart';
 import 'package:echno_attendance/task_module/services/task_service.dart';
 import 'package:echno_attendance/task_module/widgets/task_home_widgets/task_home_header.dart';
 import 'package:echno_attendance/task_module/widgets/task_home_widgets/task_home_stream.dart';
@@ -8,8 +9,10 @@ import 'package:echno_attendance/utilities/styles/padding_style.dart';
 import 'package:flutter/material.dart';
 
 class TaskHomeScreen extends StatefulWidget {
+  final SiteOffice siteOffice;
   final int? index;
   const TaskHomeScreen({
+    required this.siteOffice,
     this.index,
     super.key,
   });
@@ -22,10 +25,12 @@ class _TaskHomeScreenState extends State<TaskHomeScreen> {
   final taskService = TaskService.firestoreTasks();
 
   late int _selectedIndex;
+  late SiteOffice siteOffice;
   @override
   void initState() {
     super.initState();
     _selectedIndex = widget.index ?? 1;
+    siteOffice = widget.siteOffice;
   }
 
   @override
@@ -46,7 +51,7 @@ class _TaskHomeScreenState extends State<TaskHomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const TaskHomeHeader(),
+            TaskHomeHeader(siteOffice: siteOffice),
             const SizedBox(height: EchnoSize.spaceBtwSections),
             Center(
               child: Column(
@@ -71,6 +76,7 @@ class _TaskHomeScreenState extends State<TaskHomeScreen> {
             const Divider(height: EchnoSize.dividerHeight),
             const SizedBox(height: EchnoSize.spaceBtwItems),
             TaskHomeStreamWidget(
+              siteOffice: siteOffice.siteOfficeName,
               taskService: taskService,
               selectedIndex: _selectedIndex,
             ),
