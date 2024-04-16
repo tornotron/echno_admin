@@ -1,10 +1,10 @@
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/employee/services/hr_employee_service.dart';
+import 'package:echno_attendance/site_module/widgets/employee_autocomplete.dart';
 import 'package:flutter/material.dart';
 import 'package:echno_attendance/attendance/services/location_service.dart';
 import 'package:echno_attendance/site_module/utilities/site_status.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
-import 'package:echno_attendance/employee/utilities/employee_role.dart';
 import 'package:echno_attendance/site_module/services/site_service.dart';
 import 'package:echno_attendance/utilities/helpers/form_validators.dart';
 import 'package:echno_attendance/utilities/popups/custom_snackbar.dart';
@@ -29,7 +29,6 @@ class _CreateSiteFormState extends State<CreateSiteForm> {
   List<Employee> employees = [];
   List<Employee> selectedEmployees = [];
   List<String> firestoreEmployeeIdList = [];
-  late TextEditingController controller;
 
   bool isLoading = false;
 
@@ -117,84 +116,10 @@ class _CreateSiteFormState extends State<CreateSiteForm> {
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               const SizedBox(height: 5.0),
-              Autocomplete<Employee>(
-                optionsBuilder: (TextEditingValue textEditingValue) {
-                  if (textEditingValue.text.isEmpty) {
-                    return const Iterable.empty();
-                  } else {
-                    return employees.where((employee) {
-                      return employee.employeeName
-                              .toLowerCase()
-                              .contains(textEditingValue.text.toLowerCase()) ||
-                          getEmloyeeRoleName(employee.employeeRole)
-                              .toLowerCase()
-                              .contains(textEditingValue.text.toLowerCase());
-                    }).toList();
-                  }
-                },
-                fieldViewBuilder:
-                    (context, controller, focusNode, onEdittingComplete) {
-                  this.controller = controller;
-                  return TextFormField(
-                    controller: controller,
-                    focusNode: focusNode,
-                    onEditingComplete: onEdittingComplete,
-                    decoration: InputDecoration(
-                      hintText: 'Start typing',
-                      border: const OutlineInputBorder(),
-                      prefixIcon: const Icon(Icons.person),
-                      suffixIcon: IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: () {
-                          controller.clear();
-                        },
-                      ),
-                    ),
-                  );
-                },
-                displayStringForOption: (Employee option) =>
-                    '${option.employeeName} (${option.employeeId})',
-                onSelected: (Employee employee) {
-                  if (!selectedEmployees.contains(employee)) {
-                    setState(() {
-                      selectedEmployees.add(employee);
-                      firestoreEmployeeIdList.add(employee.employeeId);
-                      controller.clear();
-                    });
-                  } else {
-                    EchnoSnackBar.warningSnackBar(
-                        context: context,
-                        title: 'Opps...!',
-                        message: 'Employee is already selected...');
-                  }
-                },
-                optionsViewBuilder:
-                    (context, Function(Employee) onSelected, options) {
-                  return Material(
-                    child: ListView.separated(
-                        padding: EdgeInsets.zero,
-                        itemBuilder: (context, index) {
-                          final option = options.elementAt(index);
-                          return ListTile(
-                            leading: CircleAvatar(
-                              radius: 25,
-                              backgroundImage: option.photoUrl != null
-                                  ? NetworkImage(option.photoUrl!)
-                                  : null,
-                              child: option.photoUrl == null
-                                  ? const Icon(Icons.account_circle, size: 50)
-                                  : null,
-                            ),
-                            title: Text(option.employeeName),
-                            subtitle:
-                                Text(getEmloyeeRoleName(option.employeeRole)),
-                            onTap: () => onSelected(option),
-                          );
-                        },
-                        separatorBuilder: (context, index) => const Divider(),
-                        itemCount: options.length),
-                  );
-                },
+              EmployeeAutoComplete(
+                employees: employees,
+                selectedEmployees: selectedEmployees,
+                firestoreEmployeeIdList: firestoreEmployeeIdList,
               ),
               Row(
                 children: [
