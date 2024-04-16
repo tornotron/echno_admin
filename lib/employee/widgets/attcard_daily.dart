@@ -2,6 +2,7 @@ import 'package:echno_attendance/attendance/services/attendance_interface.dart';
 import 'package:echno_attendance/attendance/domain/firestore/attendance_firestore_handler.dart';
 import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/colors_string.dart';
+import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 
 class AttendanceCardDaily extends StatefulWidget {
@@ -32,6 +33,7 @@ class _AttendanceCardDailyState extends State<AttendanceCardDaily> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = EchnoHelperFunctions.isDarkMode(context);
     return Expanded(
       child: FutureBuilder(
         future: getAttData(siteName: widget.siteName, date: widget.date),
@@ -43,9 +45,7 @@ class _AttendanceCardDailyState extends State<AttendanceCardDaily> {
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else if (snapshot.data!.isEmpty) {
-            return Container(
-              color: Colors.white,
-            );
+            return Container();
           } else {
             final dataMap = snapshot.data!;
             final List<Map<String, String>> attendanceMapList =
@@ -73,7 +73,9 @@ class _AttendanceCardDailyState extends State<AttendanceCardDaily> {
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: EchnoColors.attendanceCard,
+                      color: isDarkMode
+                          ? EchnoColors.attendanceCarddark
+                          : EchnoColors.attendanceCardlight,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     height: 120,
@@ -127,12 +129,12 @@ class _AttendanceCardDailyState extends State<AttendanceCardDaily> {
                             ),
                             Text(
                               varemployeeName,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'TT Chocolates',
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(
                               height: 5,
@@ -141,38 +143,48 @@ class _AttendanceCardDailyState extends State<AttendanceCardDaily> {
                               children: [
                                 Column(
                                   children: [
-                                    const Text(
+                                    Text(
                                       "Check-In",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'TT Chocolates',
-                                          fontSize: 15),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(
+                                            fontSize: 13,
+                                          ),
                                     ),
                                     Text(
                                       varattendanceTime,
-                                      style: const TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'TT Chocolates'),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(
+                                            fontSize: 12,
+                                          ),
                                     ),
                                   ],
                                 ),
                                 const SizedBox(
                                   width: 10,
                                 ),
-                                const Column(
+                                Column(
                                   children: [
                                     Text(
                                       "Check-out",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'TT Chocolates',
-                                          fontSize: 15),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(
+                                            fontSize: 13,
+                                          ),
                                     ),
                                     Text(
                                       "--:--",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'TT Chocolates'),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(
+                                            fontSize: 12,
+                                          ),
                                     )
                                   ],
                                 ),

@@ -1,7 +1,8 @@
 import 'package:echno_attendance/attendance/screens/daily_report.dart';
 import 'package:echno_attendance/attendance/screens/monthlyreport.dart';
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
-import 'package:echno_attendance/constants/colors_string.dart';
+import 'package:echno_attendance/constants/colors.dart';
+import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 
 class AttendanceReportScreen extends StatefulWidget {
@@ -89,6 +90,7 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = EchnoHelperFunctions.isDarkMode(context);
     return Scaffold(
       appBar: EchnoAppBar(
         leadingIcon: Icons.arrow_back_ios_new,
@@ -111,25 +113,17 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
         onPressed: () {
           _showBottomSheet(context);
         },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: echnoBlueLightColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-        ),
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Text(
-            "Change report type",
-            style: Theme.of(context)
-                .textTheme
-                .labelSmall!
-                .apply(fontWeightDelta: 1),
+            "Report Type",
+            style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+                color: isDarkMode ? EchnoColors.white : EchnoColors.white),
           ),
         ),
       ),
-      backgroundColor: Colors.white,
     );
   }
 }

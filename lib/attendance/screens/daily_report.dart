@@ -1,6 +1,8 @@
 import 'package:date_picker_timeline/date_picker_timeline.dart';
-import 'package:echno_attendance/global_theme/text_theme.dart';
+import 'package:date_picker_timeline/extra/style.dart';
+import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/employee/widgets/attcard_daily.dart';
+import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -28,6 +30,7 @@ class _DailyState extends State<DailyReport> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = EchnoHelperFunctions.isDarkMode(context);
     return Column(
       children: [
         const SizedBox(
@@ -38,7 +41,9 @@ class _DailyState extends State<DailyReport> {
           child: Align(
               alignment: Alignment.centerLeft,
               child: Text('Daily Attendance Report',
-                  style: EchnoTextTheme.lightTextTheme.headlineLarge!
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineLarge!
                       .copyWith(fontSize: 29))),
         ),
         Padding(
@@ -46,7 +51,7 @@ class _DailyState extends State<DailyReport> {
           child: Align(
               alignment: Alignment.centerLeft,
               child: Text('Get daily attendance report',
-                  style: EchnoTextTheme.lightTextTheme.titleMedium)),
+                  style: Theme.of(context).textTheme.titleMedium)),
         ),
         const SizedBox(
           height: 5,
@@ -63,7 +68,7 @@ class _DailyState extends State<DailyReport> {
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       labelText: 'Enter Employee Site Name',
-                      labelStyle: EchnoTextTheme.lightTextTheme.titleMedium),
+                      labelStyle: Theme.of(context).textTheme.titleMedium),
                 ),
               ),
             ),
@@ -82,7 +87,18 @@ class _DailyState extends State<DailyReport> {
                   DateTime.now().subtract(const Duration(days: 30)),
                   initialSelectedDate: DateTime.now(),
                   controller: datevisualController,
-                  selectionColor: Colors.black,
+                  monthTextStyle: defaultMonthTextStyle.copyWith(
+                      color:
+                          isDarkMode ? EchnoColors.white : EchnoColors.black),
+                  dateTextStyle: defaultDateTextStyle.copyWith(
+                      color:
+                          isDarkMode ? EchnoColors.white : EchnoColors.black),
+                  dayTextStyle: defaultDayTextStyle.copyWith(
+                      color:
+                          isDarkMode ? EchnoColors.white : EchnoColors.black),
+                  selectionColor: isDarkMode
+                      ? EchnoColors.selectedNavDark
+                      : EchnoColors.selectedNavLight,
                   selectedTextColor: Colors.white,
                   onDateChange: (selectedDate) {
                     dateFromUI = DateFormat('yyyy-MM-dd').format(selectedDate);

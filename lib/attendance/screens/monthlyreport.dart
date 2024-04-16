@@ -1,5 +1,4 @@
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:echno_attendance/global_theme/text_theme.dart';
 import 'package:echno_attendance/employee/widgets/attcard_monthly.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,7 +35,9 @@ class _MonthlyReportState extends State<MonthlyReport> {
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text('Monthly Attendance Report',
-                style: EchnoTextTheme.lightTextTheme.headlineLarge!
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineLarge!
                     .copyWith(fontSize: 29)),
           ),
         ),
@@ -45,7 +46,7 @@ class _MonthlyReportState extends State<MonthlyReport> {
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text('Get monthly attendance report',
-                style: EchnoTextTheme.lightTextTheme.titleMedium),
+                style: Theme.of(context).textTheme.titleMedium),
           ),
         ),
         const SizedBox(
@@ -63,7 +64,7 @@ class _MonthlyReportState extends State<MonthlyReport> {
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       labelText: 'Emp ID',
-                      labelStyle: EchnoTextTheme.lightTextTheme.titleMedium),
+                      labelStyle: Theme.of(context).textTheme.titleMedium),
                 ),
               ),
             ),
@@ -94,7 +95,7 @@ class _MonthlyReportState extends State<MonthlyReport> {
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       labelText: 'Month',
-                      labelStyle: EchnoTextTheme.lightTextTheme.titleMedium,
+                      labelStyle: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
                   onChanged: (value) {
@@ -118,7 +119,7 @@ class _MonthlyReportState extends State<MonthlyReport> {
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                     labelText: 'Year',
-                    labelStyle: EchnoTextTheme.lightTextTheme.titleMedium,
+                    labelStyle: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
               ),

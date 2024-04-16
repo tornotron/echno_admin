@@ -8,8 +8,13 @@ class EchnoColors {
   static const Color secondaryDark = Color.fromARGB(255, 74, 78, 82);
   static const Color accent = Color(0xFFB0C7FF);
 
+  // Grid tile Colors
+  static const Color gridLight = Color(0xFFE0E0E0);
+  static const Color gridDark = Color.fromARGB(255, 74, 78, 82);
+
   // Attendance Colors
-  static const Color attendanceCard = Colors.indigoAccent;
+  static const Color attendanceCardlight = Color(0xFFE0E0E0);
+  static const Color attendanceCarddark = Color.fromARGB(255, 74, 78, 82);
 
   // Text colors
   static const Color textPrimary = Color(0xFF333333);

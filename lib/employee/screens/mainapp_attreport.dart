@@ -4,6 +4,7 @@ import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/employee/bloc/employee_bloc.dart';
 import 'package:echno_attendance/employee/widgets/attcard_monthly.dart';
+import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -40,6 +41,7 @@ class _MainAttendanceReportScreenState
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = EchnoHelperFunctions.isDarkMode(context);
     final Map<int, String> monthMap = {
       1: 'January',
       2: 'February',
@@ -64,9 +66,11 @@ class _MainAttendanceReportScreenState
       children: [
         Container(
           height: 80,
-          decoration: const BoxDecoration(
-            color: EchnoColors.grey,
-            borderRadius: BorderRadius.only(
+          decoration: BoxDecoration(
+            color: isDarkMode
+                ? EchnoColors.attendanceCarddark
+                : EchnoColors.attendanceCardlight,
+            borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(20),
               bottomRight: Radius.circular(20),
             ),

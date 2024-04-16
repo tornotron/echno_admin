@@ -2,6 +2,7 @@ import 'package:echno_attendance/attendance/services/attendance_controller.dart'
 import 'package:echno_attendance/attendance/domain/firestore/attendance_firestore_handler.dart';
 import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/colors_string.dart';
+import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 
 class AttendanceCardMonthly extends StatelessWidget {
@@ -35,6 +36,7 @@ class AttendanceCardMonthly extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = EchnoHelperFunctions.isDarkMode(context);
     return FutureBuilder(
       future: getAttData(
           employeeId: employeeId,
@@ -78,7 +80,9 @@ class AttendanceCardMonthly extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: EchnoColors.attendanceCard,
+                      color: isDarkMode
+                          ? EchnoColors.attendanceCarddark
+                          : EchnoColors.attendanceCardlight,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     height: 120,
@@ -132,12 +136,12 @@ class AttendanceCardMonthly extends StatelessWidget {
                             ),
                             Text(
                               varemployeeName,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'TT Chocolates',
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(
                               height: 5,
@@ -146,38 +150,48 @@ class AttendanceCardMonthly extends StatelessWidget {
                               children: [
                                 Column(
                                   children: [
-                                    const Text(
+                                    Text(
                                       "Check-In",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'TT Chocolates',
-                                          fontSize: 15),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(
+                                            fontSize: 13,
+                                          ),
                                     ),
                                     Text(
                                       varattendanceTime,
-                                      style: const TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'TT Chocolates'),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(
+                                            fontSize: 12,
+                                          ),
                                     ),
                                   ],
                                 ),
                                 const SizedBox(
                                   width: 10,
                                 ),
-                                const Column(
+                                Column(
                                   children: [
                                     Text(
                                       "Check-out",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'TT Chocolates',
-                                          fontSize: 15),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(
+                                            fontSize: 13,
+                                          ),
                                     ),
                                     Text(
                                       "--:--",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'TT Chocolates'),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(
+                                            fontSize: 12,
+                                          ),
                                     )
                                   ],
                                 ),

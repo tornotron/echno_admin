@@ -14,7 +14,7 @@ class CustomDashboardTile extends StatelessWidget {
     return InkWell(
       onTap: item.onTap,
       child: Card(
-        color: isDark ? EchnoColors.secondary : EchnoColors.primary,
+        color: isDark ? EchnoColors.gridDark : EchnoColors.gridLight,
         child: Padding(
           padding: const EdgeInsets.all(5.0),
           child: Column(
