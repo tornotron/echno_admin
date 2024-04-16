@@ -1,4 +1,7 @@
 import 'package:echno_attendance/constants/sizes.dart';
+import 'package:echno_attendance/employee/models/employee.dart';
+import 'package:echno_attendance/employee/services/hr_employee_service.dart';
+import 'package:echno_attendance/employee/utilities/employee_role.dart';
 import 'package:echno_attendance/site_module/models/site_model.dart';
 import 'package:echno_attendance/task_module/services/task_service.dart';
 import 'package:echno_attendance/task_module/utilities/task_status.dart';
@@ -35,6 +38,37 @@ class _AddTaskFormState extends State<AddTaskForm> {
   final TextEditingController _endDateController = TextEditingController();
   final TextEditingController _assignedEmployeeController =
       TextEditingController();
+
+  List<Employee> members = [];
+  late Employee assignedEmployee;
+  bool isLoading = false;
+  late TextEditingController controller;
+
+  void _fetchEmployeeFromFirestore() async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      members = await HrEmployeeService.firestore()
+          .populateMemberList(employeeIdList: widget.siteOffice.membersList);
+    } catch (e) {
+      EchnoSnackBar.errorSnackBar(
+        context: context,
+        title: 'Oh Snap...!',
+        message: e.toString(),
+      );
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchEmployeeFromFirestore();
+  }
 
   // Variables to store dropdowns field values
   TaskType? _selectedTaskType;
@@ -253,6 +287,81 @@ class _AddTaskFormState extends State<AddTaskForm> {
           ),
           const SizedBox(height: EchnoSize.spaceBtwItems),
           Text(
+            'Assign Task',
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
+          const SizedBox(height: 5.0),
+          // Assigned Employee Dropdown
+          Autocomplete<Employee>(
+            optionsBuilder: (TextEditingValue textEditingValue) {
+              if (textEditingValue.text.isEmpty) {
+                return const Iterable.empty();
+              } else {
+                return members.where((member) {
+                  return member.employeeName
+                          .toLowerCase()
+                          .contains(textEditingValue.text.toLowerCase()) ||
+                      getEmloyeeRoleName(member.employeeRole)
+                          .toLowerCase()
+                          .contains(textEditingValue.text.toLowerCase());
+                }).toList();
+              }
+            },
+            fieldViewBuilder:
+                (context, controller, focusNode, onEdittingComplete) {
+              this.controller = controller;
+              return TextFormField(
+                controller: controller,
+                focusNode: focusNode,
+                onEditingComplete: onEdittingComplete,
+                decoration: InputDecoration(
+                  hintText: 'Start typing',
+                  border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.person),
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: () {
+                      controller.clear();
+                    },
+                  ),
+                ),
+              );
+            },
+            displayStringForOption: (Employee option) =>
+                '${option.employeeName} (${option.employeeId})',
+            onSelected: (Employee employee) {
+              assignedEmployee = employee;
+              _assignedEmployeeController.text = employee.employeeId;
+            },
+            optionsViewBuilder:
+                (context, Function(Employee) onSelected, options) {
+              return Material(
+                child: ListView.separated(
+                    padding: EdgeInsets.zero,
+                    itemBuilder: (context, index) {
+                      final option = options.elementAt(index);
+                      return ListTile(
+                        leading: CircleAvatar(
+                          radius: 25,
+                          backgroundImage: option.photoUrl != null
+                              ? NetworkImage(option.photoUrl!)
+                              : null,
+                          child: option.photoUrl == null
+                              ? const Icon(Icons.account_circle, size: 50)
+                              : null,
+                        ),
+                        title: Text(option.employeeName),
+                        subtitle: Text(getEmloyeeRoleName(option.employeeRole)),
+                        onTap: () => onSelected(option),
+                      );
+                    },
+                    separatorBuilder: (context, index) => const Divider(),
+                    itemCount: options.length),
+              );
+            },
+          ),
+          const SizedBox(height: EchnoSize.spaceBtwItems),
+          Text(
             'Task Type',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
@@ -354,48 +463,7 @@ class _AddTaskFormState extends State<AddTaskForm> {
             divisions: 100,
             label: _taskProgress.round().toString(),
           ),
-          const SizedBox(height: 10.0),
-          Text(
-            'Assign Task',
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
-          const SizedBox(height: 5.0),
-          // Assigned Employee Dropdown
-          DropdownButtonFormField<String>(
-            value: _assignedEmployeeController.text.isNotEmpty
-                ? _assignedEmployeeController.text
-                : null,
-            onChanged: (String? value) {
-              setState(() {
-                _assignedEmployeeController.text = value ?? '';
-              });
-            },
-            items: const [
-              DropdownMenuItem<String>(
-                value: null,
-                child: Text('Select Employee'),
-              ),
-              DropdownMenuItem<String>(
-                value: 'Employee 1',
-                child: Text('Employee 1'),
-              ),
-              DropdownMenuItem<String>(
-                value: 'Employee 2',
-                child: Text('Employee 2'),
-              ),
-              DropdownMenuItem<String>(
-                value: 'Employee 3',
-                child: Text('Employee 3'),
-              ),
-            ],
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-            ),
-            validator: (value) => EchnoValidator.defaultValidator(
-              value,
-              'Assignee is required',
-            ),
-          ),
+
           const SizedBox(height: EchnoSize.spaceBtwItems),
           // Button to submit leave application
           SizedBox(
