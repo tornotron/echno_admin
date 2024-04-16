@@ -31,8 +31,17 @@ class _CreateSiteFormState extends State<CreateSiteForm> {
   List<String> firestoreEmployeeIdList = [];
 
   void _onSelectedEmployee(Employee employee) {
-    selectedEmployees.add(employee);
-    firestoreEmployeeIdList.add(employee.employeeId);
+    if (!selectedEmployees.contains(employee)) {
+      setState(() {
+        selectedEmployees.add(employee);
+        firestoreEmployeeIdList.add(employee.employeeId);
+      });
+    } else {
+      EchnoSnackBar.warningSnackBar(
+          context: context,
+          title: 'Opps...!',
+          message: 'Employee is already selected...');
+    }
   }
 
   bool isLoading = false;
@@ -123,8 +132,6 @@ class _CreateSiteFormState extends State<CreateSiteForm> {
               const SizedBox(height: 5.0),
               EmployeeAutoComplete(
                 employees: employees,
-                selectedEmployees: selectedEmployees,
-                firestoreEmployeeIdList: firestoreEmployeeIdList,
                 onSelectedEmployeesChanged: _onSelectedEmployee,
               ),
               Row(
