@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 class EchnoColors {
   // App theme colors
   static const Color primary = Color.fromARGB(255, 255, 255, 255);
-  static const Color primaryLight = Color(0xFFF6F5F7);
   static const Color secondary = Color(0xFF6C757D);
-  static const Color secondaryDark = Color.fromARGB(255, 74, 78, 82);
   static const Color accent = Color(0xFFB0C7FF);
 
   // Grid tile Colors
@@ -38,8 +36,10 @@ class EchnoColors {
   // Background Container colors
   static const Color lightContainer = Color(0xFF6C757D);
   static Color darkContainer = EchnoColors.white.withOpacity(0.1);
-  static const Color lightCard = Color(0xFFFEFDFF);
-  static const Color darkCard = Color(0xFF6C757D);
+
+  // Card colors
+  static const Color lightCard = Color(0xFFE0E0E0);
+  static const Color darkCard = Color.fromARGB(255, 74, 78, 82);
 
   // Button colors
   static const Color buttonPrimary = Colors.indigoAccent;
@@ -56,10 +56,12 @@ class EchnoColors {
   static const Color warning = Color(0xFFF57C00);
   static const Color info = Color(0xFF1976D2);
 
-  // Neutral Shades
+  // Neutral Dark Shades
   static const Color black = Color(0xFF232323);
   static const Color darkerGrey = Color(0xFF4F4F4F);
   static const Color darkGrey = Color(0xFF939393);
+
+  // Neutral Light Shades
   static const Color grey = Color(0xFFE0E0E0);
   static const Color softGrey = Color(0xFFF4F4F4);
   static const Color lightGrey = Color(0xFFF9F9F9);

@@ -21,7 +21,7 @@ class RoundedCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
         ),
         elevation: 0,
-        color: isDark ? EchnoColors.secondaryDark : EchnoColors.grey,
+        color: isDark ? EchnoColors.darkCard : EchnoColors.lightCard,
         child: const Padding(
           padding: EdgeInsets.only(left: 20, top: 20),
           child: Column(

@@ -31,7 +31,7 @@ class _MainHomeState extends State<MainHome> {
           slivers: [
             SliverAppBar(
                 backgroundColor:
-                    isDark ? EchnoColors.secondaryDark : EchnoColors.grey,
+                    isDark ? EchnoColors.darkCard : EchnoColors.lightCard,
                 expandedHeight: 200,
                 floating: true,
                 pinned: true,
