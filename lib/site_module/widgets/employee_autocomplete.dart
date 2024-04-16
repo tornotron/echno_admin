@@ -8,11 +8,14 @@ class EmployeeAutoComplete extends StatefulWidget {
       {required this.employees,
       required this.selectedEmployees,
       required this.firestoreEmployeeIdList,
+      required this.onSelectedEmployeesChanged,
       super.key});
 
   final List<Employee> employees;
   final List<Employee> selectedEmployees;
   final List<String> firestoreEmployeeIdList;
+
+  final void Function(Employee) onSelectedEmployeesChanged;
 
   @override
   State<EmployeeAutoComplete> createState() => _EmployeeAutoCompleteState();

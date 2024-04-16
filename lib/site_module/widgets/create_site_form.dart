@@ -30,6 +30,11 @@ class _CreateSiteFormState extends State<CreateSiteForm> {
   List<Employee> selectedEmployees = [];
   List<String> firestoreEmployeeIdList = [];
 
+  void _onSelectedEmployee(Employee employee) {
+    selectedEmployees.add(employee);
+    firestoreEmployeeIdList.add(employee.employeeId);
+  }
+
   bool isLoading = false;
 
   void _fetchEmployeeFromFirestore() async {
@@ -120,6 +125,7 @@ class _CreateSiteFormState extends State<CreateSiteForm> {
                 employees: employees,
                 selectedEmployees: selectedEmployees,
                 firestoreEmployeeIdList: firestoreEmployeeIdList,
+                onSelectedEmployeesChanged: _onSelectedEmployee,
               ),
               Row(
                 children: [
