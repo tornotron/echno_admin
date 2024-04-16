@@ -35,7 +35,7 @@ class HrAppDrawer extends StatelessWidget {
                     backgroundImage: NetworkImage(currentEmployee.photoUrl ??
                         'https://www.w3schools.com/w3images/avatar2.png'),
                   ),
-                  const SizedBox(height: EchnoSize.spaceBtwItems),
+                  const SizedBox(height: EchnoSize.spaceBtwItems / 2),
                   Text('HR', style: Theme.of(context).textTheme.headlineSmall),
                 ],
               ),
