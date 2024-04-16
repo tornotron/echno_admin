@@ -21,4 +21,9 @@ abstract class HrDatabaseHandler extends BasicEmployeeDatabaseHandler
   Future<List<Employee>> populateMemberList(
       {required List<String> employeeIdList});
   Future<List<Employee>> getEmployeeAutoComplete();
+  Future<List<Employee>> getProjectManagerList();
+  Future<List<Employee>> getSiteManagerList();
+  Future<List<Employee>> getSiteSupervisorList();
+  Future<List<Employee>> getSiteEngineerList();
+  Future<List<Employee>> getTechnicalCoordinatorList();
 }

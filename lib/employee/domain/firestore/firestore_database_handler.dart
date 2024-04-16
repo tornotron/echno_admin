@@ -306,4 +306,99 @@ class HrFirestoreDatabaseHandler extends BasicEmployeeFirestoreDatabaseHandler
       throw 'Something went wrong! Please try again.';
     }
   }
+
+  @override
+  Future<List<Employee>> getProjectManagerList() async {
+    try {
+      QuerySnapshot pmList = await FirebaseFirestore.instance
+          .collection('employees')
+          .where('employee-role', isEqualTo: 'pm')
+          .get();
+      return pmList.docs
+          .map((doc) => Employee.fromQueryDocumentSnapshot(doc))
+          .toList();
+    } on FirebaseException catch (e) {
+      throw EchnoFirebaseException(e.code).message;
+    } on PlatformException catch (e) {
+      throw EchnoPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong! Please try again.';
+    }
+  }
+
+  @override
+  Future<List<Employee>> getSiteEngineerList() async {
+    try {
+      QuerySnapshot seList = await FirebaseFirestore.instance
+          .collection('employees')
+          .where('employee-role', isEqualTo: 'se')
+          .get();
+      return seList.docs
+          .map((doc) => Employee.fromQueryDocumentSnapshot(doc))
+          .toList();
+    } on FirebaseException catch (e) {
+      throw EchnoFirebaseException(e.code).message;
+    } on PlatformException catch (e) {
+      throw EchnoPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong! Please try again.';
+    }
+  }
+
+  @override
+  Future<List<Employee>> getSiteManagerList() async {
+    try {
+      QuerySnapshot smList = await FirebaseFirestore.instance
+          .collection('employees')
+          .where('employee-role', isEqualTo: 'sm')
+          .get();
+      return smList.docs
+          .map((doc) => Employee.fromQueryDocumentSnapshot(doc))
+          .toList();
+    } on FirebaseException catch (e) {
+      throw EchnoFirebaseException(e.code).message;
+    } on PlatformException catch (e) {
+      throw EchnoPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong! Please try again.';
+    }
+  }
+
+  @override
+  Future<List<Employee>> getSiteSupervisorList() async {
+    try {
+      QuerySnapshot spList = await FirebaseFirestore.instance
+          .collection('employees')
+          .where('employee-role', isEqualTo: 'sp')
+          .get();
+      return spList.docs
+          .map((doc) => Employee.fromQueryDocumentSnapshot(doc))
+          .toList();
+    } on FirebaseException catch (e) {
+      throw EchnoFirebaseException(e.code).message;
+    } on PlatformException catch (e) {
+      throw EchnoPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong! Please try again.';
+    }
+  }
+
+  @override
+  Future<List<Employee>> getTechnicalCoordinatorList() async {
+    try {
+      QuerySnapshot tcList = await FirebaseFirestore.instance
+          .collection('employees')
+          .where('employee-role', isEqualTo: 'tc')
+          .get();
+      return tcList.docs
+          .map((doc) => Employee.fromQueryDocumentSnapshot(doc))
+          .toList();
+    } on FirebaseException catch (e) {
+      throw EchnoFirebaseException(e.code).message;
+    } on PlatformException catch (e) {
+      throw EchnoPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong! Please try again.';
+    }
+  }
 }

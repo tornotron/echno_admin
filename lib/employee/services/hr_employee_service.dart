@@ -70,4 +70,29 @@ class HrEmployeeService extends EmployeeService implements HrDatabaseHandler {
   Future<List<Employee>> getEmployeeAutoComplete() {
     return _handler.getEmployeeAutoComplete();
   }
+
+  @override
+  Future<List<Employee>> getProjectManagerList() {
+    return _handler.getProjectManagerList();
+  }
+
+  @override
+  Future<List<Employee>> getSiteEngineerList() {
+    return _handler.getSiteEngineerList();
+  }
+
+  @override
+  Future<List<Employee>> getSiteManagerList() {
+    return _handler.getSiteManagerList();
+  }
+
+  @override
+  Future<List<Employee>> getSiteSupervisorList() {
+    return _handler.getSiteSupervisorList();
+  }
+
+  @override
+  Future<List<Employee>> getTechnicalCoordinatorList() {
+    return _handler.getTechnicalCoordinatorList();
+  }
 }
