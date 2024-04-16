@@ -1,12 +1,9 @@
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
-import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/task_module/models/task_model.dart';
-import 'package:echno_attendance/task_module/screens/employee_task_screen.dart';
 import 'package:echno_attendance/task_module/services/task_service.dart';
 import 'package:echno_attendance/task_module/utilities/task_status.dart';
 import 'package:echno_attendance/task_module/utilities/task_ui_helpers.dart';
-import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:echno_attendance/utilities/popups/custom_snackbar.dart';
 import 'package:echno_attendance/utilities/styles/padding_style.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +21,6 @@ class UpdateTaskProgessScreen extends StatefulWidget {
 }
 
 class _UpdateTaskProgessScreenState extends State<UpdateTaskProgessScreen> {
-  get isDarkMode => Theme.of(context).brightness == Brightness.dark;
   Task? get task => widget.task;
 
   final _taskProvider = TaskService.firestoreTasks();
@@ -50,7 +46,6 @@ class _UpdateTaskProgessScreenState extends State<UpdateTaskProgessScreen> {
 
   @override
   Widget build(context) {
-    final isDark = EchnoHelperFunctions.isDarkMode(context);
     return Scaffold(
       appBar: EchnoAppBar(
         leadingIcon: Icons.arrow_back_ios_new,
@@ -59,9 +54,7 @@ class _UpdateTaskProgessScreenState extends State<UpdateTaskProgessScreen> {
         },
         title: Text(
           'Update Progress',
-          style: Theme.of(context).textTheme.headlineSmall?.apply(
-                color: isDark ? EchnoColors.black : EchnoColors.white,
-              ),
+          style: Theme.of(context).textTheme.headlineSmall,
         ),
       ),
       body: SingleChildScrollView(
@@ -139,6 +132,7 @@ class _UpdateTaskProgessScreenState extends State<UpdateTaskProgessScreen> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () async {
+                        int popCount = 0;
                         await _taskProvider.updateTaskProgress(
                           taskId: task!.id,
                           newTaskStatus:
@@ -151,14 +145,8 @@ class _UpdateTaskProgessScreenState extends State<UpdateTaskProgessScreen> {
                               title: 'Success...!',
                               message:
                                   'Task Progress Updated Successfully...!');
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => EmployeeTaskHomeScreen(
-                                  index: TaskUiHelpers.getTaskHomeIndex(
-                                      _selectedTaskStatus.toString())),
-                            ),
-                          );
+                          Navigator.of(context)
+                              .popUntil((route) => popCount++ == 2);
                         }
                         // Clear the controllers after form submission
                         setState(() {

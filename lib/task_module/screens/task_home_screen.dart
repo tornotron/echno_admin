@@ -4,7 +4,6 @@ import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/task_module/services/task_service.dart';
 import 'package:echno_attendance/task_module/widgets/task_home_widgets/task_home_header.dart';
 import 'package:echno_attendance/task_module/widgets/task_home_widgets/task_home_stream.dart';
-import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:echno_attendance/utilities/styles/padding_style.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +30,6 @@ class _TaskHomeScreenState extends State<TaskHomeScreen> {
 
   @override
   Widget build(context) {
-    final isDark = EchnoHelperFunctions.isDarkMode(context);
     return Scaffold(
       appBar: EchnoAppBar(
         leadingIcon: Icons.arrow_back_ios_new,
@@ -40,9 +38,7 @@ class _TaskHomeScreenState extends State<TaskHomeScreen> {
         },
         title: Text(
           'Task Manager',
-          style: Theme.of(context).textTheme.headlineSmall?.apply(
-                color: isDark ? EchnoColors.black : EchnoColors.white,
-              ),
+          style: Theme.of(context).textTheme.headlineSmall,
         ),
       ),
       body: Padding(
@@ -87,8 +83,8 @@ class _TaskHomeScreenState extends State<TaskHomeScreen> {
   Widget buildCategoryButton(int index, String text) {
     Brightness themeMode = Theme.of(context).brightness;
     Color selectedColor = themeMode == Brightness.dark
-        ? EchnoColors.secondary
-        : EchnoColors.primary;
+        ? EchnoColors.selectedNavDark
+        : EchnoColors.selectedNavLight;
     Color unselectedColor = EchnoColors.darkGrey;
     return InkWell(
       onTap: () {

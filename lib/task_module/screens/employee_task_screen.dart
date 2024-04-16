@@ -1,16 +1,17 @@
-import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/sizes.dart';
+import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/task_module/services/task_service.dart';
 import 'package:echno_attendance/task_module/widgets/employee_task_widgets/employee_task_stream.dart';
-import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:echno_attendance/utilities/styles/padding_style.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class EmployeeTaskHomeScreen extends StatefulWidget {
+  final Employee? currentEmployee;
   final int? index;
   const EmployeeTaskHomeScreen({
+    this.currentEmployee,
     this.index,
     super.key,
   });
@@ -20,10 +21,11 @@ class EmployeeTaskHomeScreen extends StatefulWidget {
 }
 
 class _EmployeeTaskHomeScreenState extends State<EmployeeTaskHomeScreen> {
-  get isDarkMode => Theme.of(context).brightness == Brightness.dark;
   final _taskProvider = TaskService.firestoreTasks();
 
   late int _selectedIndex;
+
+  get currentEmployee => widget.currentEmployee;
 
   final TextEditingController _searchController = TextEditingController();
 
@@ -35,20 +37,7 @@ class _EmployeeTaskHomeScreenState extends State<EmployeeTaskHomeScreen> {
 
   @override
   Widget build(context) {
-    final isDark = EchnoHelperFunctions.isDarkMode(context);
     return Scaffold(
-      appBar: EchnoAppBar(
-        leadingIcon: Icons.arrow_back_ios_new,
-        leadingOnPressed: () {
-          Navigator.pop(context);
-        },
-        title: Text(
-          'Tasks',
-          style: Theme.of(context).textTheme.headlineSmall?.apply(
-                color: isDark ? EchnoColors.black : EchnoColors.white,
-              ),
-        ),
-      ),
       body: Padding(
         padding: CustomPaddingStyle.defaultPaddingWithAppbar,
         child: Column(
@@ -115,6 +104,7 @@ class _EmployeeTaskHomeScreenState extends State<EmployeeTaskHomeScreen> {
             const Divider(height: EchnoSize.dividerHeight),
             const SizedBox(height: EchnoSize.spaceBtwItems),
             EmployeeTaskStreamWidget(
+              employeeId: widget.currentEmployee!.employeeId,
               taskProvider: _taskProvider,
               searchController: _searchController,
               selectedIndex: _selectedIndex,
@@ -128,8 +118,8 @@ class _EmployeeTaskHomeScreenState extends State<EmployeeTaskHomeScreen> {
   Widget buildCategoryButton(int index, String text) {
     Brightness themeMode = Theme.of(context).brightness;
     Color selectedColor = themeMode == Brightness.dark
-        ? EchnoColors.secondary
-        : EchnoColors.primary;
+        ? EchnoColors.selectedNavDark
+        : EchnoColors.selectedNavLight;
     Color unselectedColor = EchnoColors.darkGrey;
     return InkWell(
       onTap: () {

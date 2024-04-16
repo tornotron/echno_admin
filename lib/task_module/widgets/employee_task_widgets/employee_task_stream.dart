@@ -12,6 +12,7 @@ class EmployeeTaskStreamWidget extends StatelessWidget {
     required TaskService taskProvider,
     required TextEditingController searchController,
     required int selectedIndex,
+    required this.employeeId,
   })  : _taskProvider = taskProvider,
         _searchController = searchController,
         _selectedIndex = selectedIndex;
@@ -19,12 +20,12 @@ class EmployeeTaskStreamWidget extends StatelessWidget {
   final TaskService _taskProvider;
   final TextEditingController _searchController;
   final int _selectedIndex;
+  final String employeeId;
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<Task>>(
-      stream:
-          _taskProvider.streamTasksByEmployee(assignedEmployee: 'Employee 1'),
+      stream: _taskProvider.streamTasksByEmployee(assignedEmployee: employeeId),
       builder: (BuildContext context, AsyncSnapshot<List<Task>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Expanded(

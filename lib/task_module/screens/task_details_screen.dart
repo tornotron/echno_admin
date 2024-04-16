@@ -3,7 +3,6 @@ import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/task_module/models/task_model.dart';
 import 'package:echno_attendance/task_module/screens/update_task_progress.dart';
-// import 'package:echno_attendance/task_module/screens/update_task_screen.dart';
 import 'package:echno_attendance/task_module/utilities/task_ui_helpers.dart';
 import 'package:echno_attendance/task_module/widgets/task_details_form.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
@@ -84,23 +83,17 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
         leadingOnPressed: () {
           Navigator.pop(context);
         },
-        title: Text(
-          'Task Details',
-          style: Theme.of(context).textTheme.headlineSmall?.apply(
-                color: isDark ? EchnoColors.black : EchnoColors.white,
-              ),
-        ),
+        title: Text('Task Details',
+            style: Theme.of(context).textTheme.headlineSmall),
         actions: [
           IconButton(
             onPressed: () {
-              // Navigator.push(context, MaterialPageRoute(builder: (context) {
-              //   return UpdateTaskScreen(task: task);
-              // }));
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return UpdateTaskProgessScreen(task: task);
               }));
             },
-            icon: const Icon(Icons.edit),
+            icon: Icon(Icons.edit,
+                color: isDark ? EchnoColors.white : EchnoColors.black),
           ),
         ],
       ),
