@@ -7,6 +7,7 @@ import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/employee/screens/mainapp_attreport.dart';
 import 'package:echno_attendance/employee/screens/mainapp_homepage.dart';
 import 'package:echno_attendance/employee/screens/profile_screen.dart';
+import 'package:echno_attendance/task_module/screens/employee_task_screen.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:echno_attendance/utilities/show_error_dialog.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +44,6 @@ class _HomePageState extends State<HomePage> {
       return bloc.currentEmployee;
     });
     return Scaffold(
-      // backgroundColor: const Color(0xFFFFE3CA),
       extendBody: true,
       appBar: EchnoAppBar(
         leadingIcon: Icons.menu,
@@ -77,12 +77,14 @@ class _HomePageState extends State<HomePage> {
         child: PageView(
           physics: const NeverScrollableScrollPhysics(),
           controller: pageController,
-          children: const <Widget>[
-            MainAttendanceReportScreen(),
-            Center(child: Text('Under Development!')),
-            MainHome(),
-            Center(child: Text('Under Development!')),
-            ProfileScreen(),
+          children: <Widget>[
+            const MainAttendanceReportScreen(),
+            EmployeeTaskHomeScreen(
+              currentEmployee: currentEmployee,
+            ),
+            const MainHome(),
+            const Center(child: Text('Under Development!')),
+            const ProfileScreen(),
           ],
         ),
       ),
