@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:echno_attendance/attendance/services/siteassiagnment_service.dart';
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
+import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/employee/services/hr_employee_service.dart';
+import 'package:echno_attendance/employee/utilities/employee_role.dart';
 import 'package:echno_attendance/site_module/models/site_model.dart';
 import 'package:echno_attendance/site_module/services/siteEmpAdd_service.dart';
 import 'package:echno_attendance/utilities/helpers/device_helper.dart';
@@ -155,9 +157,9 @@ class _AssignSiteScreenState extends State<AssignSiteScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-    final screenSize = mediaQuery.size;
-    final screenWidth = screenSize.width;
+    // final mediaQuery = MediaQuery.of(context);
+    // final screenSize = mediaQuery.size;
+    // final screenWidth = screenSize.width;
     return Scaffold(
       appBar: EchnoAppBar(
         leadingIcon: Icons.arrow_back_ios_new,
@@ -208,12 +210,59 @@ class _AssignSiteScreenState extends State<AssignSiteScreen> {
                     child: CircularProgressIndicator(),
                   )
                 : ListView.builder(
+                    padding: EdgeInsets.zero,
                     itemCount: _employeeList.length,
                     itemBuilder: (context, index) {
                       Employee employee = _employeeList[index];
-                      return ListTile(
-                        title: Text(employee.employeeName),
-                        subtitle: Text(employee.employeeId),
+                      return Padding(
+                        padding: const EdgeInsets.only(
+                          left: 16.0,
+                          right: 16.0,
+                          top: 4.0,
+                          bottom: 4,
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                  EchnoSize.borderRadiusLg),
+                              color: EchnoColors.accent),
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              radius: 25,
+                              backgroundImage: employee.photoUrl != null
+                                  ? NetworkImage(employee.photoUrl!)
+                                  : null,
+                              child: employee.photoUrl == null
+                                  ? const Icon(Icons.account_circle, size: 50)
+                                  : null,
+                            ),
+                            title: Text(employee.employeeName),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(getEmloyeeRoleName(employee.employeeRole)),
+                                Text(employee.employeeId),
+                              ],
+                            ),
+                            trailing: Container(
+                              width: 50.0,
+                              height: 50.0,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                      EchnoSize.borderRadiusLg),
+                                  color: EchnoColors.error),
+                              child: IconButton(
+                                icon: const Icon(Icons.delete),
+                                onPressed: () {
+                                  showDeleteDialog(
+                                      context,
+                                      [employee.employeeId],
+                                      widget.siteoffice.siteOfficeName);
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
                       );
                     },
                   ),
