@@ -33,6 +33,9 @@ class _LeaveApplicationFormState extends State<LeaveApplicationForm> {
   LeaveType?
       _selectedLeaveType; // Variable to store selected leave type using radio buttons
 
+  String?
+      _selectedSiteOffice; // Variable to store selected site office using radio buttons
+
   // Function selects the start date of leave
   Future<void> _selectStartDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -139,7 +142,7 @@ class _LeaveApplicationFormState extends State<LeaveApplicationForm> {
         fromDate: startDate ?? DateTime.now(),
         toDate: endDate ?? DateTime.now(),
         leaveType: _selectedLeaveType.toString().split('.').last,
-        siteOffice: 'Site Office',
+        siteOffice: _selectedSiteOffice ?? '',
         remarks: _remarksController.text,
       );
 
@@ -174,6 +177,13 @@ class _LeaveApplicationFormState extends State<LeaveApplicationForm> {
   String? _validateLeaveType(LeaveType? value) {
     if (value == null) {
       return 'Please select a leave type';
+    }
+    return null;
+  }
+
+  String? _validateSiteOffice(String? value) {
+    if (value == null) {
+      return 'Please select a site office';
     }
     return null;
   }
@@ -215,10 +225,30 @@ class _LeaveApplicationFormState extends State<LeaveApplicationForm> {
             const SizedBox(height: EchnoSize.spaceBtwItems),
 
             // The immediate supervisor of the employee
-            const LeaveFormField(
-              mainLabel: 'Site Co-Ordinator',
-              isReadOnly: true,
-              hintText: 'Alex Mercer', // This should be fetched from DB
+            Text(
+              'Site Office',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: 5.0),
+            DropdownButtonFormField<String>(
+              value: _selectedSiteOffice,
+              onChanged: (String? newValue) {
+                setState(() {
+                  _selectedSiteOffice = newValue;
+                });
+              },
+              items: currentEmployee.sites!
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              decoration: const InputDecoration(
+                hintText: 'Select Site Office',
+                border: OutlineInputBorder(),
+              ),
+              validator: _validateSiteOffice,
             ),
             const SizedBox(height: EchnoSize.spaceBtwItems),
 
