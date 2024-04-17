@@ -11,6 +11,10 @@ class SiteOffice {
   final double siteLongitude;
   final double siteLatitude;
   final double siteRadius;
+  final String projectManager;
+  final String siteSupervisor;
+  final String siteEngineer;
+  final String technicalCoordinator;
   List<String> membersList;
 
   SiteOffice({
@@ -20,6 +24,10 @@ class SiteOffice {
     required this.siteLongitude,
     required this.siteLatitude,
     required this.siteRadius,
+    required this.projectManager,
+    required this.siteSupervisor,
+    required this.siteEngineer,
+    required this.technicalCoordinator,
     required this.membersList,
   });
 
@@ -32,6 +40,10 @@ class SiteOffice {
       siteLongitude: data['site-longitude'] ?? 0.0,
       siteLatitude: data['site-latitude'] ?? 0.0,
       siteRadius: data['site-radius'] ?? 0.0,
+      projectManager: data['project-manager'] ?? '',
+      siteSupervisor: data['site-supervisor'] ?? '',
+      siteEngineer: data['site-engineer'] ?? '',
+      technicalCoordinator: data['technical-coordinator'] ?? '',
       membersList: List<String>.from(data['employee-list']),
     );
   }
@@ -50,6 +62,10 @@ class SiteOffice {
     final siteLongitude = (data['site-longitude'] ?? 0.0) as double;
     final siteLatitude = (data['site-latitude'] ?? 0.0) as double;
     final siteRadius = (data['site-radius'] ?? 0.0) as double;
+    final projectManager = data['project-manager'] ?? '';
+    final siteSupervisor = data['site-supervisor'] ?? '';
+    final siteEngineer = data['site-engineer'] ?? '';
+    final technicalCoordinator = data['technical-coordinator'] ?? '';
     final membersList = List<String>.from(data['employee-list'] ?? []);
 
     return SiteOffice(
@@ -59,6 +75,10 @@ class SiteOffice {
       siteLongitude: siteLongitude,
       siteLatitude: siteLatitude,
       siteRadius: siteRadius,
+      projectManager: projectManager,
+      siteSupervisor: siteSupervisor,
+      siteEngineer: siteEngineer,
+      technicalCoordinator: technicalCoordinator,
       membersList: membersList,
     );
   }

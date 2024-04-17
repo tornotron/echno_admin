@@ -17,6 +17,10 @@ class FirestoreSiteHandler implements SiteHandler {
       required double siteLatitude,
       required double siteLongitude,
       required double siteRadius,
+      required String projectManager,
+      required String siteSupervisor,
+      required String siteEngineer,
+      required String technicalCoordinator,
       required List<String>? memberList}) async {
     try {
       final CollectionReference siteRef = _firestore.collection('site');
@@ -27,6 +31,10 @@ class FirestoreSiteHandler implements SiteHandler {
         'site-latitude': siteLatitude,
         'site-longitude': siteLongitude,
         'site-radius': siteRadius,
+        'project-manager': projectManager,
+        'site-supervisor': siteSupervisor,
+        'site-engineer': siteEngineer,
+        'technical-coordinator': technicalCoordinator,
         'employee-list': memberList,
       });
 
@@ -58,6 +66,10 @@ class FirestoreSiteHandler implements SiteHandler {
       required double? newSiteLatitude,
       required double? newSiteLongitude,
       required double? newSiteRadius,
+      required String? newProjectManager,
+      required String? newSiteSupervisor,
+      required String? newSiteEngineer,
+      required String? newTechnicalCoordinator,
       required List<String>? newMemberList}) async {
     try {
       // Document Reference
@@ -87,6 +99,18 @@ class FirestoreSiteHandler implements SiteHandler {
       }
       if (newSiteRadius != null) {
         updateData['site-radius'] = newSiteRadius;
+      }
+      if (newProjectManager != null) {
+        updateData['project-manager'] = newProjectManager;
+      }
+      if (newSiteSupervisor != null) {
+        updateData['site-supervisor'] = newSiteSupervisor;
+      }
+      if (newSiteEngineer != null) {
+        updateData['site-engineer'] = newSiteEngineer;
+      }
+      if (newTechnicalCoordinator != null) {
+        updateData['technical-coordinator'] = newTechnicalCoordinator;
       }
       if (newMemberList != null) {
         updateData['employee-list'] = newMemberList;

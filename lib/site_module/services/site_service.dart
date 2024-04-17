@@ -18,6 +18,10 @@ class SiteService implements SiteHandler {
       required double siteLatitude,
       required double siteLongitude,
       required double siteRadius,
+      required String projectManager,
+      required String siteSupervisor,
+      required String siteEngineer,
+      required String technicalCoordinator,
       required List<String>? memberList}) {
     return _handler.createSiteOffice(
       siteName: siteName,
@@ -26,6 +30,10 @@ class SiteService implements SiteHandler {
       siteLatitude: siteLatitude,
       siteLongitude: siteLongitude,
       siteRadius: siteRadius,
+      projectManager: projectManager,
+      siteSupervisor: siteSupervisor,
+      siteEngineer: siteEngineer,
+      technicalCoordinator: technicalCoordinator,
       memberList: memberList,
     );
   }
@@ -38,6 +46,10 @@ class SiteService implements SiteHandler {
       required double? newSiteLatitude,
       required double? newSiteLongitude,
       required double? newSiteRadius,
+      required String? newProjectManager,
+      required String? newSiteSupervisor,
+      required String? newSiteEngineer,
+      required String? newTechnicalCoordinator,
       required List<String>? newMemberList}) {
     return _handler.updateSiteOffice(
       siteName: siteName,
@@ -46,6 +58,10 @@ class SiteService implements SiteHandler {
       newSiteLatitude: newSiteLatitude,
       newSiteLongitude: newSiteLongitude,
       newSiteRadius: newSiteRadius,
+      newProjectManager: newProjectManager,
+      newSiteSupervisor: newSiteSupervisor,
+      newSiteEngineer: newSiteEngineer,
+      newTechnicalCoordinator: newTechnicalCoordinator,
       newMemberList: newMemberList,
     );
   }

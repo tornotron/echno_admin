@@ -9,6 +9,10 @@ abstract class SiteHandler {
     required double siteLatitude,
     required double siteLongitude,
     required double siteRadius,
+    required String projectManager,
+    required String siteSupervisor,
+    required String siteEngineer,
+    required String technicalCoordinator,
     required List<String>? memberList,
   });
 
@@ -19,6 +23,10 @@ abstract class SiteHandler {
     required double? newSiteLatitude,
     required double? newSiteLongitude,
     required double? newSiteRadius,
+    required String? newProjectManager,
+    required String? newSiteSupervisor,
+    required String? newSiteEngineer,
+    required String? newTechnicalCoordinator,
     required List<String>? newMemberList,
   });
 
