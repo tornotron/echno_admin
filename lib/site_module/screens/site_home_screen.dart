@@ -1,5 +1,6 @@
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/constants/sizes.dart';
+import 'package:echno_attendance/leave_module/screens/site_leave_register.dart';
 import 'package:echno_attendance/site_module/models/site_model.dart';
 import 'package:echno_attendance/site_module/screens/site_assignment_screen.dart';
 import 'package:echno_attendance/site_module/widgets/site_menu_widget.dart';
@@ -52,6 +53,19 @@ class _SiteHomeScreenState extends State<SiteHomeScreen> {
                   icon: Icons.playlist_add_check_circle_sharp,
                   title: 'Attendance',
                   onPressed: () {},
+                ),
+                SiteMenuWidget(
+                  isDark: isDark,
+                  icon: Icons.app_registration_rounded,
+                  title: 'Leave Management',
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return SiteLeaveRegister(
+                        siteOffice: siteOffice,
+                      );
+                    }));
+                  },
                 ),
                 SiteMenuWidget(
                   isDark: isDark,
