@@ -61,7 +61,7 @@ Widget employeeRegisterStreamBuilder({
             itemCount: filteredEmployees.length,
             itemBuilder: (context, index) {
               final employee = filteredEmployees[index];
-              return employeeCard(employee, isDarkMode, context);
+              return EmployeeCard(employee: employee);
             },
           );
         }
