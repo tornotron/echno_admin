@@ -1,15 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:echno_attendance/attendance/services/siteassiagnment_service.dart';
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
-import 'package:echno_attendance/constants/colors_string.dart';
 import 'package:echno_attendance/constants/sizes.dart';
+import 'package:echno_attendance/employee/models/employee.dart';
+import 'package:echno_attendance/employee/services/hr_employee_service.dart';
+import 'package:echno_attendance/site_module/models/site_model.dart';
 import 'package:echno_attendance/site_module/services/siteEmpAdd_service.dart';
 import 'package:echno_attendance/utilities/helpers/device_helper.dart';
 import 'package:flutter/material.dart';
 
 class AssignSiteScreen extends StatefulWidget {
-  const AssignSiteScreen({super.key, required this.sitename});
-  final String sitename;
+  final SiteOffice siteoffice;
+  const AssignSiteScreen({super.key, required this.siteoffice});
 
   @override
   State<AssignSiteScreen> createState() => _AssignSiteScreenState();
@@ -19,10 +21,12 @@ class _AssignSiteScreenState extends State<AssignSiteScreen> {
   late final TextEditingController _addEmpcontroller;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   final formKey = GlobalKey<FormState>();
+  List<Employee> _employeeList = [];
 
   @override
   void initState() {
     _addEmpcontroller = TextEditingController();
+    _initializeData();
     super.initState();
   }
 
@@ -30,6 +34,19 @@ class _AssignSiteScreenState extends State<AssignSiteScreen> {
   void dispose() {
     _addEmpcontroller.dispose();
     super.dispose();
+  }
+
+  Future<void> _initializeData() async {
+    List<Employee> employees = await employeeObjectListinit();
+    setState(() {
+      _employeeList = employees;
+    });
+  }
+
+  Future<List<Employee>> employeeObjectListinit() async {
+    List<Employee> members = await HrEmployeeService.firestore()
+        .populateMemberList(employeeIdList: widget.siteoffice.membersList);
+    return members;
   }
 
   void _showBottomSheet(BuildContext context) {
@@ -81,7 +98,8 @@ class _AssignSiteScreenState extends State<AssignSiteScreen> {
                             if (formKey.currentState!.validate()) {
                               SiteEmpAdd(
                                       empId: _addEmpcontroller.text,
-                                      siteOfficeName: widget.sitename)
+                                      siteOfficeName:
+                                          widget.siteoffice.siteOfficeName)
                                   .assignment();
                               setState(() {});
                               Navigator.pop(context);
@@ -122,7 +140,7 @@ class _AssignSiteScreenState extends State<AssignSiteScreen> {
               onPressed: () {
                 SiteAssignment(
                   employeeId: empString,
-                  siteOfficeName: widget.sitename,
+                  siteOfficeName: widget.siteoffice.siteOfficeName,
                 ).assignment();
                 Navigator.of(context).pop(true);
                 setState(() {});
@@ -146,7 +164,7 @@ class _AssignSiteScreenState extends State<AssignSiteScreen> {
         leadingOnPressed: () {
           Navigator.pop(context);
         },
-        title: Text('${widget.sitename} Members',
+        title: Text('${widget.siteoffice.siteOfficeName} Members',
             style: Theme.of(context).textTheme.headlineSmall),
       ),
       body: Column(
@@ -185,97 +203,20 @@ class _AssignSiteScreenState extends State<AssignSiteScreen> {
             height: 40,
           ),
           Expanded(
-            child: FutureBuilder(
-              future: firestore.collection('site').doc(widget.sitename).get(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
+            child: _employeeList.isEmpty
+                ? const Center(
                     child: CircularProgressIndicator(),
-                  );
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else if (snapshot.data!.id.isEmpty) {
-                  return Container(
-                    color: Colors.white,
-                  );
-                } else {
-                  final List<dynamic> empList =
-                      snapshot.data!.get('employee-list');
-                  return ListView.builder(
-                    itemCount: empList.length,
+                  )
+                : ListView.builder(
+                    itemCount: _employeeList.length,
                     itemBuilder: (context, index) {
-                      if (empList[0] == "") {
-                        return Container(
-                          color: Colors.white,
-                        );
-                      } else {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            width: screenWidth,
-                            height: 80,
-                            decoration: BoxDecoration(
-                              color: echnoBlueLightColor,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Row(
-                              children: [
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                Column(
-                                  children: [
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    Text(
-                                      empList[index],
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontFamily: 'TT Chocolates',
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  width: 100,
-                                ),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.red,
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: InkWell(
-                                        onTap: () async {
-                                          empList.removeAt(index);
-                                          List<String> empString = empList
-                                              .map((dynamic item) =>
-                                                  item.toString())
-                                              .toList();
-                                          await showDeleteDialog(context,
-                                              empString, widget.sitename);
-                                        },
-                                        child: const Center(
-                                          child: Icon(Icons.delete_outline),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        );
-                      }
+                      Employee employee = _employeeList[index];
+                      return ListTile(
+                        title: Text(employee.employeeName),
+                        subtitle: Text(employee.employeeId),
+                      );
                     },
-                  );
-                }
-              },
-            ),
+                  ),
           )
         ],
       ),
