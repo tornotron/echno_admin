@@ -63,11 +63,7 @@ Widget leaveRegisterStreamBuilder({
             itemCount: filteredLeaves.length,
             itemBuilder: (context, index) {
               final leave = filteredLeaves[index];
-              return leaveRow(
-                leave,
-                isDarkMode,
-                context,
-              );
+              return LeaveRegisterCard(leave: leave);
             },
           );
         }
