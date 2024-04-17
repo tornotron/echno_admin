@@ -1,4 +1,5 @@
 import 'package:echno_attendance/task_module/models/task_model.dart';
+import 'package:echno_attendance/task_module/utilities/task_status.dart';
 
 abstract class TaskHandler {
   Future<Task?> addNewTask({
@@ -44,5 +45,9 @@ abstract class TaskHandler {
 
   Stream<List<Task>> streamTasksBySiteOffice({
     required String? siteOffice,
+  });
+
+  Future<Map<TaskStatus, int>> getSiteTaskCounts({
+    required String siteOffice,
   });
 }

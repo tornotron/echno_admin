@@ -1,6 +1,7 @@
 import 'package:echno_attendance/task_module/domain/firestore/firestore_task_handler.dart';
 import 'package:echno_attendance/task_module/domain/firestore/task_handler.dart';
 import 'package:echno_attendance/task_module/models/task_model.dart';
+import 'package:echno_attendance/task_module/utilities/task_status.dart';
 
 class TaskService implements TaskHandler {
   final TaskHandler _taskHandler;
@@ -94,5 +95,10 @@ class TaskService implements TaskHandler {
   @override
   Stream<List<Task>> streamTasksBySiteOffice({required String? siteOffice}) {
     return _taskHandler.streamTasksBySiteOffice(siteOffice: siteOffice);
+  }
+
+  @override
+  Future<Map<TaskStatus, int>> getSiteTaskCounts({required String siteOffice}) {
+    return _taskHandler.getSiteTaskCounts(siteOffice: siteOffice);
   }
 }

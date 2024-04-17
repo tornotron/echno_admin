@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:echno_attendance/logger.dart';
 import 'package:echno_attendance/task_module/domain/firestore/task_handler.dart';
 import 'package:echno_attendance/task_module/models/task_model.dart';
+import 'package:echno_attendance/task_module/utilities/task_status.dart';
 import 'package:echno_attendance/task_module/utilities/task_ui_helpers.dart';
 import 'package:echno_attendance/utilities/exceptions/firebase_exceptions.dart';
 import 'package:echno_attendance/utilities/exceptions/platform_exceptions.dart';
@@ -206,6 +207,40 @@ class FirestoreTaskHandler implements TaskHandler {
               doc as QueryDocumentSnapshot<Map<String, dynamic>>);
         }).toList();
       });
+    } on FirebaseException catch (e) {
+      throw EchnoFirebaseException(e.code).message;
+    } on PlatformException catch (e) {
+      throw EchnoPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong.! Please try again.';
+    }
+  }
+
+  @override
+  Future<Map<TaskStatus, int>> getSiteTaskCounts(
+      {required String siteOffice}) async {
+    try {
+      final tasks = await _firestoreTasks
+          .where('site-office', isEqualTo: siteOffice)
+          .snapshots()
+          .map((QuerySnapshot<Object?> querySnapshot) {
+        return querySnapshot.docs.map((doc) {
+          return Task.fromSnapshot(
+              doc as QueryDocumentSnapshot<Map<String, dynamic>>);
+        }).toList();
+      }).first;
+
+      final taskCounts = {
+        TaskStatus.onHold:
+            tasks.where((task) => task.status == TaskStatus.onHold).length,
+        TaskStatus.completed:
+            tasks.where((task) => task.status == TaskStatus.completed).length,
+        TaskStatus.inProgress:
+            tasks.where((task) => task.status == TaskStatus.inProgress).length,
+        TaskStatus.todo:
+            tasks.where((task) => task.status == TaskStatus.todo).length,
+      };
+      return taskCounts;
     } on FirebaseException catch (e) {
       throw EchnoFirebaseException(e.code).message;
     } on PlatformException catch (e) {

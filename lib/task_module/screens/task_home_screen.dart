@@ -3,6 +3,7 @@ import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/site_module/models/site_model.dart';
 import 'package:echno_attendance/task_module/services/task_service.dart';
+import 'package:echno_attendance/task_module/utilities/task_status.dart';
 import 'package:echno_attendance/task_module/widgets/task_home_widgets/task_home_header.dart';
 import 'package:echno_attendance/task_module/widgets/task_home_widgets/task_home_stream.dart';
 import 'package:echno_attendance/utilities/styles/padding_style.dart';
@@ -26,11 +27,22 @@ class _TaskHomeScreenState extends State<TaskHomeScreen> {
 
   late int _selectedIndex;
   late SiteOffice siteOffice;
+  late Map<TaskStatus, int> taskCounts;
+
   @override
   void initState() {
     super.initState();
     _selectedIndex = widget.index ?? 1;
     siteOffice = widget.siteOffice;
+    _updateTaskCounts();
+  }
+
+  Future<void> _updateTaskCounts() async {
+    final taskCountMap = await taskService.getSiteTaskCounts(
+        siteOffice: widget.siteOffice.siteOfficeName);
+    setState(() {
+      taskCounts = taskCountMap;
+    });
   }
 
   @override
@@ -62,10 +74,14 @@ class _TaskHomeScreenState extends State<TaskHomeScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        buildCategoryButton(0, 'On Hold'),
-                        buildCategoryButton(1, 'Ongoing'),
-                        buildCategoryButton(2, 'Upcoming'),
-                        buildCategoryButton(3, 'Completed'),
+                        buildCategoryButton(
+                            0, 'On Hold', taskCounts[TaskStatus.onHold] ?? 0),
+                        buildCategoryButton(1, 'Ongoing',
+                            taskCounts[TaskStatus.inProgress] ?? 0),
+                        buildCategoryButton(
+                            2, 'Upcoming', taskCounts[TaskStatus.todo] ?? 0),
+                        buildCategoryButton(3, 'Completed',
+                            taskCounts[TaskStatus.completed] ?? 0),
                       ],
                     ),
                   ),
@@ -86,7 +102,7 @@ class _TaskHomeScreenState extends State<TaskHomeScreen> {
     );
   }
 
-  Widget buildCategoryButton(int index, String text) {
+  Widget buildCategoryButton(int index, String text, int taskCount) {
     Brightness themeMode = Theme.of(context).brightness;
     Color selectedColor = themeMode == Brightness.dark
         ? EchnoColors.selectedNavDark
@@ -107,12 +123,16 @@ class _TaskHomeScreenState extends State<TaskHomeScreen> {
             right: BorderSide(width: 0.1),
           ),
         ),
-        child: Text(text,
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color: EchnoColors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13.0,
-                )),
+        child: Row(
+          children: [
+            Text('$text ($taskCount)',
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      color: EchnoColors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13.0,
+                    )),
+          ],
+        ),
       ),
     );
   }
