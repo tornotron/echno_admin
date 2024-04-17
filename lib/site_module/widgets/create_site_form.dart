@@ -27,7 +27,19 @@ class _CreateSiteFormState extends State<CreateSiteForm> {
   SiteStatus? _selectedSiteStatus;
 
   List<Employee> employees = [];
+  List<Employee> projectManagers = [];
+
+  List<Employee> supervisors = [];
+  List<Employee> siteEngineers = [];
+  List<Employee> technicalCoordinators = [];
   List<Employee> selectedEmployees = [];
+
+  Employee? selectedProjectManager;
+
+  Employee? selectedSupervisor;
+  Employee? selectedSiteEngineer;
+  Employee? selectedTechnicalCoordinator;
+
   List<String> firestoreEmployeeIdList = [];
 
   void _onSelectedEmployee(Employee employee) {
@@ -44,6 +56,66 @@ class _CreateSiteFormState extends State<CreateSiteForm> {
     }
   }
 
+  void _onSelectedProjectManager(Employee pm) {
+    if (!selectedEmployees.contains(pm)) {
+      setState(() {
+        selectedEmployees.add(pm);
+        selectedProjectManager = pm;
+        firestoreEmployeeIdList.add(pm.employeeId);
+      });
+    } else {
+      EchnoSnackBar.warningSnackBar(
+          context: context,
+          title: 'Opps...!',
+          message: 'Project Manager already selected...');
+    }
+  }
+
+  void _onSelectedSupervisor(Employee sp) {
+    if (!selectedEmployees.contains(sp)) {
+      setState(() {
+        selectedEmployees.add(sp);
+        selectedSupervisor = sp;
+        firestoreEmployeeIdList.add(sp.employeeId);
+      });
+    } else {
+      EchnoSnackBar.warningSnackBar(
+          context: context,
+          title: 'Opps...!',
+          message: 'Supervisor already selected...');
+    }
+  }
+
+  void _onSelectedSiteEngineer(Employee se) {
+    if (!selectedEmployees.contains(se)) {
+      setState(() {
+        selectedEmployees.add(se);
+        selectedSiteEngineer = se;
+        firestoreEmployeeIdList.add(se.employeeId);
+      });
+    } else {
+      EchnoSnackBar.warningSnackBar(
+          context: context,
+          title: 'Opps...!',
+          message: 'Site Engineer already selected...');
+    }
+  }
+
+  void _onSelectedTechnicalCoordinator(Employee tc) {
+    if (!selectedEmployees.contains(tc)) {
+      setState(() {
+        selectedEmployees.add(tc);
+        selectedTechnicalCoordinator = tc;
+        firestoreEmployeeIdList.add(tc.employeeId);
+      });
+    } else {
+      EchnoSnackBar.warningSnackBar(
+          context: context,
+          title: 'Opps...!',
+          message: 'Technical Coordinator already selected...');
+    }
+  }
+
   bool isLoading = false;
 
   void _fetchEmployeeFromFirestore() async {
@@ -52,6 +124,13 @@ class _CreateSiteFormState extends State<CreateSiteForm> {
     });
     try {
       employees = await HrEmployeeService.firestore().getEmployeeAutoComplete();
+      projectManagers =
+          await HrEmployeeService.firestore().getProjectManagerList();
+
+      supervisors = await HrEmployeeService.firestore().getSiteSupervisorList();
+      siteEngineers = await HrEmployeeService.firestore().getSiteEngineerList();
+      technicalCoordinators =
+          await HrEmployeeService.firestore().getTechnicalCoordinatorList();
     } catch (e) {
       EchnoSnackBar.errorSnackBar(
         context: context,
@@ -126,6 +205,70 @@ class _CreateSiteFormState extends State<CreateSiteForm> {
               ),
               const SizedBox(height: EchnoSize.spaceBtwItems),
               Text(
+                'Project Manager',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              const SizedBox(height: 5.0),
+              EmployeeAutoComplete(
+                employees: projectManagers,
+                onSelectedEmployeesChanged: _onSelectedProjectManager,
+                onPressSuffixIcon: () {
+                  selectedEmployees.remove(selectedProjectManager);
+                  firestoreEmployeeIdList
+                      .remove(selectedProjectManager!.employeeId);
+                  selectedProjectManager = null;
+                },
+              ),
+              const SizedBox(height: EchnoSize.spaceBtwItems),
+              Text(
+                'Supervisor',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              const SizedBox(height: 5.0),
+              EmployeeAutoComplete(
+                employees: supervisors,
+                onSelectedEmployeesChanged: _onSelectedSupervisor,
+                onPressSuffixIcon: () {
+                  selectedEmployees.remove(selectedSupervisor);
+                  firestoreEmployeeIdList
+                      .remove(selectedSupervisor!.employeeId);
+                  selectedSupervisor = null;
+                },
+              ),
+              const SizedBox(height: EchnoSize.spaceBtwItems),
+              Text(
+                'Site Engineer',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              const SizedBox(height: 5.0),
+              EmployeeAutoComplete(
+                employees: siteEngineers,
+                onSelectedEmployeesChanged: _onSelectedSiteEngineer,
+                onPressSuffixIcon: () {
+                  selectedEmployees.remove(selectedSiteEngineer);
+                  firestoreEmployeeIdList
+                      .remove(selectedSiteEngineer!.employeeId);
+                  selectedSiteEngineer = null;
+                },
+              ),
+              const SizedBox(height: EchnoSize.spaceBtwItems),
+              Text(
+                'Technical Coordinator',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              const SizedBox(height: 5.0),
+              EmployeeAutoComplete(
+                employees: technicalCoordinators,
+                onSelectedEmployeesChanged: _onSelectedTechnicalCoordinator,
+                onPressSuffixIcon: () {
+                  selectedEmployees.remove(selectedTechnicalCoordinator);
+                  firestoreEmployeeIdList
+                      .remove(selectedTechnicalCoordinator!.employeeId);
+                  selectedTechnicalCoordinator = null;
+                },
+              ),
+              const SizedBox(height: EchnoSize.spaceBtwItems),
+              Text(
                 'Add Members',
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
@@ -138,8 +281,7 @@ class _CreateSiteFormState extends State<CreateSiteForm> {
                 children: [
                   Expanded(
                     child: Wrap(
-                      spacing:
-                          8.0, // Adjust the spacing between chips as needed
+                      spacing: 8.0,
                       children: [
                         for (int index = 0;
                             index < selectedEmployees.length;
@@ -290,16 +432,42 @@ class _CreateSiteFormState extends State<CreateSiteForm> {
                     final siteLongitude =
                         double.parse(_siteLongitudeController.text);
                     final siteRadius = double.parse(_siteRadiusController.text);
+                    final projectManager =
+                        selectedProjectManager?.employeeId ?? '';
+
+                    final siteSupervisor = selectedSupervisor?.employeeId ?? '';
+                    final siteEngineer = selectedSiteEngineer?.employeeId ?? '';
+                    final technicalCoordinator =
+                        selectedTechnicalCoordinator?.employeeId ?? '';
+
                     final memberList = firestoreEmployeeIdList;
 
-                    await SiteService.firestore().createSiteOffice(
-                        siteName: siteName,
-                        siteStatus: siteStatus,
-                        siteAddress: siteAddress,
-                        siteLatitude: siteLatitude,
-                        siteLongitude: siteLongitude,
-                        siteRadius: siteRadius,
-                        memberList: memberList);
+                    try {
+                      await SiteService.firestore().createSiteOffice(
+                          siteName: siteName,
+                          siteStatus: siteStatus,
+                          siteAddress: siteAddress,
+                          siteLatitude: siteLatitude,
+                          siteLongitude: siteLongitude,
+                          siteRadius: siteRadius,
+                          projectManager: projectManager,
+                          siteSupervisor: siteSupervisor,
+                          siteEngineer: siteEngineer,
+                          technicalCoordinator: technicalCoordinator,
+                          memberList: memberList);
+                    } catch (e) {
+                      EchnoSnackBar.errorSnackBar(
+                        context: context,
+                        title: 'Oh Snap...!',
+                        message: e.toString(),
+                      );
+                    } finally {
+                      EchnoSnackBar.successSnackBar(
+                        context: context,
+                        title: 'Success...!',
+                        message: 'Site Created Successfully...',
+                      );
+                    }
                   },
                   child: const Text('Create Site'),
                 ),
