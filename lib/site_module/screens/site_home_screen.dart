@@ -3,6 +3,7 @@ import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/leave_module/screens/site_leave_register.dart';
 import 'package:echno_attendance/site_module/models/site_model.dart';
 import 'package:echno_attendance/site_module/screens/site_assignment_screen.dart';
+import 'package:echno_attendance/site_module/screens/site_attendance_screen.dart';
 import 'package:echno_attendance/site_module/widgets/site_menu_widget.dart';
 import 'package:echno_attendance/task_module/screens/task_home_screen.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
@@ -52,7 +53,12 @@ class _SiteHomeScreenState extends State<SiteHomeScreen> {
                   isDark: isDark,
                   icon: Icons.playlist_add_check_circle_sharp,
                   title: 'Attendance',
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return SiteAttendanceReport(siteOffice: siteOffice);
+                    }));
+                  },
                 ),
                 SiteMenuWidget(
                   isDark: isDark,
@@ -88,7 +94,7 @@ class _SiteHomeScreenState extends State<SiteHomeScreen> {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
                       return AssignSiteScreen(
-                        sitename: siteOffice.siteOfficeName,
+                        siteoffice: siteOffice,
                       );
                     }));
                   },
