@@ -6,11 +6,13 @@ class EmployeeAutoComplete extends StatelessWidget {
   const EmployeeAutoComplete(
       {required this.employees,
       required this.onSelectedEmployeesChanged,
+      this.onPressSuffixIcon,
       super.key});
 
   final List<Employee> employees;
 
   final void Function(Employee) onSelectedEmployeesChanged;
+  final void Function()? onPressSuffixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,12 @@ class EmployeeAutoComplete extends StatelessWidget {
             suffixIcon: IconButton(
               icon: const Icon(Icons.clear),
               onPressed: () {
-                customController.clear();
+                if (onPressSuffixIcon != null) {
+                  onPressSuffixIcon!();
+                  customController.clear();
+                } else {
+                  customController.clear();
+                }
               },
             ),
           ),
