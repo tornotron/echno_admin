@@ -211,4 +211,40 @@ class FirestoreLeaveHandler implements LeaveHandler {
       throw GenericLeaveException(e.toString());
     }
   }
+
+  @override
+  Stream<List<Leave>> fetchLeavesBySiteName({required String siteName}) {
+    try {
+      return _firestore
+          .collection('leaves')
+          .where('is-cancelled', isEqualTo: false)
+          .where('site-office',
+              isEqualTo: siteName) // Filtering for cancelled leaves
+          .snapshots()
+          .map(
+        (QuerySnapshot<Object?> querySnapshot) {
+          return querySnapshot.docs.map((doc) {
+            return Leave.fromFirestore(
+                doc as QueryDocumentSnapshot<Map<String, dynamic>>);
+          }).toList();
+        },
+      );
+    } on FirebaseException catch (e) {
+      if (e.code == 'cancelled') {
+        throw OperationTerminateException;
+      } else if (e.code == 'unauthenticated') {
+        throw UnauthenticatedException;
+      } else if (e.code == 'permission-denied') {
+        throw UnauthorizedException;
+      } else if (e.code == 'not-found') {
+        throw NoDataFoundException;
+      } else if (e.code == 'aborted') {
+        throw OperationFailedException;
+      } else {
+        throw GenericLeaveException(e.code);
+      }
+    } catch (e) {
+      throw GenericLeaveException(e.toString());
+    }
+  }
 }

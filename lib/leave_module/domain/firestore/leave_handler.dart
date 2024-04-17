@@ -26,4 +26,8 @@ abstract class LeaveHandler {
     required String leaveId,
     required String newStatus,
   });
+
+  Stream<List<Leave>> fetchLeavesBySiteName({
+    required String siteName,
+  });
 }

@@ -62,4 +62,9 @@ class LeaveService implements LeaveHandler {
       newStatus: newStatus,
     );
   }
+
+  @override
+  Stream<List<Leave>> fetchLeavesBySiteName({required String siteName}) {
+    return _leaveHanler.fetchLeavesBySiteName(siteName: siteName);
+  }
 }
