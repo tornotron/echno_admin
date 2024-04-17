@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:echno_attendance/leave_module/models/leave_model.dart';
 import 'dart:developer' as devtools show log;
-
 import 'package:echno_attendance/leave_module/domain/firestore/leave_handler.dart';
-import 'package:echno_attendance/leave_module/utilities/leave_exceptions.dart';
 import 'package:echno_attendance/leave_module/utilities/leave_status.dart';
 import 'package:echno_attendance/leave_module/utilities/leave_type.dart';
+import 'package:echno_attendance/utilities/exceptions/firebase_exceptions.dart';
+import 'package:echno_attendance/utilities/exceptions/platform_exceptions.dart';
+import 'package:flutter/services.dart';
 
 class FirestoreLeaveHandler implements LeaveHandler {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -60,21 +61,11 @@ class FirestoreLeaveHandler implements LeaveHandler {
         remarks: remarks ?? '',
       );
     } on FirebaseException catch (e) {
-      if (e.code == 'cancelled') {
-        throw OperationTerminateException;
-      } else if (e.code == 'unauthenticated') {
-        throw UnauthenticatedException;
-      } else if (e.code == 'permission-denied') {
-        throw UnauthorizedException;
-      } else if (e.code == 'not-found') {
-        throw NoDataFoundException;
-      } else if (e.code == 'aborted') {
-        throw OperationFailedException;
-      } else {
-        throw GenericLeaveException(e.code);
-      }
+      throw EchnoFirebaseException(e.code).message;
+    } on PlatformException catch (e) {
+      throw EchnoPlatformException(e.code).message;
     } catch (e) {
-      throw GenericLeaveException(e.toString());
+      throw 'Something went wrong.! Please try again.';
     }
   }
 
@@ -97,21 +88,11 @@ class FirestoreLeaveHandler implements LeaveHandler {
         },
       );
     } on FirebaseException catch (e) {
-      if (e.code == 'cancelled') {
-        throw OperationTerminateException;
-      } else if (e.code == 'unauthenticated') {
-        throw UnauthenticatedException;
-      } else if (e.code == 'permission-denied') {
-        throw UnauthorizedException;
-      } else if (e.code == 'not-found') {
-        throw NoDataFoundException;
-      } else if (e.code == 'aborted') {
-        throw OperationFailedException;
-      } else {
-        throw GenericLeaveException(e.code);
-      }
+      throw EchnoFirebaseException(e.code).message;
+    } on PlatformException catch (e) {
+      throw EchnoPlatformException(e.code).message;
     } catch (e) {
-      throw GenericLeaveException(e.toString());
+      throw 'Something went wrong.! Please try again.';
     }
   }
 
@@ -126,21 +107,11 @@ class FirestoreLeaveHandler implements LeaveHandler {
         'is-cancelled': true,
       });
     } on FirebaseException catch (e) {
-      if (e.code == 'cancelled') {
-        throw OperationTerminateException;
-      } else if (e.code == 'unauthenticated') {
-        throw UnauthenticatedException;
-      } else if (e.code == 'permission-denied') {
-        throw UnauthorizedException;
-      } else if (e.code == 'not-found') {
-        throw NoDataFoundException;
-      } else if (e.code == 'aborted') {
-        throw OperationFailedException;
-      } else {
-        throw GenericLeaveException(e.code);
-      }
+      throw EchnoFirebaseException(e.code).message;
+    } on PlatformException catch (e) {
+      throw EchnoPlatformException(e.code).message;
     } catch (e) {
-      throw GenericLeaveException(e.toString());
+      throw 'Something went wrong.! Please try again.';
     }
   }
 
@@ -162,21 +133,11 @@ class FirestoreLeaveHandler implements LeaveHandler {
         },
       );
     } on FirebaseException catch (e) {
-      if (e.code == 'cancelled') {
-        throw OperationTerminateException;
-      } else if (e.code == 'unauthenticated') {
-        throw UnauthenticatedException;
-      } else if (e.code == 'permission-denied') {
-        throw UnauthorizedException;
-      } else if (e.code == 'not-found') {
-        throw NoDataFoundException;
-      } else if (e.code == 'aborted') {
-        throw OperationFailedException;
-      } else {
-        throw GenericLeaveException(e.code);
-      }
+      throw EchnoFirebaseException(e.code).message;
+    } on PlatformException catch (e) {
+      throw EchnoPlatformException(e.code).message;
     } catch (e) {
-      throw GenericLeaveException(e.toString());
+      throw 'Something went wrong.! Please try again.';
     }
   }
 
@@ -194,21 +155,11 @@ class FirestoreLeaveHandler implements LeaveHandler {
         'leave-status': newStatus,
       });
     } on FirebaseException catch (e) {
-      if (e.code == 'cancelled') {
-        throw OperationTerminateException;
-      } else if (e.code == 'unauthenticated') {
-        throw UnauthenticatedException;
-      } else if (e.code == 'permission-denied') {
-        throw UnauthorizedException;
-      } else if (e.code == 'not-found') {
-        throw NoDataFoundException;
-      } else if (e.code == 'aborted') {
-        throw OperationFailedException;
-      } else {
-        throw GenericLeaveException(e.code);
-      }
+      throw EchnoFirebaseException(e.code).message;
+    } on PlatformException catch (e) {
+      throw EchnoPlatformException(e.code).message;
     } catch (e) {
-      throw GenericLeaveException(e.toString());
+      throw 'Something went wrong.! Please try again.';
     }
   }
 
@@ -230,21 +181,11 @@ class FirestoreLeaveHandler implements LeaveHandler {
         },
       );
     } on FirebaseException catch (e) {
-      if (e.code == 'cancelled') {
-        throw OperationTerminateException;
-      } else if (e.code == 'unauthenticated') {
-        throw UnauthenticatedException;
-      } else if (e.code == 'permission-denied') {
-        throw UnauthorizedException;
-      } else if (e.code == 'not-found') {
-        throw NoDataFoundException;
-      } else if (e.code == 'aborted') {
-        throw OperationFailedException;
-      } else {
-        throw GenericLeaveException(e.code);
-      }
+      throw EchnoFirebaseException(e.code).message;
+    } on PlatformException catch (e) {
+      throw EchnoPlatformException(e.code).message;
     } catch (e) {
-      throw GenericLeaveException(e.toString());
+      throw 'Something went wrong.! Please try again.';
     }
   }
 }
