@@ -101,4 +101,11 @@ class TaskService implements TaskHandler {
   Future<Map<TaskStatus, int>> getSiteTaskCounts({required String siteOffice}) {
     return _taskHandler.getSiteTaskCounts(siteOffice: siteOffice);
   }
+
+  @override
+  Future<Map<TaskStatus, int>> getEmployeeTaskCounts(
+      {required String assignedEmployee}) {
+    return _taskHandler.getEmployeeTaskCounts(
+        assignedEmployee: assignedEmployee);
+  }
 }

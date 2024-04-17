@@ -108,11 +108,10 @@ class _MainHomeState extends State<MainHome> {
             child: Visibility(
               visible: !isAttendanceMarked,
               child: SlideAction(
-                elevation: 0,
+                elevation: 2,
                 innerColor:
                     isDark ? EchnoColors.black : EchnoColors.selectedNavLight,
-                outerColor:
-                    isDark ? EchnoColors.secondary : EchnoColors.lightCard,
+                outerColor: isDark ? EchnoColors.secondary : EchnoColors.white,
                 text: 'Slide to mark attendance',
                 textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: isDark ? EchnoColors.black : EchnoColors.black,
@@ -131,6 +130,7 @@ class _MainHomeState extends State<MainHome> {
                         isPictureUploaded: false,
                       ));
                 },
+                alignment: Alignment.center,
               ),
             ),
           ),

@@ -50,4 +50,8 @@ abstract class TaskHandler {
   Future<Map<TaskStatus, int>> getSiteTaskCounts({
     required String siteOffice,
   });
+
+  Future<Map<TaskStatus, int>> getEmployeeTaskCounts({
+    required String assignedEmployee,
+  });
 }

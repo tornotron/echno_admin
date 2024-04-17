@@ -249,4 +249,39 @@ class FirestoreTaskHandler implements TaskHandler {
       throw 'Something went wrong.! Please try again.';
     }
   }
+
+  @override
+  Future<Map<TaskStatus, int>> getEmployeeTaskCounts(
+      {required String assignedEmployee}) async {
+    try {
+      final tasks = await _firestoreTasks
+          .where('assigned-employee', isEqualTo: assignedEmployee)
+          .snapshots()
+          .map((QuerySnapshot<Object?> querySnapshot) {
+        return querySnapshot.docs.map((doc) {
+          return Task.fromSnapshot(
+              doc as QueryDocumentSnapshot<Map<String, dynamic>>);
+        }).toList();
+      }).first;
+
+      final taskCounts = {
+        TaskStatus.onHold:
+            tasks.where((task) => task.status == TaskStatus.onHold).length,
+        TaskStatus.completed:
+            tasks.where((task) => task.status == TaskStatus.completed).length,
+        TaskStatus.inProgress:
+            tasks.where((task) => task.status == TaskStatus.inProgress).length,
+        TaskStatus.todo:
+            tasks.where((task) => task.status == TaskStatus.todo).length,
+      };
+
+      return taskCounts;
+    } on FirebaseException catch (e) {
+      throw EchnoFirebaseException(e.code).message;
+    } on PlatformException catch (e) {
+      throw EchnoPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong.! Please try again.';
+    }
+  }
 }
