@@ -66,7 +66,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '735079555774',
     projectId: 'echno-attendance-project',
     storageBucket: 'echno-attendance-project.appspot.com',
-    iosClientId: '735079555774-1t2kleba7tb7ah3evl8q3l9vkjcar0kc.apps.googleusercontent.com',
+    androidClientId:
+        '735079555774-9rujbuf6860ln69r8bph4ibsu0uqsl6j.apps.googleusercontent.com',
+    iosClientId:
+        '735079555774-1t2kleba7tb7ah3evl8q3l9vkjcar0kc.apps.googleusercontent.com',
     iosBundleId: 'com.example.echnoAttendance',
   );
 
@@ -76,7 +79,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '735079555774',
     projectId: 'echno-attendance-project',
     storageBucket: 'echno-attendance-project.appspot.com',
-    iosClientId: '735079555774-0vlt4atk8pjs806sbo686f1qgo8r412n.apps.googleusercontent.com',
+    androidClientId:
+        '735079555774-9rujbuf6860ln69r8bph4ibsu0uqsl6j.apps.googleusercontent.com',
+    iosClientId:
+        '735079555774-0vlt4atk8pjs806sbo686f1qgo8r412n.apps.googleusercontent.com',
     iosBundleId: 'com.example.echnoAttendance.RunnerTests',
   );
 }

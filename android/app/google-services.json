@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "735079555774-urj3vvbh25utkjp1mniqs2qn54hj1mjm.apps.googleusercontent.com",
+          "client_id": "735079555774-9rujbuf6860ln69r8bph4ibsu0uqsl6j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.echno_attendance",
+            "certificate_hash": "2afea9259c8128b777e2996d0099b07d582695ef"
+          }
+        },
+        {
+          "client_id": "735079555774-t8conun5jks3j9kmktpjhejjaef3uqhu.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,7 +35,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "735079555774-urj3vvbh25utkjp1mniqs2qn54hj1mjm.apps.googleusercontent.com",
+              "client_id": "735079555774-t8conun5jks3j9kmktpjhejjaef3uqhu.apps.googleusercontent.com",
               "client_type": 3
             },
             {
