@@ -38,6 +38,17 @@ class EchnoText {
       'Please click on the link you\'ve received via your email...';
   static const String emailVerificationButton = 'Resent Verification Mail';
 
+  // Inactive Employee Screen
+  static const String inactiveEmployeeTitle = 'Access Denied...!';
+  static const String inactiveEmployeeSubtitle =
+      'Your account is currently inactive. Please contact HR...';
+
+  // Enter Employee ID Screen
+  static const String enterEmployeeIdTitle = 'No account found...!';
+  static const String enterEmployeeIdSubtitle =
+      'Please enter your Employee ID to continue. If you don\'t have one, contact HR...';
+  static const String enterEmployeeIdButton = 'Continue';
+
   // HR Screens
   static const String addEmployeeTitle = 'Add New Employee';
   static const String addEmployeeSubtitle =

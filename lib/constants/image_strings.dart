@@ -13,6 +13,8 @@ class EchnoImages {
   static const String signIn = 'assets/images/signin.svg';
   static const String emailVerification =
       'assets/images/email-verification.svg';
+  static const String contactHr = 'assets/images/contact_hr.svg';
+  static const String inactiveEmp = 'assets/images/inactive_employee.svg';
 
   // Icons
   static const String redCalendar = 'assets/icons/Calendar_red.png';
