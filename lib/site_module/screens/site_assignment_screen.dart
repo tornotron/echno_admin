@@ -7,8 +7,10 @@ import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/employee/services/hr_employee_service.dart';
 import 'package:echno_attendance/employee/utilities/employee_role.dart';
 import 'package:echno_attendance/site_module/models/site_model.dart';
-import 'package:echno_attendance/site_module/services/siteEmpAdd_service.dart';
-import 'package:echno_attendance/utilities/helpers/device_helper.dart';
+import 'package:echno_attendance/site_module/services/site_service.dart';
+import 'package:echno_attendance/site_module/widgets/employee_autocomplete.dart';
+import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
+import 'package:echno_attendance/utilities/popups/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 
 class AssignSiteScreen extends StatefulWidget {
@@ -20,107 +22,67 @@ class AssignSiteScreen extends StatefulWidget {
 }
 
 class _AssignSiteScreenState extends State<AssignSiteScreen> {
-  late final TextEditingController _addEmpcontroller;
+  late SiteOffice siteofficeobj; 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   final formKey = GlobalKey<FormState>();
   List<Employee> _employeeList = [];
+  List<Employee> allEmployeesList = [];
+  List<Employee> selectedEmployees = [];
+
+  List<String> employeeIdlist = [];
+  
 
   @override
   void initState() {
-    _addEmpcontroller = TextEditingController();
-    _initializeData();
     super.initState();
+    siteofficeobj = widget.siteoffice;
+    _initializememberData();
+    _initializeallEmployeeData();
   }
 
   @override
   void dispose() {
-    _addEmpcontroller.dispose();
     super.dispose();
   }
 
-  Future<void> _initializeData() async {
+  Future<void> _initializememberData() async {
     List<Employee> employees = await employeeObjectListinit();
     setState(() {
       _employeeList = employees;
     });
   }
 
+  Future<void> _initializeallEmployeeData() async {
+    List<Employee> allEmployees = await employeeListForAutocomplete();
+    setState(() {
+      allEmployeesList = allEmployees;
+    });
+  }
+
   Future<List<Employee>> employeeObjectListinit() async {
     List<Employee> members = await HrEmployeeService.firestore()
-        .populateMemberList(employeeIdList: widget.siteoffice.membersList);
+        .populateMemberList(employeeIdList: siteofficeobj.membersList);
     return members;
   }
 
-  void _showBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(EchnoSize.borderRadiusLg),
-      ),
-      context: context,
-      builder: (context) => StatefulBuilder(
-        builder: (BuildContext context, StateSetter setState) {
-          return Padding(
-            padding: EdgeInsets.only(
-              bottom: DeviceUtilityHelpers.getKeyboardHeight(context),
-            ),
-            child: SingleChildScrollView(
-              child: Container(
-                padding: const EdgeInsets.only(
-                    top: 40, left: 20, right: 20, bottom: 40),
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      TextFormField(
-                        controller: _addEmpcontroller,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter the employee ID';
-                          }
-                          return null;
-                        },
-                        enableSuggestions: false,
-                        autocorrect: false,
-                        maxLines: 1,
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.person_outline_outlined),
-                          labelText: 'Employee ID',
-                          border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.circular(EchnoSize.borderRadiusLg),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: EchnoSize.spaceBtwItems),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (formKey.currentState!.validate()) {
-                              SiteEmpAdd(
-                                      empId: _addEmpcontroller.text,
-                                      siteOfficeName:
-                                          widget.siteoffice.siteOfficeName)
-                                  .assignment();
-                              setState(() {});
-                              Navigator.pop(context);
-                            }
-                          },
-                          child: const Text(
-                            'Submit',
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-        },
-      ),
-    );
+  Future<List<Employee>> employeeListForAutocomplete() async {
+    List<Employee> allEmployees =
+        await HrEmployeeService.firestore().getEmployeeAutoComplete();
+    return allEmployees;
+  }
+
+  void onEmployeeSelect(Employee employee) {
+    if (!selectedEmployees.contains(employee)) {
+      setState(() {
+        selectedEmployees.add(employee);
+        employeeIdlist.add(employee.employeeId);
+      });
+    } else {
+      EchnoSnackBar.warningSnackBar(
+          context: context,
+          title: 'Error',
+          message: 'Employee is already selected');
+    }
   }
 
   Future showDeleteDialog(
@@ -157,16 +119,17 @@ class _AssignSiteScreenState extends State<AssignSiteScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final mediaQuery = MediaQuery.of(context);
-    // final screenSize = mediaQuery.size;
-    // final screenWidth = screenSize.width;
+    final mediaQuery = MediaQuery.of(context);
+    final screenSize = mediaQuery.size;
+    final screenWidth = screenSize.width;
+    final isDarkMode = EchnoHelperFunctions.isDarkMode(context);
     return Scaffold(
       appBar: EchnoAppBar(
         leadingIcon: Icons.arrow_back_ios_new,
         leadingOnPressed: () {
           Navigator.pop(context);
         },
-        title: Text('${widget.siteoffice.siteOfficeName} Members',
+        title: Text('${siteofficeobj.siteOfficeName} Members',
             style: Theme.of(context).textTheme.headlineSmall),
       ),
       body: Column(
@@ -176,16 +139,13 @@ class _AssignSiteScreenState extends State<AssignSiteScreen> {
           ),
           Row(
             children: [
-              Expanded(
+              SizedBox(
+                width: screenWidth / 1.5,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      _showBottomSheet(context);
-                    },
-                    child: const Text(
-                      'Add Employee',
-                    ),
+                  child: EmployeeAutoComplete(
+                    employees: allEmployeesList,
+                    onSelectedEmployeesChanged: onEmployeeSelect,
                   ),
                 ),
               ),
@@ -193,80 +153,122 @@ class _AssignSiteScreenState extends State<AssignSiteScreen> {
                   child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
-                  onPressed: () {},
-                  child: const Text(
-                    '',
-                  ),
+                  onPressed: () async {
+                    await SiteService.firestore().addSiteMember(
+                      siteName: siteofficeobj.siteOfficeName,
+                      memberList: employeeIdlist,
+                    );
+                    siteofficeobj =
+                        await SiteService.firestore().fetchSpecificSiteOffice(
+                      siteOfficeId: siteofficeobj.siteOfficeName,
+                    );
+                    _initializememberData();
+                    setState(() {
+                    });
+                  },
+                  child: const Text('Add'),
                 ),
-              )),
+              ))
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Wrap(
+                  spacing: 8.0,
+                  children: [
+                    for (int index = 0;
+                        index < selectedEmployees.length;
+                        index++)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        child: Chip(
+                          label: Text(selectedEmployees[index].employeeName),
+                          onDeleted: () {
+                            setState(() {
+                              selectedEmployees.removeAt(index);
+                              employeeIdlist.removeAt(index);
+                            });
+                          },
+                          deleteIcon: const Icon(
+                            Icons.cancel,
+                            size: 16,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
             ],
           ),
           const SizedBox(
             height: 40,
           ),
           Expanded(
-            child: _employeeList.isEmpty
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : ListView.builder(
-                    padding: EdgeInsets.zero,
-                    itemCount: _employeeList.length,
-                    itemBuilder: (context, index) {
-                      Employee employee = _employeeList[index];
-                      return Padding(
-                        padding: const EdgeInsets.only(
-                          left: 16.0,
-                          right: 16.0,
-                          top: 4.0,
-                          bottom: 4,
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(
-                                  EchnoSize.borderRadiusLg),
-                              color: EchnoColors.accent),
-                          child: ListTile(
-                            leading: CircleAvatar(
-                              radius: 25,
-                              backgroundImage: employee.photoUrl != null
-                                  ? NetworkImage(employee.photoUrl!)
-                                  : null,
-                              child: employee.photoUrl == null
-                                  ? const Icon(Icons.account_circle, size: 50)
-                                  : null,
-                            ),
-                            title: Text(employee.employeeName),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(getEmloyeeRoleName(employee.employeeRole)),
-                                Text(employee.employeeId),
-                              ],
-                            ),
-                            trailing: Container(
-                              width: 50.0,
-                              height: 50.0,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                      EchnoSize.borderRadiusLg),
-                                  color: EchnoColors.error),
-                              child: IconButton(
-                                icon: const Icon(Icons.delete),
-                                onPressed: () {
-                                  showDeleteDialog(
-                                      context,
-                                      [employee.employeeId],
-                                      widget.siteoffice.siteOfficeName);
-                                },
+              child: _employeeList.isEmpty
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : ListView.builder(
+                      padding: EdgeInsets.zero,
+                      itemCount: _employeeList.length,
+                      itemBuilder: (context, index) {
+                        Employee employee = _employeeList[index];
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                            left: 16.0,
+                            right: 16.0,
+                            top: 4.0,
+                            bottom: 4,
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                    EchnoSize.borderRadiusLg),
+                                color: isDarkMode
+                                    ? EchnoColors.attendanceCarddark
+                                    : EchnoColors.attendanceCardlight),
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                radius: 25,
+                                backgroundImage: employee.photoUrl != null
+                                    ? NetworkImage(employee.photoUrl!)
+                                    : null,
+                                child: employee.photoUrl == null
+                                    ? const Icon(Icons.account_circle, size: 50)
+                                    : null,
+                              ),
+                              title: Text(employee.employeeName),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(getEmloyeeRoleName(
+                                      employee.employeeRole)),
+                                  Text(employee.employeeId),
+                                ],
+                              ),
+                              trailing: Container(
+                                width: 50.0,
+                                height: 50.0,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(
+                                        EchnoSize.borderRadiusLg),
+                                    color: EchnoColors.error),
+                                child: IconButton(
+                                  icon: const Icon(Icons.delete),
+                                  onPressed: () {
+                                    showDeleteDialog(
+                                        context,
+                                        [employee.employeeId],
+                                        siteofficeobj.siteOfficeName);
+                                  },
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-          )
+                        );
+                      },
+                    ))
         ],
       ),
     );
