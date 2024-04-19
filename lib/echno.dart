@@ -17,15 +17,20 @@ class EchnoApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: BlocProvider<AuthBloc>(
-        create: (context) => AuthBloc(FirebaseAuthHandler()),
-        child: const AuthStateManagementWidget(),
+    return Center(
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 420.0),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: BlocProvider<AuthBloc>(
+            create: (context) => AuthBloc(FirebaseAuthHandler()),
+            child: const AuthStateManagementWidget(),
+          ),
+          theme: EchnoCustomTheme.lightTheme,
+          darkTheme: EchnoCustomTheme.darkTheme,
+          themeMode: ThemeMode.system,
+        ),
       ),
-      theme: EchnoCustomTheme.lightTheme,
-      darkTheme: EchnoCustomTheme.darkTheme,
-      themeMode: ThemeMode.system,
     );
   }
 }

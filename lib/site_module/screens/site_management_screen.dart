@@ -102,6 +102,7 @@ class _SiteManageState extends State<SiteManage> {
                           ),
                           Text(
                             siteOffice.siteOfficeName,
+                            textAlign: TextAlign.center,
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
