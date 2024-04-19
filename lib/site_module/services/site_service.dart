@@ -90,6 +90,11 @@ class SiteService implements SiteHandler {
   }
 
   @override
+  Future<SiteOffice> fetchSpecificSiteOffice({required String siteOfficeId}) {
+    return _handler.fetchSpecificSiteOffice(siteOfficeId: siteOfficeId);
+  }
+
+  @override
   Future<List<SiteOffice>> populateSiteOfficeList(
       {required List<String> siteNameList}) {
     return _handler.populateSiteOfficeList(siteNameList: siteNameList);

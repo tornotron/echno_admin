@@ -42,6 +42,8 @@ abstract class SiteHandler {
 
   Stream<List<SiteOffice>> fetchSiteOffices();
 
+  Future<SiteOffice> fetchSpecificSiteOffice({required String siteOfficeId});
+
   Future<List<SiteOffice>> populateSiteOfficeList(
       {required List<String> siteNameList});
 }

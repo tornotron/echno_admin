@@ -160,9 +160,19 @@ class FirestoreSiteHandler implements SiteHandler {
 
   @override
   Future<void> addSiteMember(
-      {required String siteName, required List<String>? memberList}) {
-    // TODO: implement addSiteMember
-    throw UnimplementedError();
+      {required String siteName, required List<String>? memberList}) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('site')
+          .doc(siteName)
+          .update({'employee-list': FieldValue.arrayUnion(memberList!)});
+    } on FirebaseException catch (e) {
+      print("Error: $e");
+      throw Exception('Failed to add members: $e');
+    } catch (e) {
+      print("Unknown error: $e");
+      throw Exception('Unknown error occurred: $e');
+    }
   }
 
   @override
@@ -183,6 +193,26 @@ class FirestoreSiteHandler implements SiteHandler {
           }).toList();
         },
       );
+    } on FirebaseException catch (e) {
+      throw EchnoFirebaseException(e.code).message;
+    } on PlatformException catch (e) {
+      throw EchnoPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong.! Please try again.';
+    }
+  }
+
+  @override
+  Future<SiteOffice> fetchSpecificSiteOffice(
+      {required String siteOfficeId}) async {
+    try {
+      var documentSnapshot =
+          await _firestore.collection('site').doc(siteOfficeId).get();
+      if (documentSnapshot.exists) {
+        return SiteOffice.fromDocumentSnapshot(documentSnapshot);
+      } else {
+        throw 'No site office found with id: $siteOfficeId';
+      }
     } on FirebaseException catch (e) {
       throw EchnoFirebaseException(e.code).message;
     } on PlatformException catch (e) {
