@@ -23,12 +23,26 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
   EmployeeBloc(this.basicEmployeeDatabaseHandler)
       : super(const EmployeeNotInitializedState()) {
     on<EmployeeInitializeEvent>((event, emit) async {
-      currentEmployee = await basicEmployeeDatabaseHandler.currentEmployee;
+      try {
+        currentEmployee = await basicEmployeeDatabaseHandler.currentEmployee;
+      } catch (e) {
+        if (e
+            .toString()
+            .contains('Employee Not Added to Employee Collection')) {
+          emit(const EnterEmployeeIdState());
+        } else {
+          emit(const EmployeeNotInitializedState());
+        }
+      }
       siteOffices = await siteService.populateSiteOfficeList(
           siteNameList: currentEmployee.sites!);
       isAttendanceMarked = await AttendanceCheck()
           .attendanceTodayCheck(currentEmployee.employeeId, formattedDate);
-      emit(const EmployeeInitializedState());
+      if (currentEmployee.employeeStatus == false) {
+        emit(const EmployeeInactiveState());
+      } else {
+        emit(const EmployeeInitializedState());
+      }
     });
     on<EmployeeHomeEvent>((event, emit) {
       emit(const EmployeeHomeState());

@@ -3,8 +3,10 @@ import 'package:echno_attendance/camera/take_picture_screen.dart';
 import 'package:echno_attendance/employee/bloc/employee_bloc.dart';
 import 'package:echno_attendance/employee/bloc/employee_event.dart';
 import 'package:echno_attendance/employee/bloc/employee_state.dart';
+import 'package:echno_attendance/employee/screens/enter_employee_id.dart';
 import 'package:echno_attendance/employee/screens/hr_screens/hr_dashboard.dart';
 import 'package:echno_attendance/employee/screens/homepage_screen.dart';
+import 'package:echno_attendance/employee/screens/inactive_employee_screen.dart';
 import 'package:echno_attendance/employee/utilities/employee_role.dart';
 import 'package:echno_attendance/leave_module/screens/leave_status_screen.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +37,10 @@ class _EmployeeStateManagementWidgetState
             } else {
               return const HomePage();
             }
+          } else if (state is EmployeeInactiveState) {
+            return const InactiveEmployeeScreen();
+          } else if (state is EnterEmployeeIdState) {
+            return const EnterEmployeeIdScreen();
           } else if (state is EmployeeProfileState) {
             return const HomePage();
           } else if (state is EmployeeHomeState) {

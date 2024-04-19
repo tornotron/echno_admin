@@ -13,6 +13,14 @@ class EmployeeNotInitializedState extends EmployeeState {
   const EmployeeNotInitializedState();
 }
 
+class EnterEmployeeIdState extends EmployeeState {
+  const EnterEmployeeIdState();
+}
+
+class EmployeeInactiveState extends EmployeeState {
+  const EmployeeInactiveState();
+}
+
 class EmployeeInitializedState extends EmployeeState {
   const EmployeeInitializedState();
 }
