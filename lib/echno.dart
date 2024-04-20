@@ -19,7 +19,7 @@ class EchnoApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        constraints: const BoxConstraints(maxWidth: 420.0),
+        constraints: const BoxConstraints(maxWidth: 390.0),
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           home: BlocProvider<AuthBloc>(
