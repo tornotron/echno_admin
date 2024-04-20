@@ -15,15 +15,18 @@ class RegistrationForm extends StatelessWidget {
     required TextEditingController employeeIdController,
     required TextEditingController emailController,
     required TextEditingController passwordController,
+    required TextEditingController confirmPasswordController,
   })  : _registrationFormKey = registrationFormKey,
         _employeeIdController = employeeIdController,
         _emailController = emailController,
-        _passwordController = passwordController;
+        _passwordController = passwordController,
+        _confirmPasswordController = confirmPasswordController;
 
   final GlobalKey<FormState> _registrationFormKey;
   final TextEditingController _employeeIdController;
   final TextEditingController _emailController;
   final TextEditingController _passwordController;
+  final TextEditingController _confirmPasswordController;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +42,7 @@ class RegistrationForm extends StatelessWidget {
             decoration: InputDecoration(
               prefixIcon: const Icon(Icons.person_outline_outlined),
               labelText: 'Employee ID',
-              hintText: 'EMP-000001',
+              hintText: 'Enter Employee ID...',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(
                   (EchnoSize.borderRadiusLg),
@@ -77,12 +80,20 @@ class RegistrationForm extends StatelessWidget {
           ),
           const SizedBox(height: EchnoSize.spaceBtwItems),
 
-          // // Re-Enter Password TextField
-          // const PasswordTextField(
-          //   labelText: 'Re-Enter Password',
-          //   hintText: 'Re-Enter Password',
-          // ),
-          // const SizedBox(height: 30.0),
+          PasswordTextField(
+            controller: _confirmPasswordController,
+            labelText: 'Confirm Password',
+            hintText: 'Confirm Password',
+            validator: (value) {
+              if (value != _passwordController.text) {
+                return 'Passwords do not match...';
+              } else if (value == null || value.isEmpty) {
+                return 'Password is required...';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: EchnoSize.spaceBtwItems),
 
           // Register Button
           SizedBox(

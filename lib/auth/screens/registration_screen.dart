@@ -25,12 +25,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final GlobalKey<FormState> _registrationFormKey = GlobalKey<FormState>();
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
+  late final TextEditingController _confirmPasswordController;
   late final TextEditingController _employeeIdController;
 
   @override
   void initState() {
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+    _confirmPasswordController = TextEditingController();
     _employeeIdController = TextEditingController();
     super.initState();
   }
@@ -39,6 +41,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     _employeeIdController.dispose();
     super.dispose();
   }
@@ -101,6 +104,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     employeeIdController: _employeeIdController,
                     emailController: _emailController,
                     passwordController: _passwordController,
+                    confirmPasswordController: _confirmPasswordController,
                   ),
                   const SizedBox(height: EchnoSize.spaceBtwSections),
                   // Footer Section Widget
