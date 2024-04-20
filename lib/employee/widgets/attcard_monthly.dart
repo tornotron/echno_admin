@@ -1,7 +1,6 @@
 import 'package:echno_attendance/attendance/services/attendance_controller.dart';
 import 'package:echno_attendance/attendance/domain/firestore/attendance_firestore_handler.dart';
 import 'package:echno_attendance/constants/colors.dart';
-import 'package:echno_attendance/constants/colors_string.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 
@@ -98,15 +97,13 @@ class AttendanceCardMonthly extends StatelessWidget {
                             width: 95,
                             height: 80,
                             decoration: BoxDecoration(
-                              color: echnoBlueLightColor,
+                              color: EchnoColors.attendanceDate,
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: Center(
                               child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
                                   Text(
                                     varattendanceDay,
                                     style: const TextStyle(
@@ -131,9 +128,7 @@ class AttendanceCardMonthly extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const SizedBox(
-                              height: 20,
-                            ),
+                            const SizedBox(height: 20),
                             Text(
                               varemployeeName,
                               style: Theme.of(context)
@@ -143,9 +138,7 @@ class AttendanceCardMonthly extends StatelessWidget {
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold),
                             ),
-                            const SizedBox(
-                              height: 5,
-                            ),
+                            const SizedBox(height: 5),
                             Row(
                               children: [
                                 Column(
@@ -170,9 +163,7 @@ class AttendanceCardMonthly extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
+                                const SizedBox(width: 10),
                                 Column(
                                   children: [
                                     Text(
@@ -199,9 +190,6 @@ class AttendanceCardMonthly extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          width: 15,
-                        ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
@@ -212,7 +200,7 @@ class AttendanceCardMonthly extends StatelessWidget {
                             width: 95,
                             height: 80,
                             decoration: BoxDecoration(
-                              color: echnoBlueLightColor,
+                              color: EchnoColors.attendanceDate,
                               borderRadius: BorderRadius.circular(20),
                               image: DecorationImage(
                                 image: employeeImg,

@@ -13,6 +13,7 @@ class EchnoColors {
   // Attendance Colors
   static const Color attendanceCardlight = Color(0xFFE0E0E0);
   static const Color attendanceCarddark = Color.fromARGB(255, 74, 78, 82);
+  static const Color attendanceDate = Color(0xFFC3E7FD);
 
   // Text colors
   static const Color textPrimary = Color(0xFF333333);
