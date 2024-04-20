@@ -50,10 +50,35 @@ class EmployeeProfileForm extends StatelessWidget {
             value: getEmloyeeRoleName(currentEmployee.employeeRole),
             icon: Icons.work_outline),
         const Divider(),
-        ProfileFieldsWidget(
-            title: 'Sites',
-            value: currentEmployee.sites?.join(', ') ?? 'No site assigned',
-            icon: Icons.work_outline),
+        ListTile(
+          leading: const Icon(Icons.work_outline),
+          title: Text(
+            'Sites',
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge
+                ?.copyWith(fontSize: 15.0),
+          ),
+          trailing: SizedBox(
+            width: 130.0,
+            child: Wrap(
+              spacing: 8.0,
+              alignment: WrapAlignment.end,
+              children: [
+                Text(
+                  currentEmployee.sites!.isNotEmpty
+                      ? currentEmployee.sites?.join(', ') ?? 'No site assigned'
+                      : 'No site assigned',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge
+                      ?.copyWith(fontSize: 15.0),
+                  textAlign: TextAlign.end,
+                ),
+              ],
+            ),
+          ),
+        ),
         const Divider(),
         ProfileMenuWidget(
             isDark: isDark,
