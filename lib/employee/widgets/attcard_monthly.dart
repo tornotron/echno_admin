@@ -76,155 +76,145 @@ class AttendanceCardMonthly extends StatelessWidget {
                 ImageProvider employeeImg =
                     NetworkImage(attendanceData['image-url']!);
                 varattendanceTime = varattendanceTime.substring(0, 5);
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: isDarkMode
-                          ? EchnoColors.attendanceCarddark
-                          : EchnoColors.attendanceCardlight,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    height: 120,
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Container(
-                            constraints: const BoxConstraints(
-                              maxHeight: 100,
-                              maxWidth: 105,
-                            ),
-                            width: 95,
-                            height: 80,
-                            decoration: BoxDecoration(
-                              color: echnoBlueLightColor,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Center(
-                              child: Column(
+                return Card(
+                  color: isDarkMode
+                      ? EchnoColors.attendanceCarddark
+                      : EchnoColors.attendanceCardlight,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.all(13.0),
+                        constraints:
+                            const BoxConstraints(maxHeight: 100, maxWidth: 105),
+                        width: 95,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          color: echnoBlueLightColor,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                varattendanceDay,
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'TT Chocolates',
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              Text(
+                                varattendanceMonth,
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'TT Chocolates',
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            varemployeeName,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.copyWith(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 5),
+                          Row(
+                            children: [
+                              Column(
                                 children: [
-                                  const SizedBox(
-                                    height: 5,
+                                  Text(
+                                    "Check-In",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                          fontSize: 13,
+                                        ),
                                   ),
                                   Text(
-                                    varattendanceDay,
-                                    style: const TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'TT Chocolates',
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.w600),
+                                    varattendanceTime,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                          fontSize: 12,
+                                        ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(width: 10),
+                              Column(
+                                children: [
+                                  Text(
+                                    "Check-out",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                          fontSize: 13,
+                                        ),
                                   ),
                                   Text(
-                                    varattendanceMonth,
-                                    style: const TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'TT Chocolates',
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w600),
+                                    "--:--",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                          fontSize: 12,
+                                        ),
                                   )
                                 ],
                               ),
-                            ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Container(
+                        margin: const EdgeInsets.all(8.0),
+                        constraints: const BoxConstraints(
+                          maxHeight: 100,
+                          maxWidth: 105,
+                        ),
+                        width: 95,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          color: echnoBlueLightColor,
+                          borderRadius: BorderRadius.circular(20),
+                          image: DecorationImage(
+                            image: employeeImg,
+                            fit: BoxFit.cover,
                           ),
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Text(
-                              varemployeeName,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Row(
-                              children: [
-                                Column(
-                                  children: [
-                                    Text(
-                                      "Check-In",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            fontSize: 13,
-                                          ),
-                                    ),
-                                    Text(
-                                      varattendanceTime,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            fontSize: 12,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Column(
-                                  children: [
-                                    Text(
-                                      "Check-out",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            fontSize: 13,
-                                          ),
-                                    ),
-                                    Text(
-                                      "--:--",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            fontSize: 12,
-                                          ),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            constraints: const BoxConstraints(
-                              maxHeight: 100,
-                              maxWidth: 105,
-                            ),
-                            width: 95,
-                            height: 80,
-                            decoration: BoxDecoration(
-                              color: echnoBlueLightColor,
-                              borderRadius: BorderRadius.circular(20),
-                              image: DecorationImage(
-                                image: employeeImg,
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 );
+                // Padding(
+                //   padding: const EdgeInsets.all(8.0),
+                //   child: Container(
+                //     decoration: BoxDecoration(
+                //       color: isDarkMode
+                //           ? EchnoColors.attendanceCarddark
+                //           : EchnoColors.attendanceCardlight,
+                //       borderRadius: BorderRadius.circular(20),
+                //     ),
+                //     height: 120,
+                //     child:
+                //   ),
+                // );
               },
             ),
           );
