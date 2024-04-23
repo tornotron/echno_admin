@@ -6,7 +6,9 @@ import 'package:echno_attendance/task_module/services/task_service.dart';
 import 'package:echno_attendance/task_module/utilities/task_status.dart';
 import 'package:echno_attendance/task_module/widgets/task_home_widgets/task_home_header.dart';
 import 'package:echno_attendance/task_module/widgets/task_home_widgets/task_home_stream.dart';
+import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:echno_attendance/utilities/styles/padding_style.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TaskHomeScreen extends StatefulWidget {
@@ -25,9 +27,14 @@ class TaskHomeScreen extends StatefulWidget {
 class _TaskHomeScreenState extends State<TaskHomeScreen> {
   final taskService = TaskService.firestoreTasks();
 
-  late int _selectedIndex;
+  int? _selectedIndex;
   late SiteOffice siteOffice;
   late Map<TaskStatus, int> taskCounts;
+  bool isLoading = false;
+  int onHoldCount = 0;
+  int onGoingCount = 0;
+  int upComingCount = 0;
+  int completedCount = 0;
 
   @override
   void initState() {
@@ -38,15 +45,24 @@ class _TaskHomeScreenState extends State<TaskHomeScreen> {
   }
 
   Future<void> _updateTaskCounts() async {
+    setState(() {
+      isLoading = true;
+    });
     final taskCountMap = await taskService.getSiteTaskCounts(
         siteOffice: widget.siteOffice.siteOfficeName);
     setState(() {
-      taskCounts = taskCountMap;
+      onHoldCount = taskCountMap[TaskStatus.onHold] ?? 0;
+      onGoingCount = taskCountMap[TaskStatus.inProgress] ?? 0;
+      upComingCount = taskCountMap[TaskStatus.todo] ?? 0;
+      completedCount = taskCountMap[TaskStatus.completed] ?? 0;
+      isLoading = false;
     });
   }
 
   @override
   Widget build(context) {
+    final isDark = EchnoHelperFunctions.isDarkMode(context);
+
     return Scaffold(
       appBar: EchnoAppBar(
         leadingIcon: Icons.arrow_back_ios_new,
@@ -58,82 +74,52 @@ class _TaskHomeScreenState extends State<TaskHomeScreen> {
           style: Theme.of(context).textTheme.headlineSmall,
         ),
       ),
-      body: Padding(
-        padding: CustomPaddingStyle.defaultPaddingWithAppbar,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TaskHomeHeader(siteOffice: siteOffice),
-            const SizedBox(height: EchnoSize.spaceBtwSections),
-            Center(
+      body: isLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : Padding(
+              padding: CustomPaddingStyle.defaultPaddingWithAppbar,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  TaskHomeHeader(siteOffice: siteOffice),
+                  const SizedBox(height: EchnoSize.spaceBtwSections),
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        buildCategoryButton(
-                            0, 'On Hold', taskCounts[TaskStatus.onHold] ?? 0),
-                        buildCategoryButton(1, 'Ongoing',
-                            taskCounts[TaskStatus.inProgress] ?? 0),
-                        buildCategoryButton(
-                            2, 'Upcoming', taskCounts[TaskStatus.todo] ?? 0),
-                        buildCategoryButton(3, 'Completed',
-                            taskCounts[TaskStatus.completed] ?? 0),
+                        CupertinoSlidingSegmentedControl(
+                          thumbColor: isDark
+                              ? EchnoColors.selectedNavDark
+                              : EchnoColors.selectedNavLight,
+                          children: {
+                            0: Text('On Hold ($onHoldCount)'),
+                            1: Text('Ongoing ($onGoingCount)'),
+                            2: Text('Upcoming ($upComingCount)'),
+                            3: Text('Completed ($completedCount)'),
+                          },
+                          groupValue: _selectedIndex,
+                          onValueChanged: (int? index) {
+                            setState(() {
+                              _selectedIndex = index;
+                            });
+                          },
+                        ),
                       ],
                     ),
+                  ),
+                  const SizedBox(height: EchnoSize.spaceBtwItems),
+                  const Divider(height: EchnoSize.dividerHeight),
+                  const SizedBox(height: EchnoSize.spaceBtwItems),
+                  TaskHomeStreamWidget(
+                    siteOffice: siteOffice.siteOfficeName,
+                    taskService: taskService,
+                    selectedIndex: _selectedIndex!,
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: EchnoSize.spaceBtwItems),
-            const Divider(height: EchnoSize.dividerHeight),
-            const SizedBox(height: EchnoSize.spaceBtwItems),
-            TaskHomeStreamWidget(
-              siteOffice: siteOffice.siteOfficeName,
-              taskService: taskService,
-              selectedIndex: _selectedIndex,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildCategoryButton(int index, String text, int taskCount) {
-    Brightness themeMode = Theme.of(context).brightness;
-    Color selectedColor = themeMode == Brightness.dark
-        ? EchnoColors.selectedNavDark
-        : EchnoColors.selectedNavLight;
-    Color unselectedColor = EchnoColors.darkGrey;
-    return InkWell(
-      onTap: () {
-        setState(() {
-          _selectedIndex = index;
-        });
-      },
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-        decoration: BoxDecoration(
-          color: _selectedIndex == index ? selectedColor : unselectedColor,
-          border: const Border(
-            left: BorderSide(width: 0.1),
-            right: BorderSide(width: 0.1),
-          ),
-        ),
-        child: Row(
-          children: [
-            Text('$text ($taskCount)',
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      color: EchnoColors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 13.0,
-                    )),
-          ],
-        ),
-      ),
     );
   }
 }
