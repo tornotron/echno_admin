@@ -162,6 +162,7 @@ class _LeaveApplicationFormState extends State<LeaveApplicationForm> {
         endDate = null;
         _selectedLeaveType = null;
       });
+      Navigator.pop(context);
     }
   }
 
