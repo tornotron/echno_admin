@@ -84,7 +84,7 @@ class _SiteManageState extends State<SiteManage> {
                             image: siteImage, fit: BoxFit.cover),
                       ),
                       child: Stack(
-                        alignment: Alignment.center,
+                        alignment: Alignment.bottomCenter,
                         children: [
                           InkWell(
                             onLongPress: () {},
@@ -100,12 +100,16 @@ class _SiteManageState extends State<SiteManage> {
                               );
                             },
                           ),
-                          Text(
-                            siteOffice.siteOfficeName,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 24,
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              siteOffice.siteOfficeName,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 24,
+                              ),
+                              overflow: TextOverflow.ellipsis,
                             ),
                           )
                         ],
