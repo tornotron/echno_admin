@@ -3,8 +3,9 @@ import 'package:echno_attendance/camera/take_picture_screen.dart';
 import 'package:echno_attendance/employee/bloc/employee_bloc.dart';
 import 'package:echno_attendance/employee/bloc/employee_event.dart';
 import 'package:echno_attendance/employee/bloc/employee_state.dart';
+import 'package:echno_attendance/employee/hr_bloc/hr_bloc.dart';
+import 'package:echno_attendance/employee/hr_bloc/hr_state_management.dart';
 import 'package:echno_attendance/employee/screens/enter_employee_id.dart';
-import 'package:echno_attendance/employee/screens/hr_screens/hr_dashboard.dart';
 import 'package:echno_attendance/employee/screens/homepage_screen.dart';
 import 'package:echno_attendance/employee/screens/inactive_employee_screen.dart';
 import 'package:echno_attendance/employee/utilities/employee_role.dart';
@@ -33,7 +34,10 @@ class _EmployeeStateManagementWidgetState
               return bloc.currentEmployee;
             });
             if (currentEmployee.employeeRole == EmployeeRole.hr) {
-              return const HRDashboardScreen();
+              return BlocProvider(
+                create: (context) => HrBloc(),
+                child: const HrStateManagement(),
+              );
             } else {
               return const HomePage();
             }
@@ -46,7 +50,10 @@ class _EmployeeStateManagementWidgetState
           } else if (state is EmployeeHomeState) {
             return const HomePage();
           } else if (state is HrHomeState) {
-            return const HRDashboardScreen();
+            return BlocProvider(
+              create: (context) => HrBloc(),
+              child: const HrStateManagement(),
+            );
           } else if (state is EmployeeLeavesState) {
             return const LeaveStatusScreen();
           } else if (state is TakePictureState) {
