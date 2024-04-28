@@ -2,7 +2,7 @@ import 'package:echno_attendance/employee/hr_bloc/hr_bloc.dart';
 import 'package:echno_attendance/employee/hr_bloc/hr_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:echno_attendance/employee/screens/hr_screens/hr_dashboard.dart';
+import 'package:echno_attendance/employee/screens/hr_screens/hr_dashboard_screen.dart';
 
 class HrStateManagement extends StatefulWidget {
   const HrStateManagement({super.key});

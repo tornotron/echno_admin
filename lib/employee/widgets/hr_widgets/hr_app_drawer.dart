@@ -4,7 +4,7 @@ import 'package:echno_attendance/auth/utilities/alert_dialogue.dart';
 import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
-import 'package:echno_attendance/employee/screens/hr_screens/add_employee.dart';
+import 'package:echno_attendance/employee/screens/hr_screens/add_employee_screen.dart';
 import 'package:echno_attendance/employee/screens/hr_screens/update_details_screen.dart';
 import 'package:echno_attendance/employee/widgets/hr_widgets/hr_drawer_menu_item.dart';
 import 'package:flutter/material.dart';
