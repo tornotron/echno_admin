@@ -1,6 +1,6 @@
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/constants/sizes.dart';
-import 'package:echno_attendance/leave_module/screens/site_leave_register.dart';
+import 'package:echno_attendance/leave_module/screens/site_leave_register_screen.dart';
 import 'package:echno_attendance/site_module/models/site_model.dart';
 import 'package:echno_attendance/site_module/screens/site_assignment_screen.dart';
 import 'package:echno_attendance/site_module/screens/site_attendance_screen.dart';
@@ -67,7 +67,7 @@ class _SiteHomeScreenState extends State<SiteHomeScreen> {
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return SiteLeaveRegister(
+                      return SiteLeaveRegisterScreen(
                         siteOffice: siteOffice,
                       );
                     }));

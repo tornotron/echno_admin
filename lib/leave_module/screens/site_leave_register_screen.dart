@@ -8,18 +8,19 @@ import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:echno_attendance/utilities/styles/padding_style.dart';
 import 'package:flutter/material.dart';
 
-class SiteLeaveRegister extends StatefulWidget {
+class SiteLeaveRegisterScreen extends StatefulWidget {
   final SiteOffice siteOffice;
-  const SiteLeaveRegister({
+  const SiteLeaveRegisterScreen({
     required this.siteOffice,
     super.key,
   });
 
   @override
-  State<SiteLeaveRegister> createState() => SiteLeaveRegisterState();
+  State<SiteLeaveRegisterScreen> createState() =>
+      SiteLeaveRegisterScreenState();
 }
 
-class SiteLeaveRegisterState extends State<SiteLeaveRegister> {
+class SiteLeaveRegisterScreenState extends State<SiteLeaveRegisterScreen> {
   final TextEditingController _searchController = TextEditingController();
   late final Employee currentEmployee;
 
