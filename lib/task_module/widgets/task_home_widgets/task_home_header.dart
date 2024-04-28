@@ -1,5 +1,5 @@
 import 'package:echno_attendance/site_module/models/site_model.dart';
-import 'package:echno_attendance/task_module/screens/add_new_task.dart';
+import 'package:echno_attendance/task_module/screens/add_task_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
