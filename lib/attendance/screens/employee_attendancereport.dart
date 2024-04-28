@@ -2,8 +2,11 @@ import 'package:echno_attendance/attendance/screens/daily_report.dart';
 import 'package:echno_attendance/attendance/screens/monthlyreport.dart';
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/constants/colors.dart';
+import 'package:echno_attendance/employee/hr_bloc/hr_bloc.dart';
+import 'package:echno_attendance/employee/hr_bloc/hr_event.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AttendanceReportScreen extends StatefulWidget {
   const AttendanceReportScreen({super.key});
@@ -95,7 +98,7 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
       appBar: EchnoAppBar(
         leadingIcon: Icons.arrow_back_ios_new,
         leadingOnPressed: () {
-          Navigator.pop(context);
+          context.read<HrBloc>().add(const HrDashboardEvent());
         },
         title: Text('Attendance Report',
             style: Theme.of(context).textTheme.headlineSmall),

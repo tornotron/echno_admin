@@ -1,9 +1,12 @@
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
+import 'package:echno_attendance/employee/hr_bloc/hr_bloc.dart';
+import 'package:echno_attendance/employee/hr_bloc/hr_event.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/employee/services/employee_service.dart';
 import 'package:echno_attendance/leave_module/widgets/employee_leave_register.dart';
 import 'package:echno_attendance/utilities/styles/padding_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LeaveRegisterScreen extends StatelessWidget {
   const LeaveRegisterScreen({super.key});
@@ -14,7 +17,7 @@ class LeaveRegisterScreen extends StatelessWidget {
       appBar: EchnoAppBar(
         leadingIcon: Icons.arrow_back_ios_new,
         leadingOnPressed: () {
-          Navigator.pop(context);
+          context.read<HrBloc>().add(const HrDashboardEvent());
         },
         title: Text('Leave Register',
             style: Theme.of(context).textTheme.headlineSmall),

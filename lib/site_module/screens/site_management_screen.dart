@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:echno_attendance/constants/colors.dart';
+import 'package:echno_attendance/employee/hr_bloc/hr_bloc.dart';
+import 'package:echno_attendance/employee/hr_bloc/hr_event.dart';
 import 'package:echno_attendance/site_module/models/site_model.dart';
 import 'package:echno_attendance/site_module/screens/create_site_screen.dart';
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/site_module/screens/site_home_screen.dart';
 import 'package:echno_attendance/site_module/services/site_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SiteManagementScreen extends StatefulWidget {
   const SiteManagementScreen({super.key});
@@ -41,7 +44,7 @@ class _SiteManagementScreenState extends State<SiteManagementScreen> {
         appBar: EchnoAppBar(
           leadingIcon: Icons.arrow_back_ios_new,
           leadingOnPressed: () {
-            Navigator.pop(context);
+            context.read<HrBloc>().add(const HrDashboardEvent());
           },
           title: Text('Site Management',
               style: Theme.of(context).textTheme.headlineSmall),

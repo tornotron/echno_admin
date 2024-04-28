@@ -1,10 +1,13 @@
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/constants/static_text.dart';
+import 'package:echno_attendance/employee/hr_bloc/hr_bloc.dart';
+import 'package:echno_attendance/employee/hr_bloc/hr_event.dart';
 import 'package:echno_attendance/employee/widgets/hr_widgets/employee_register_stream.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:echno_attendance/utilities/styles/padding_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EmployeeRegisterScreen extends StatefulWidget {
   const EmployeeRegisterScreen({super.key});
@@ -25,7 +28,7 @@ class _EmployeeRegisterScreenState extends State<EmployeeRegisterScreen> {
         appBar: EchnoAppBar(
           leadingIcon: Icons.arrow_back_ios_new,
           leadingOnPressed: () {
-            Navigator.pop(context);
+            context.read<HrBloc>().add(const HrDashboardEvent());
           },
           title: Text('Employee Register',
               style: Theme.of(context).textTheme.headlineSmall),
