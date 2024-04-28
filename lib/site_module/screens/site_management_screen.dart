@@ -7,14 +7,14 @@ import 'package:echno_attendance/site_module/screens/site_home_screen.dart';
 import 'package:echno_attendance/site_module/services/site_service.dart';
 import 'package:flutter/material.dart';
 
-class SiteManage extends StatefulWidget {
-  const SiteManage({super.key});
+class SiteManagementScreen extends StatefulWidget {
+  const SiteManagementScreen({super.key});
 
   @override
-  State<SiteManage> createState() => _SiteManageState();
+  State<SiteManagementScreen> createState() => _SiteManagementScreenState();
 }
 
-class _SiteManageState extends State<SiteManage> {
+class _SiteManagementScreenState extends State<SiteManagementScreen> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   late ImageProvider siteImage;
   final formKey = GlobalKey<FormState>();
