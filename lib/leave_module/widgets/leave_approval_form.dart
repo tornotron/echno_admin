@@ -1,6 +1,5 @@
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
-import 'package:echno_attendance/employee/services/employee_service.dart';
 import 'package:echno_attendance/employee/utilities/employee_role.dart';
 import 'package:echno_attendance/leave_module/models/leave_model.dart';
 import 'package:echno_attendance/leave_module/services/leave_services.dart';
@@ -15,9 +14,11 @@ class LeaveApprovalForm extends StatefulWidget {
   const LeaveApprovalForm({
     super.key,
     required this.leave,
+    required this.currentEmployee,
   });
 
   final Leave leave;
+  final Employee currentEmployee;
   @override
   State<LeaveApprovalForm> createState() => _LeaveApprovalFormState();
 }
@@ -25,23 +26,14 @@ class LeaveApprovalForm extends StatefulWidget {
 class _LeaveApprovalFormState extends State<LeaveApprovalForm> {
   final _leaveHandler = LeaveService.firestoreLeave();
   late Leave leave;
-  late final Employee currentEmployee;
   LeaveStatus? selectedLeaveStatus;
   final TextEditingController _remarksController = TextEditingController();
-
-  Future<void> _fetchCurrentEmployee() async {
-    final employee = await EmployeeService.firestore().currentEmployee;
-    setState(() {
-      currentEmployee = employee;
-    });
-  }
 
   @override
   void initState() {
     super.initState();
     leave = widget.leave;
     selectedLeaveStatus = leave.leaveStatus;
-    _fetchCurrentEmployee();
     _remarksController.text = leave.remarks!;
   }
 
@@ -66,13 +58,13 @@ class _LeaveApprovalFormState extends State<LeaveApprovalForm> {
         LeaveFormField(
           mainLabel: 'Employee Name',
           isReadOnly: true,
-          hintText: currentEmployee.employeeName,
+          hintText: widget.currentEmployee.employeeName,
         ),
         const SizedBox(height: EchnoSize.spaceBtwItems),
         LeaveFormField(
           mainLabel: 'Employee ID',
           isReadOnly: true,
-          hintText: currentEmployee.employeeId,
+          hintText: widget.currentEmployee.employeeId,
         ),
         const SizedBox(height: EchnoSize.spaceBtwItems),
         LeaveFormField(
@@ -150,7 +142,7 @@ class _LeaveApprovalFormState extends State<LeaveApprovalForm> {
       ],
     );
 
-    if (currentEmployee.employeeRole != EmployeeRole.hr) {
+    if (widget.currentEmployee.employeeRole != EmployeeRole.hr) {
       content = Center(
         child: Text(
           'You are not authorized to access this Page. Please contact HR',
