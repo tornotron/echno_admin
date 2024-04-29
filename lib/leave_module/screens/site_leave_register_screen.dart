@@ -1,8 +1,11 @@
 import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/leave_module/widgets/site_leave_register.dart';
+import 'package:echno_attendance/site_module/bloc/site_bloc.dart';
+import 'package:echno_attendance/site_module/bloc/site_event.dart';
 import 'package:echno_attendance/site_module/models/site_model.dart';
 import 'package:echno_attendance/utilities/styles/padding_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SiteLeaveRegisterScreen extends StatelessWidget {
   final SiteOffice siteOffice;
@@ -18,7 +21,7 @@ class SiteLeaveRegisterScreen extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new),
           onPressed: () {
-            Navigator.pop(context);
+            context.read<SiteBloc>().add(SiteHomeEvent(siteOffice: siteOffice));
           },
         ),
         title: Text('Leave Management',

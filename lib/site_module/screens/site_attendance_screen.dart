@@ -3,9 +3,12 @@ import 'package:date_picker_timeline/extra/style.dart';
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/employee/widgets/attcard_daily.dart';
+import 'package:echno_attendance/site_module/bloc/site_bloc.dart';
+import 'package:echno_attendance/site_module/bloc/site_event.dart';
 import 'package:echno_attendance/site_module/models/site_model.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class SiteAttendanceReport extends StatefulWidget {
@@ -38,7 +41,9 @@ class _DailyState extends State<SiteAttendanceReport> {
       appBar: EchnoAppBar(
         leadingIcon: Icons.arrow_back_ios_new,
         leadingOnPressed: () {
-          Navigator.pop(context);
+          context
+              .read<SiteBloc>()
+              .add(SiteHomeEvent(siteOffice: widget.siteOffice));
         },
         title: Text('${widget.siteOffice.siteOfficeName} Report',
             style: Theme.of(context).textTheme.headlineSmall),

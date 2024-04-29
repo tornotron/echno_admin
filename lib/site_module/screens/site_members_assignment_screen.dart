@@ -6,23 +6,27 @@ import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/employee/services/hr_employee_service.dart';
 import 'package:echno_attendance/employee/utilities/employee_role.dart';
+import 'package:echno_attendance/site_module/bloc/site_bloc.dart';
+import 'package:echno_attendance/site_module/bloc/site_event.dart';
 import 'package:echno_attendance/site_module/models/site_model.dart';
 import 'package:echno_attendance/site_module/services/site_service.dart';
 import 'package:echno_attendance/site_module/widgets/employee_autocomplete.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:echno_attendance/utilities/popups/custom_snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AssignSiteScreen extends StatefulWidget {
-  final SiteOffice siteoffice;
-  const AssignSiteScreen({super.key, required this.siteoffice});
+class AssignSiteMembersScreen extends StatefulWidget {
+  final SiteOffice siteOffice;
+  const AssignSiteMembersScreen({super.key, required this.siteOffice});
 
   @override
-  State<AssignSiteScreen> createState() => _AssignSiteScreenState();
+  State<AssignSiteMembersScreen> createState() =>
+      _AssignSiteMembersScreenState();
 }
 
-class _AssignSiteScreenState extends State<AssignSiteScreen> {
-  late SiteOffice siteofficeobj; 
+class _AssignSiteMembersScreenState extends State<AssignSiteMembersScreen> {
+  late SiteOffice siteofficeobj;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   final formKey = GlobalKey<FormState>();
   List<Employee> _employeeList = [];
@@ -30,12 +34,11 @@ class _AssignSiteScreenState extends State<AssignSiteScreen> {
   List<Employee> selectedEmployees = [];
 
   List<String> employeeIdlist = [];
-  
 
   @override
   void initState() {
     super.initState();
-    siteofficeobj = widget.siteoffice;
+    siteofficeobj = widget.siteOffice;
     _initializememberData();
     _initializeallEmployeeData();
   }
@@ -104,7 +107,7 @@ class _AssignSiteScreenState extends State<AssignSiteScreen> {
               onPressed: () {
                 SiteAssignment(
                   employeeId: empString,
-                  siteOfficeName: widget.siteoffice.siteOfficeName,
+                  siteOfficeName: widget.siteOffice.siteOfficeName,
                 ).assignment();
                 Navigator.of(context).pop(true);
                 setState(() {});
@@ -127,7 +130,9 @@ class _AssignSiteScreenState extends State<AssignSiteScreen> {
       appBar: EchnoAppBar(
         leadingIcon: Icons.arrow_back_ios_new,
         leadingOnPressed: () {
-          Navigator.pop(context);
+          context
+              .read<SiteBloc>()
+              .add(SiteHomeEvent(siteOffice: widget.siteOffice));
         },
         title: Text('${siteofficeobj.siteOfficeName} Members',
             style: Theme.of(context).textTheme.headlineSmall),
@@ -163,8 +168,7 @@ class _AssignSiteScreenState extends State<AssignSiteScreen> {
                       siteOfficeId: siteofficeobj.siteOfficeName,
                     );
                     _initializememberData();
-                    setState(() {
-                    });
+                    setState(() {});
                   },
                   child: const Text('Add'),
                 ),

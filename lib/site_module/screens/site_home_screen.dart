@@ -1,14 +1,13 @@
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/constants/sizes.dart';
-import 'package:echno_attendance/leave_module/screens/site_leave_register_screen.dart';
+import 'package:echno_attendance/site_module/bloc/site_bloc.dart';
+import 'package:echno_attendance/site_module/bloc/site_event.dart';
 import 'package:echno_attendance/site_module/models/site_model.dart';
-import 'package:echno_attendance/site_module/screens/site_assignment_screen.dart';
-import 'package:echno_attendance/site_module/screens/site_attendance_screen.dart';
 import 'package:echno_attendance/site_module/widgets/site_menu_widget.dart';
-import 'package:echno_attendance/task_module/screens/task_home_screen.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:echno_attendance/utilities/styles/padding_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SiteHomeScreen extends StatefulWidget {
   final SiteOffice siteOffice;
@@ -30,7 +29,7 @@ class _SiteHomeScreenState extends State<SiteHomeScreen> {
         appBar: EchnoAppBar(
           leadingIcon: Icons.arrow_back_ios_new,
           leadingOnPressed: () {
-            Navigator.pop(context);
+            context.read<SiteBloc>().add(const SiteManagementDashboardEvent());
           },
           title: Text(siteOffice.siteOfficeName,
               style: Theme.of(context).textTheme.headlineSmall),
@@ -54,10 +53,9 @@ class _SiteHomeScreenState extends State<SiteHomeScreen> {
                   icon: Icons.playlist_add_check_circle_sharp,
                   title: 'Attendance',
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return SiteAttendanceReport(siteOffice: siteOffice);
-                    }));
+                    context
+                        .read<SiteBloc>()
+                        .add(SiteAttendanceReportEvent(siteOffice: siteOffice));
                   },
                 ),
                 SiteMenuWidget(
@@ -65,12 +63,9 @@ class _SiteHomeScreenState extends State<SiteHomeScreen> {
                   icon: Icons.app_registration_rounded,
                   title: 'Leave Management',
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return SiteLeaveRegisterScreen(
-                        siteOffice: siteOffice,
-                      );
-                    }));
+                    context
+                        .read<SiteBloc>()
+                        .add(SiteLeaveRegisterEvent(siteOffice: siteOffice));
                   },
                 ),
                 SiteMenuWidget(
@@ -78,12 +73,9 @@ class _SiteHomeScreenState extends State<SiteHomeScreen> {
                   icon: Icons.task_outlined,
                   title: 'Tasks',
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return TaskHomeScreen(
-                        siteOffice: siteOffice,
-                      );
-                    }));
+                    context
+                        .read<SiteBloc>()
+                        .add(SiteTaskManagementEvent(siteOffice: siteOffice));
                   },
                 ),
                 SiteMenuWidget(
@@ -91,12 +83,9 @@ class _SiteHomeScreenState extends State<SiteHomeScreen> {
                   icon: Icons.people_outline,
                   title: 'Site Members',
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return AssignSiteScreen(
-                        siteoffice: siteOffice,
-                      );
-                    }));
+                    context
+                        .read<SiteBloc>()
+                        .add(SiteMemberManagementEvent(siteOffice: siteOffice));
                   },
                 ),
                 SiteMenuWidget(
