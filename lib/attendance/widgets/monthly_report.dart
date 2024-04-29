@@ -95,7 +95,9 @@ class _MonthlyReportState extends State<MonthlyReport> {
                   onChanged: (value) {
                     if (value == null) {
                     } else {
-                      _attendanceMonthfromUI = value;
+                      setState(() {
+                        _attendanceMonthfromUI = value;
+                      });
                     }
                   },
                 ),
@@ -132,11 +134,8 @@ class _MonthlyReportState extends State<MonthlyReport> {
                   _yearController.text.isNotEmpty) {
                 setState(() {
                   _employeeIdfromUI = _employeeIdController.text;
-                  _attendanceMonthfromUI = _attendanceMonthfromUI;
                   _attendanceYearfromUI = _yearController.text;
                 });
-              } else {
-                setState(() {});
               }
             },
             child: const Text(

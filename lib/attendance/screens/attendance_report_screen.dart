@@ -1,5 +1,5 @@
-import 'package:echno_attendance/attendance/screens/daily_report.dart';
-import 'package:echno_attendance/attendance/screens/monthlyreport.dart';
+import 'package:echno_attendance/attendance/widgets/daily_report.dart';
+import 'package:echno_attendance/attendance/widgets/monthly_report.dart';
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/employee/hr_bloc/hr_bloc.dart';
@@ -92,7 +92,7 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
         title: Text('Attendance Report',
             style: Theme.of(context).textTheme.headlineSmall),
       ),
-      body: showMainContent ? MonthlyReport() : const DailyReport(),
+      body: showMainContent ? const MonthlyReport() : const DailyReport(),
       floatingActionButton: ElevatedButton(
         onPressed: () {
           _showBottomSheet(context);

@@ -1,4 +1,4 @@
-import 'package:echno_attendance/attendance/screens/employee_attendancereport.dart';
+import 'package:echno_attendance/attendance/screens/attendance_report_screen.dart';
 import 'package:echno_attendance/employee/hr_bloc/hr_bloc.dart';
 import 'package:echno_attendance/employee/hr_bloc/hr_state.dart';
 import 'package:echno_attendance/employee/screens/hr_screens/employee_register_screen.dart';
