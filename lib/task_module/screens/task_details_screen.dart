@@ -1,6 +1,9 @@
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/sizes.dart';
+import 'package:echno_attendance/site_module/models/site_model.dart';
+import 'package:echno_attendance/task_module/bloc/task_bloc.dart';
+import 'package:echno_attendance/task_module/bloc/task_event.dart';
 import 'package:echno_attendance/task_module/models/task_model.dart';
 import 'package:echno_attendance/task_module/screens/update_task_progress_screen.dart';
 import 'package:echno_attendance/task_module/utilities/task_ui_helpers.dart';
@@ -8,12 +11,15 @@ import 'package:echno_attendance/task_module/widgets/task_details_form.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:echno_attendance/utilities/styles/padding_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TaskDetailsScreen extends StatefulWidget {
   final Task? task;
+  final SiteOffice? siteOffice;
   const TaskDetailsScreen({
     required this.task,
     super.key,
+    this.siteOffice,
   });
 
   @override
@@ -81,7 +87,13 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
       appBar: EchnoAppBar(
         leadingIcon: Icons.arrow_back_ios_new,
         leadingOnPressed: () {
-          Navigator.pop(context);
+          if (widget.siteOffice == null) {
+            Navigator.of(context).pop();
+          } else {
+            context
+                .read<TaskBloc>()
+                .add(TaskHomeEvent(siteOffice: widget.siteOffice!));
+          }
         },
         title: Text('Task Details',
             style: Theme.of(context).textTheme.headlineSmall),

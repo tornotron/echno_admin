@@ -10,5 +10,14 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<TaskHomeEvent>((event, emit) {
       emit(TaskHomeState(siteOffice: event.siteOffice));
     });
+    on<AddTaskEvent>((event, emit) {
+      emit(AddTaskState(siteOffice: event.siteOffice));
+    });
+    on<TaskDetailsEvent>((event, emit) {
+      emit(TaskDetailsState(
+        siteOffice: event.siteOffice,
+        task: event.task,
+      ));
+    });
   }
 }

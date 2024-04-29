@@ -1,9 +1,12 @@
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/site_module/models/site_model.dart';
+import 'package:echno_attendance/task_module/bloc/task_bloc.dart';
+import 'package:echno_attendance/task_module/bloc/task_event.dart';
 import 'package:echno_attendance/task_module/widgets/add_task_form.dart';
 import 'package:echno_attendance/utilities/styles/padding_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddTaskScreen extends StatelessWidget {
   final SiteOffice siteOffice;
@@ -18,7 +21,7 @@ class AddTaskScreen extends StatelessWidget {
       appBar: EchnoAppBar(
         leadingIcon: Icons.arrow_back_ios_new,
         leadingOnPressed: () {
-          Navigator.pop(context);
+          context.read<TaskBloc>().add(TaskHomeEvent(siteOffice: siteOffice));
         },
         title: Text('Create Task',
             style: Theme.of(context).textTheme.headlineSmall),

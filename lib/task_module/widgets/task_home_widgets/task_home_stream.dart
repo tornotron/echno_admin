@@ -1,11 +1,13 @@
 import 'package:echno_attendance/site_module/models/site_model.dart';
+import 'package:echno_attendance/task_module/bloc/task_bloc.dart';
+import 'package:echno_attendance/task_module/bloc/task_event.dart';
 import 'package:echno_attendance/task_module/models/task_model.dart';
-import 'package:echno_attendance/task_module/screens/task_details_screen.dart';
 import 'package:echno_attendance/task_module/services/task_service.dart';
 import 'package:echno_attendance/task_module/utilities/task_status.dart';
 import 'package:echno_attendance/task_module/utilities/task_ui_helpers.dart';
 import 'package:echno_attendance/task_module/widgets/task_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TaskHomeStreamWidget extends StatelessWidget {
   const TaskHomeStreamWidget({
@@ -64,10 +66,12 @@ class TaskHomeStreamWidget extends StatelessWidget {
                   return InkWell(
                     child: TaskCard(taskData),
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return TaskDetailsScreen(task: taskData);
-                      }));
+                      context.read<TaskBloc>().add(
+                            TaskDetailsEvent(
+                              siteOffice: siteOffice,
+                              task: taskData!,
+                            ),
+                          );
                     },
                   );
                 },

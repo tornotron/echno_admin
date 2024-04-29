@@ -1,6 +1,8 @@
 import 'package:echno_attendance/site_module/models/site_model.dart';
-import 'package:echno_attendance/task_module/screens/add_task_screen.dart';
+import 'package:echno_attendance/task_module/bloc/task_bloc.dart';
+import 'package:echno_attendance/task_module/bloc/task_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class TaskHomeHeader extends StatelessWidget {
@@ -34,11 +36,9 @@ class TaskHomeHeader extends StatelessWidget {
           width: 130.00,
           child: ElevatedButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return AddTaskScreen(
-                  siteOffice: siteOffice,
-                );
-              }));
+              context
+                  .read<TaskBloc>()
+                  .add(AddTaskEvent(siteOffice: siteOffice));
             },
             child: const Text(
               '+ Add Task',
