@@ -28,18 +28,19 @@ class UpdateTaskProgessScreen extends StatefulWidget {
 
 class _UpdateTaskProgessScreenState extends State<UpdateTaskProgessScreen> {
   Task? get task => widget.task;
-
   final _taskProvider = TaskService.firestoreTasks();
-
   late TextEditingController _progressController;
   double? _progressSliderValue = 0.0;
   TaskStatus? _selectedTaskStatus;
+  bool _isProgressEditable = true;
+  double _progressControllerEditedValue = 0.0;
 
   @override
   void initState() {
     _progressController =
         TextEditingController(text: widget.task.taskProgress.toString());
     _progressSliderValue = widget.task.taskProgress;
+    _progressControllerEditedValue = widget.task.taskProgress;
     _selectedTaskStatus = widget.task.status;
     super.initState();
   }
@@ -88,6 +89,26 @@ class _UpdateTaskProgessScreenState extends State<UpdateTaskProgessScreen> {
                   DropdownButtonFormField<TaskStatus>(
                     value: _selectedTaskStatus,
                     onChanged: (TaskStatus? newValue) {
+                      if (newValue == TaskStatus.todo) {
+                        setState(() {
+                          _progressSliderValue = 0.0;
+                          _progressController.text = '0.0';
+                          _isProgressEditable = false;
+                        });
+                      } else if (newValue == TaskStatus.completed) {
+                        setState(() {
+                          _progressSliderValue = 100.0;
+                          _progressController.text = '100.0';
+                          _isProgressEditable = false;
+                        });
+                      } else {
+                        setState(() {
+                          _progressSliderValue = _progressControllerEditedValue;
+                          _progressController.text =
+                              _progressControllerEditedValue.toStringAsFixed(2);
+                          _isProgressEditable = true;
+                        });
+                      }
                       setState(() {
                         _selectedTaskStatus = newValue;
                       });
@@ -112,6 +133,8 @@ class _UpdateTaskProgessScreenState extends State<UpdateTaskProgessScreen> {
                   ),
                   const SizedBox(height: EchnoSize.defaultSpace / 2),
                   TextFormField(
+                    //disable text form field
+                    enabled: _isProgressEditable,
                     controller: _progressController,
                     keyboardType: TextInputType.number,
                     onChanged: (value) {
@@ -128,10 +151,16 @@ class _UpdateTaskProgessScreenState extends State<UpdateTaskProgessScreen> {
                   Slider(
                     value: _progressSliderValue!,
                     onChanged: (value) {
-                      setState(() {
-                        _progressSliderValue = value;
-                        _progressController.text = value.toStringAsFixed(2);
-                      });
+                      if (_selectedTaskStatus != TaskStatus.todo &&
+                          _selectedTaskStatus != TaskStatus.completed) {
+                        setState(
+                          () {
+                            _progressSliderValue = value;
+                            _progressController.text = value.toStringAsFixed(2);
+                            _progressControllerEditedValue = value;
+                          },
+                        );
+                      }
                     },
                     min: 0,
                     max: 100,
