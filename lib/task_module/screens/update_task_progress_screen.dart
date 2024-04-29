@@ -33,14 +33,14 @@ class _UpdateTaskProgessScreenState extends State<UpdateTaskProgessScreen> {
   double? _progressSliderValue = 0.0;
   TaskStatus? _selectedTaskStatus;
   bool _isProgressEditable = true;
-  double _progressControllerEditedValue = 0.0;
+  double _progressEditedValue = 0.0;
 
   @override
   void initState() {
     _progressController =
         TextEditingController(text: widget.task.taskProgress.toString());
     _progressSliderValue = widget.task.taskProgress;
-    _progressControllerEditedValue = widget.task.taskProgress;
+    _progressEditedValue = widget.task.taskProgress;
     _selectedTaskStatus = widget.task.status;
     super.initState();
   }
@@ -103,9 +103,9 @@ class _UpdateTaskProgessScreenState extends State<UpdateTaskProgessScreen> {
                         });
                       } else {
                         setState(() {
-                          _progressSliderValue = _progressControllerEditedValue;
+                          _progressSliderValue = _progressEditedValue;
                           _progressController.text =
-                              _progressControllerEditedValue.toStringAsFixed(2);
+                              _progressEditedValue.toStringAsFixed(2);
                           _isProgressEditable = true;
                         });
                       }
@@ -133,13 +133,13 @@ class _UpdateTaskProgessScreenState extends State<UpdateTaskProgessScreen> {
                   ),
                   const SizedBox(height: EchnoSize.defaultSpace / 2),
                   TextFormField(
-                    //disable text form field
                     enabled: _isProgressEditable,
                     controller: _progressController,
                     keyboardType: TextInputType.number,
                     onChanged: (value) {
                       setState(() {
                         _progressSliderValue = double.tryParse(value) ?? 0.0;
+                        _progressEditedValue = double.tryParse(value) ?? 0.0;
                       });
                     },
                     decoration: const InputDecoration(
@@ -157,7 +157,7 @@ class _UpdateTaskProgessScreenState extends State<UpdateTaskProgessScreen> {
                           () {
                             _progressSliderValue = value;
                             _progressController.text = value.toStringAsFixed(2);
-                            _progressControllerEditedValue = value;
+                            _progressEditedValue = value;
                           },
                         );
                       }
