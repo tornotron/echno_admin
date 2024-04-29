@@ -29,37 +29,15 @@ class TaskHomeScreen extends StatefulWidget {
 
 class _TaskHomeScreenState extends State<TaskHomeScreen> {
   final taskService = TaskService.firestoreTasks();
-
   int? _selectedIndex;
   late SiteOffice siteOffice;
-  late Map<TaskStatus, int> taskCounts;
-  bool isLoading = false;
-  int onHoldCount = 0;
-  int onGoingCount = 0;
-  int upComingCount = 0;
-  int completedCount = 0;
+  late Map<TaskStatus, int> _taskCounts;
 
   @override
   void initState() {
     super.initState();
     _selectedIndex = widget.index ?? 1;
     siteOffice = widget.siteOffice;
-    _updateTaskCounts();
-  }
-
-  Future<void> _updateTaskCounts() async {
-    setState(() {
-      isLoading = true;
-    });
-    final taskCountMap = await taskService.getSiteTaskCounts(
-        siteOffice: widget.siteOffice.siteOfficeName);
-    setState(() {
-      onHoldCount = taskCountMap[TaskStatus.onHold] ?? 0;
-      onGoingCount = taskCountMap[TaskStatus.inProgress] ?? 0;
-      upComingCount = taskCountMap[TaskStatus.todo] ?? 0;
-      completedCount = taskCountMap[TaskStatus.completed] ?? 0;
-      isLoading = false;
-    });
   }
 
   @override
@@ -77,11 +55,33 @@ class _TaskHomeScreenState extends State<TaskHomeScreen> {
           style: Theme.of(context).textTheme.headlineSmall,
         ),
       ),
-      body: isLoading
-          ? const Center(
+      body: FutureBuilder<Map<TaskStatus, int>>(
+        future: taskService.getSiteTaskCounts(
+            siteOffice: widget.siteOffice.siteOfficeName),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
               child: CircularProgressIndicator(),
-            )
-          : Padding(
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                'Error: ${snapshot.error}',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            );
+          } else {
+            if (!snapshot.hasData || snapshot.data == null) {
+              _taskCounts = {
+                TaskStatus.onHold: 0,
+                TaskStatus.inProgress: 0,
+                TaskStatus.todo: 0,
+                TaskStatus.completed: 0,
+              };
+            } else {
+              _taskCounts = snapshot.data!;
+            }
+            return Padding(
               padding: CustomPaddingStyle.defaultPaddingWithAppbar,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -97,10 +97,14 @@ class _TaskHomeScreenState extends State<TaskHomeScreen> {
                               ? EchnoColors.selectedNavDark
                               : EchnoColors.selectedNavLight,
                           children: {
-                            0: Text('On Hold ($onHoldCount)'),
-                            1: Text('Ongoing ($onGoingCount)'),
-                            2: Text('Upcoming ($upComingCount)'),
-                            3: Text('Completed ($completedCount)'),
+                            0: Text(
+                                'On Hold (${_taskCounts[TaskStatus.onHold]!})'),
+                            1: Text(
+                                'Ongoing (${_taskCounts[TaskStatus.inProgress]!})'),
+                            2: Text(
+                                'Upcoming (${_taskCounts[TaskStatus.todo]!})'),
+                            3: Text(
+                                'Completed (${_taskCounts[TaskStatus.completed]!})'),
                           },
                           groupValue: _selectedIndex,
                           onValueChanged: (int? index) {
@@ -122,7 +126,10 @@ class _TaskHomeScreenState extends State<TaskHomeScreen> {
                   ),
                 ],
               ),
-            ),
+            );
+          }
+        },
+      ),
     );
   }
 }
