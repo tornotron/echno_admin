@@ -27,7 +27,7 @@ class TaskDetailsScreen extends StatefulWidget {
 }
 
 class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
-  Task? get task => widget.task;
+  Task get task => widget.task;
 
   // Controllers for text form fields
   final TextEditingController _titleController = TextEditingController();
@@ -50,17 +50,17 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
 
   @override
   void initState() {
-    _titleController.text = task?.title ?? "";
-    _descriptionController.text = task?.description ?? "";
-    _createdDateController.text = TaskUiHelpers.formatDate(task?.createdAt);
-    _taskAuthorController.text = task?.taskAuthor ?? "";
-    _startDateController.text = TaskUiHelpers.formatDate(task?.startDate);
-    _endDateController.text = TaskUiHelpers.formatDate(task?.endDate);
-    _taskTypeController.text = TaskUiHelpers.getTaskTypeName(task?.taskType);
-    _assignedEmployeeController.text = task?.assignedEmployee ?? "";
-    _statusController.text = TaskUiHelpers.getTaskStatusName(task?.status);
-    _taskProgressController.text = task?.taskProgress.toString() ?? "";
-    taskProgress = task?.taskProgress != null ? task!.taskProgress / 100 : null;
+    _titleController.text = task.title;
+    _descriptionController.text = task.description;
+    _createdDateController.text = TaskUiHelpers.formatDate(task.createdAt);
+    _taskAuthorController.text = task.taskAuthor;
+    _startDateController.text = TaskUiHelpers.formatDate(task.startDate);
+    _endDateController.text = TaskUiHelpers.formatDate(task.endDate);
+    _taskTypeController.text = TaskUiHelpers.getTaskTypeName(task.taskType);
+    _assignedEmployeeController.text = task.assignedEmployee ?? " ";
+    _statusController.text = TaskUiHelpers.getTaskStatusName(task.status);
+    _taskProgressController.text = task.taskProgress.toString();
+    taskProgress = task.taskProgress / 100;
     super.initState();
   }
 
@@ -100,9 +100,16 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return UpdateTaskProgessScreen(task: task);
-              }));
+              if (widget.siteOffice == null) {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return UpdateTaskProgessScreen(task: task);
+                }));
+              } else {
+                context.read<TaskBloc>().add(UpdateTaskProgressEvent(
+                      siteOffice: widget.siteOffice!,
+                      task: widget.task,
+                    ));
+              }
             },
             icon: Icon(Icons.edit,
                 color: isDark ? EchnoColors.white : EchnoColors.black),

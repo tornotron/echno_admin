@@ -1,5 +1,8 @@
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
 import 'package:echno_attendance/constants/sizes.dart';
+import 'package:echno_attendance/site_module/models/site_model.dart';
+import 'package:echno_attendance/task_module/bloc/task_bloc.dart';
+import 'package:echno_attendance/task_module/bloc/task_event.dart';
 import 'package:echno_attendance/task_module/models/task_model.dart';
 import 'package:echno_attendance/task_module/services/task_service.dart';
 import 'package:echno_attendance/task_module/utilities/task_status.dart';
@@ -7,12 +10,15 @@ import 'package:echno_attendance/task_module/utilities/task_ui_helpers.dart';
 import 'package:echno_attendance/utilities/popups/custom_snackbar.dart';
 import 'package:echno_attendance/utilities/styles/padding_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UpdateTaskProgessScreen extends StatefulWidget {
-  final Task? task;
+  final SiteOffice? siteOffice;
+  final Task task;
   const UpdateTaskProgessScreen({
     required this.task,
     super.key,
+    this.siteOffice,
   });
 
   @override
@@ -32,9 +38,9 @@ class _UpdateTaskProgessScreenState extends State<UpdateTaskProgessScreen> {
   @override
   void initState() {
     _progressController =
-        TextEditingController(text: widget.task?.taskProgress.toString());
-    _progressSliderValue = widget.task?.taskProgress;
-    _selectedTaskStatus = widget.task?.status;
+        TextEditingController(text: widget.task.taskProgress.toString());
+    _progressSliderValue = widget.task.taskProgress;
+    _selectedTaskStatus = widget.task.status;
     super.initState();
   }
 
@@ -50,7 +56,12 @@ class _UpdateTaskProgessScreenState extends State<UpdateTaskProgessScreen> {
       appBar: EchnoAppBar(
         leadingIcon: Icons.arrow_back_ios_new,
         leadingOnPressed: () {
-          Navigator.pop(context);
+          if (widget.siteOffice == null) {
+            Navigator.pop(context);
+          } else {
+            context.read<TaskBloc>().add(TaskDetailsEvent(
+                siteOffice: widget.siteOffice!, task: widget.task));
+          }
         },
         title: Text(
           'Update Progress',
@@ -145,8 +156,12 @@ class _UpdateTaskProgessScreenState extends State<UpdateTaskProgessScreen> {
                               title: 'Success...!',
                               message:
                                   'Task Progress Updated Successfully...!');
-                          Navigator.of(context)
-                              .popUntil((route) => popCount++ == 2);
+                          if (widget.siteOffice == null) {
+                            Navigator.of(context)
+                                .popUntil((route) => popCount++ == 2);
+                          }
+                          context.read<TaskBloc>().add(
+                              TaskHomeEvent(siteOffice: widget.siteOffice!));
                         }
                         // Clear the controllers after form submission
                         setState(() {

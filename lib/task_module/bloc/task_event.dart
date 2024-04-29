@@ -23,3 +23,12 @@ class TaskDetailsEvent extends TaskEvent {
     required this.task,
   });
 }
+
+class UpdateTaskProgressEvent extends TaskEvent {
+  final SiteOffice siteOffice;
+  final Task task;
+  const UpdateTaskProgressEvent({
+    required this.siteOffice,
+    required this.task,
+  });
+}

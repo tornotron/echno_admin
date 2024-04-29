@@ -23,3 +23,12 @@ class TaskDetailsState extends TaskState {
     required this.task,
   });
 }
+
+class UpdateTaskProgressState extends TaskState {
+  final SiteOffice siteOffice;
+  final Task task;
+  const UpdateTaskProgressState({
+    required this.siteOffice,
+    required this.task,
+  });
+}

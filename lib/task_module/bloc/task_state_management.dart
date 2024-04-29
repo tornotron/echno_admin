@@ -3,6 +3,7 @@ import 'package:echno_attendance/task_module/bloc/task_state.dart';
 import 'package:echno_attendance/task_module/screens/add_task_screen.dart';
 import 'package:echno_attendance/task_module/screens/task_details_screen.dart';
 import 'package:echno_attendance/task_module/screens/task_home_screen.dart';
+import 'package:echno_attendance/task_module/screens/update_task_progress_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,6 +27,11 @@ class _TaskStateManagementState extends State<TaskStateManagement> {
           return AddTaskScreen(siteOffice: state.siteOffice);
         } else if (state is TaskDetailsState) {
           return TaskDetailsScreen(
+            siteOffice: state.siteOffice,
+            task: state.task,
+          );
+        } else if (state is UpdateTaskProgressState) {
+          return UpdateTaskProgessScreen(
             siteOffice: state.siteOffice,
             task: state.task,
           );
