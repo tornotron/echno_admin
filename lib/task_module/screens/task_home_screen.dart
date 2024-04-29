@@ -116,7 +116,7 @@ class _TaskHomeScreenState extends State<TaskHomeScreen> {
                   const Divider(height: EchnoSize.dividerHeight),
                   const SizedBox(height: EchnoSize.spaceBtwItems),
                   TaskHomeStreamWidget(
-                    siteOffice: siteOffice.siteOfficeName,
+                    siteOffice: siteOffice,
                     taskService: taskService,
                     selectedIndex: _selectedIndex!,
                   ),

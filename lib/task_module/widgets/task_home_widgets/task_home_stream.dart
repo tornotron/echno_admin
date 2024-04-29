@@ -1,3 +1,4 @@
+import 'package:echno_attendance/site_module/models/site_model.dart';
 import 'package:echno_attendance/task_module/models/task_model.dart';
 import 'package:echno_attendance/task_module/screens/task_details_screen.dart';
 import 'package:echno_attendance/task_module/services/task_service.dart';
@@ -16,12 +17,13 @@ class TaskHomeStreamWidget extends StatelessWidget {
 
   final TaskService taskService;
   final int _selectedIndex;
-  final String siteOffice;
+  final SiteOffice siteOffice;
 
   @override
   Widget build(BuildContext context) {
+    final siteOfficeName = siteOffice.siteOfficeName;
     return StreamBuilder<List<Task>>(
-      stream: taskService.streamTasksBySiteOffice(siteOffice: siteOffice),
+      stream: taskService.streamTasksBySiteOffice(siteOffice: siteOfficeName),
       builder: (BuildContext context, AsyncSnapshot<List<Task>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Expanded(
