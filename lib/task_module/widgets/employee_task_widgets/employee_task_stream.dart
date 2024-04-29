@@ -71,15 +71,14 @@ class EmployeeTaskStreamWidget extends StatelessWidget {
               child: ListView.builder(
                 itemCount: tasks.length,
                 itemBuilder: (context, index) {
-                  final taskData = tasks?[index];
+                  final task = tasks![index];
                   return InkWell(
-                    child: TaskCard(taskData),
+                    child: TaskCard(task),
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              TaskDetailsScreen(task: taskData),
+                          builder: (context) => TaskDetailsScreen(task: task),
                         ),
                       );
                     },
