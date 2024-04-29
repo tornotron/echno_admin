@@ -1,19 +1,38 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * const {onCall} = require("firebase-functions/v2/https");
- * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable require-jsdoc */
+const { onSchedule } = require("firebase-functions/v2/scheduler");
+// const { logger } = require("firebase-functions");
 
-const {onRequest} = require("firebase-functions/v2/https");
-const logger = require("firebase-functions/logger");
+const admin = require("firebase-admin");
+const { setGlobalOptions } = require("firebase-functions/v2");
+admin.initializeApp();
 
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
+const firestore = admin.firestore();
 
-// exports.helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+setGlobalOptions({ region: "asia-south1" });
+
+async function createDocument(collectionName, documentData) {
+  try {
+    const docref = await firestore.collection(collectionName).add(documentData);
+    return docref.id;
+  } catch (err) {
+    console.error("Error adding document: ", err);
+    throw err;
+  }
+}
+
+const collectionName = "testcoll";
+const documentData = {
+  field1: "testvalue1",
+  field2: "testvalue",
+};
+
+exports.scheduleLeaveMarking = onSchedule("* * * * *", async (context) => {
+  try {
+    await createDocument(collectionName, documentData);
+    console.log("Document created successfully");
+  } catch (error) {
+    console.error("Error creating document: ", error);
+  }
+});
+
