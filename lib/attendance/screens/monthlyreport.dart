@@ -4,25 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class MonthlyReport extends StatefulWidget {
-  MonthlyReport(
-      {super.key,
-      required this.employeeIdController,
-      required this.yearController,
-      required this.employeeIdfromUI,
-      required this.attendanceMonthfromUI,
-      required this.attendanceYearfromUI});
-
-  TextEditingController employeeIdController;
-  TextEditingController yearController;
-  String employeeIdfromUI;
-  String attendanceMonthfromUI;
-  String attendanceYearfromUI;
+  const MonthlyReport({super.key});
 
   @override
   State<MonthlyReport> createState() => _MonthlyReportState();
 }
 
 class _MonthlyReportState extends State<MonthlyReport> {
+  final TextEditingController _employeeIdController = TextEditingController();
+  final TextEditingController _yearController = TextEditingController();
+  late String _employeeIdfromUI = '';
+  late String _attendanceMonthfromUI = '';
+  late String _attendanceYearfromUI = '';
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -58,7 +52,7 @@ class _MonthlyReportState extends State<MonthlyReport> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
-                  controller: widget.employeeIdController,
+                  controller: _employeeIdController,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15.0),
@@ -101,7 +95,7 @@ class _MonthlyReportState extends State<MonthlyReport> {
                   onChanged: (value) {
                     if (value == null) {
                     } else {
-                      widget.attendanceMonthfromUI = value;
+                      _attendanceMonthfromUI = value;
                     }
                   },
                 ),
@@ -113,7 +107,7 @@ class _MonthlyReportState extends State<MonthlyReport> {
                 child: TextField(
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  controller: widget.yearController,
+                  controller: _yearController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15.0),
@@ -133,13 +127,13 @@ class _MonthlyReportState extends State<MonthlyReport> {
           width: 250,
           child: ElevatedButton(
             onPressed: () {
-              if (widget.employeeIdController.text.isNotEmpty &&
-                  widget.attendanceMonthfromUI.isNotEmpty &&
-                  widget.yearController.text.isNotEmpty) {
+              if (_employeeIdController.text.isNotEmpty &&
+                  _attendanceMonthfromUI.isNotEmpty &&
+                  _yearController.text.isNotEmpty) {
                 setState(() {
-                  widget.employeeIdfromUI = widget.employeeIdController.text;
-                  widget.attendanceMonthfromUI = widget.attendanceMonthfromUI;
-                  widget.attendanceYearfromUI = widget.yearController.text;
+                  _employeeIdfromUI = _employeeIdController.text;
+                  _attendanceMonthfromUI = _attendanceMonthfromUI;
+                  _attendanceYearfromUI = _yearController.text;
                 });
               } else {
                 setState(() {});
@@ -158,13 +152,13 @@ class _MonthlyReportState extends State<MonthlyReport> {
           height: 10,
         ),
         Container(
-          child: widget.employeeIdfromUI.isNotEmpty &&
-                  widget.attendanceMonthfromUI.isNotEmpty &&
-                  widget.attendanceYearfromUI.isNotEmpty
+          child: _employeeIdfromUI.isNotEmpty &&
+                  _attendanceMonthfromUI.isNotEmpty &&
+                  _attendanceYearfromUI.isNotEmpty
               ? AttendanceCardMonthly(
-                  employeeId: widget.employeeIdfromUI,
-                  attendanceMonth: widget.attendanceMonthfromUI,
-                  attYear: widget.attendanceYearfromUI,
+                  employeeId: _employeeIdfromUI,
+                  attendanceMonth: _attendanceMonthfromUI,
+                  attYear: _attendanceYearfromUI,
                 )
               : Container(
                   color: Colors.white,

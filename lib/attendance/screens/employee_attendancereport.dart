@@ -18,19 +18,8 @@ class AttendanceReportScreen extends StatefulWidget {
 class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
   bool showMainContent = true;
 
-  TextEditingController employeeIdController = TextEditingController();
-  TextEditingController monthController = TextEditingController();
-  TextEditingController yearController = TextEditingController();
-
-  String employeeIdfromUI = '';
-  String attendanceMonthfromUI = '';
-  String attendanceYearfromUI = '';
-
   @override
   void dispose() {
-    employeeIdController.dispose();
-    monthController.dispose();
-    yearController.dispose();
     super.dispose();
   }
 
@@ -103,15 +92,7 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
         title: Text('Attendance Report',
             style: Theme.of(context).textTheme.headlineSmall),
       ),
-      body: showMainContent
-          ? MonthlyReport(
-              employeeIdController: employeeIdController,
-              yearController: yearController,
-              employeeIdfromUI: employeeIdfromUI,
-              attendanceMonthfromUI: attendanceMonthfromUI,
-              attendanceYearfromUI: attendanceYearfromUI,
-            )
-          : const DailyReport(),
+      body: showMainContent ? MonthlyReport() : const DailyReport(),
       floatingActionButton: ElevatedButton(
         onPressed: () {
           _showBottomSheet(context);
