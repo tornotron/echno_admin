@@ -44,6 +44,10 @@ class _AddTaskFormState extends State<AddTaskForm> {
   bool isLoading = false;
   late TextEditingController controller;
 
+  // Variables to control task progress update
+  bool _isProgressEditable = true;
+  double _progressEditedValue = 0.0;
+
   void _fetchEmployeeFromFirestore() async {
     setState(() {
       isLoading = true;
@@ -400,6 +404,26 @@ class _AddTaskFormState extends State<AddTaskForm> {
           DropdownButtonFormField<TaskStatus>(
             value: _selectedTaskStatus,
             onChanged: (TaskStatus? newValue) {
+              if (newValue == TaskStatus.todo) {
+                setState(() {
+                  _taskProgress = 0.0;
+                  _taskProgressController.text = '0.0';
+                  _isProgressEditable = false;
+                });
+              } else if (newValue == TaskStatus.completed) {
+                setState(() {
+                  _taskProgress = 100.0;
+                  _taskProgressController.text = '100.0';
+                  _isProgressEditable = false;
+                });
+              } else {
+                setState(() {
+                  _taskProgress = _progressEditedValue;
+                  _taskProgressController.text =
+                      _progressEditedValue.toStringAsFixed(2);
+                  _isProgressEditable = true;
+                });
+              }
               setState(() {
                 _selectedTaskStatus = newValue;
               });
@@ -427,11 +451,13 @@ class _AddTaskFormState extends State<AddTaskForm> {
           const SizedBox(height: 5.0),
           // Task Progress Linear Progress Indicator
           TextFormField(
+            enabled: _isProgressEditable,
             controller: _taskProgressController,
             keyboardType: TextInputType.number,
             onChanged: (value) {
               setState(() {
                 _taskProgress = double.tryParse(value) ?? 0.0;
+                _progressEditedValue = double.tryParse(value) ?? 0.0;
               });
             },
             decoration: const InputDecoration(
@@ -453,10 +479,16 @@ class _AddTaskFormState extends State<AddTaskForm> {
           Slider(
             value: _taskProgress,
             onChanged: (value) {
-              setState(() {
-                _taskProgress = value;
-                _taskProgressController.text = value.toStringAsFixed(2);
-              });
+              if (_selectedTaskStatus != TaskStatus.todo &&
+                  _selectedTaskStatus != TaskStatus.completed) {
+                setState(
+                  () {
+                    _taskProgress = value;
+                    _taskProgressController.text = value.toStringAsFixed(2);
+                    _progressEditedValue = value;
+                  },
+                );
+              }
             },
             min: 0,
             max: 100,
