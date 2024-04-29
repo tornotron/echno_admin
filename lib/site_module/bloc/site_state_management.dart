@@ -6,7 +6,8 @@ import 'package:echno_attendance/site_module/screens/site_members_assignment_scr
 import 'package:echno_attendance/site_module/screens/site_attendance_screen.dart';
 import 'package:echno_attendance/site_module/screens/site_home_screen.dart';
 import 'package:echno_attendance/site_module/screens/site_management_screen.dart';
-import 'package:echno_attendance/task_module/screens/task_home_screen.dart';
+import 'package:echno_attendance/task_module/bloc/task_bloc.dart';
+import 'package:echno_attendance/task_module/bloc/task_state_management.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,7 +34,10 @@ class _SiteStateManagementState extends State<SiteStateManagement> {
         } else if (state is SiteLeaveRegisterState) {
           return SiteLeaveRegisterScreen(siteOffice: state.siteOffice);
         } else if (state is SiteTaskManagementState) {
-          return TaskHomeScreen(siteOffice: state.siteOffice);
+          return BlocProvider(
+            create: (context) => TaskBloc(siteOffice: state.siteOffice),
+            child: const TaskStateManagement(),
+          );
         } else if (state is SiteMemberManagementState) {
           return AssignSiteMembersScreen(siteOffice: state.siteOffice);
         } else {
