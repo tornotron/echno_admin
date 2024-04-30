@@ -10,7 +10,7 @@ import 'package:echno_attendance/task_module/widgets/task_home_widgets/task_home
 import 'package:echno_attendance/task_module/widgets/task_home_widgets/task_home_stream.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:echno_attendance/utilities/styles/padding_style.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart' show CupertinoSlidingSegmentedControl;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -74,8 +74,8 @@ class _TaskHomeScreenState extends State<TaskHomeScreen> {
             if (!snapshot.hasData || snapshot.data == null) {
               _taskCounts = {
                 TaskStatus.onHold: 0,
-                TaskStatus.inProgress: 0,
-                TaskStatus.todo: 0,
+                TaskStatus.onGoing: 0,
+                TaskStatus.upcoming: 0,
                 TaskStatus.completed: 0,
               };
             } else {
@@ -100,9 +100,9 @@ class _TaskHomeScreenState extends State<TaskHomeScreen> {
                             0: Text(
                                 'On Hold (${_taskCounts[TaskStatus.onHold]!})'),
                             1: Text(
-                                'Ongoing (${_taskCounts[TaskStatus.inProgress]!})'),
+                                'Ongoing (${_taskCounts[TaskStatus.onGoing]!})'),
                             2: Text(
-                                'Upcoming (${_taskCounts[TaskStatus.todo]!})'),
+                                'Upcoming (${_taskCounts[TaskStatus.upcoming]!})'),
                             3: Text(
                                 'Completed (${_taskCounts[TaskStatus.completed]!})'),
                           },

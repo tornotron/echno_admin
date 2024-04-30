@@ -89,7 +89,7 @@ class _UpdateTaskProgessScreenState extends State<UpdateTaskProgessScreen> {
                   DropdownButtonFormField<TaskStatus>(
                     value: _selectedTaskStatus,
                     onChanged: (TaskStatus? newValue) {
-                      if (newValue == TaskStatus.todo) {
+                      if (newValue == TaskStatus.upcoming) {
                         setState(() {
                           _progressSliderValue = 0.0;
                           _progressController.text = '0.0';
@@ -151,7 +151,7 @@ class _UpdateTaskProgessScreenState extends State<UpdateTaskProgessScreen> {
                   Slider(
                     value: _progressSliderValue!,
                     onChanged: (value) {
-                      if (_selectedTaskStatus != TaskStatus.todo &&
+                      if (_selectedTaskStatus != TaskStatus.upcoming &&
                           _selectedTaskStatus != TaskStatus.completed) {
                         setState(
                           () {

@@ -102,7 +102,7 @@ class _UpdateTaskFormWidgetState extends State<UpdateTaskFormWidget> {
     _endDateController.text = TaskUiHelpers.formatDate(task?.endDate);
     _selectedTaskType = task?.taskType ?? TaskType.open;
     _assignedEmployeeController.text = task?.assignedEmployee ?? "";
-    _selectedTaskStatus = task?.status ?? TaskStatus.todo;
+    _selectedTaskStatus = task?.status ?? TaskStatus.upcoming;
     _taskProgressController.text = task?.taskProgress.toString() ?? "";
     _taskProgress = task?.taskProgress != null ? task!.taskProgress : null;
     super.initState();

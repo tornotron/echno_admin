@@ -235,10 +235,10 @@ class FirestoreTaskHandler implements TaskHandler {
             tasks.where((task) => task.status == TaskStatus.onHold).length,
         TaskStatus.completed:
             tasks.where((task) => task.status == TaskStatus.completed).length,
-        TaskStatus.inProgress:
-            tasks.where((task) => task.status == TaskStatus.inProgress).length,
-        TaskStatus.todo:
-            tasks.where((task) => task.status == TaskStatus.todo).length,
+        TaskStatus.onGoing:
+            tasks.where((task) => task.status == TaskStatus.onGoing).length,
+        TaskStatus.upcoming:
+            tasks.where((task) => task.status == TaskStatus.upcoming).length,
       };
       return taskCounts;
     } on FirebaseException catch (e) {
@@ -269,10 +269,10 @@ class FirestoreTaskHandler implements TaskHandler {
             tasks.where((task) => task.status == TaskStatus.onHold).length,
         TaskStatus.completed:
             tasks.where((task) => task.status == TaskStatus.completed).length,
-        TaskStatus.inProgress:
-            tasks.where((task) => task.status == TaskStatus.inProgress).length,
-        TaskStatus.todo:
-            tasks.where((task) => task.status == TaskStatus.todo).length,
+        TaskStatus.onGoing:
+            tasks.where((task) => task.status == TaskStatus.onGoing).length,
+        TaskStatus.upcoming:
+            tasks.where((task) => task.status == TaskStatus.upcoming).length,
       };
 
       return taskCounts;

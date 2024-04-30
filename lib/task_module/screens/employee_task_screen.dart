@@ -6,7 +6,7 @@ import 'package:echno_attendance/task_module/utilities/task_status.dart';
 import 'package:echno_attendance/task_module/widgets/employee_task_widgets/employee_task_stream.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:echno_attendance/utilities/styles/padding_style.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart' show CupertinoSlidingSegmentedControl;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -53,8 +53,8 @@ class _EmployeeTaskHomeScreenState extends State<EmployeeTaskHomeScreen> {
         assignedEmployee: currentEmployee.employeeId);
     setState(() {
       onHoldCount = taskCountMap[TaskStatus.onHold] ?? 0;
-      onGoingCount = taskCountMap[TaskStatus.inProgress] ?? 0;
-      upComingCount = taskCountMap[TaskStatus.todo] ?? 0;
+      onGoingCount = taskCountMap[TaskStatus.onGoing] ?? 0;
+      upComingCount = taskCountMap[TaskStatus.upcoming] ?? 0;
       completedCount = taskCountMap[TaskStatus.completed] ?? 0;
       isLoading = false;
     });

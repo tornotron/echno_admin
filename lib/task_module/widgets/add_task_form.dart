@@ -404,7 +404,7 @@ class _AddTaskFormState extends State<AddTaskForm> {
           DropdownButtonFormField<TaskStatus>(
             value: _selectedTaskStatus,
             onChanged: (TaskStatus? newValue) {
-              if (newValue == TaskStatus.todo) {
+              if (newValue == TaskStatus.upcoming) {
                 setState(() {
                   _taskProgress = 0.0;
                   _taskProgressController.text = '0.0';
@@ -479,7 +479,7 @@ class _AddTaskFormState extends State<AddTaskForm> {
           Slider(
             value: _taskProgress,
             onChanged: (value) {
-              if (_selectedTaskStatus != TaskStatus.todo &&
+              if (_selectedTaskStatus != TaskStatus.upcoming &&
                   _selectedTaskStatus != TaskStatus.completed) {
                 setState(
                   () {

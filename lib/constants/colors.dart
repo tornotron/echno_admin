@@ -84,8 +84,8 @@ class EchnoColors {
   static const Color taskOnhold = Color(0xFFFB8C00);
   static const Color taskCompleted = Color.fromARGB(255, 39, 160, 45);
   static const Color taskDisposed = Color.fromARGB(255, 192, 13, 0);
-  static const Color taskTodo = Color.fromARGB(255, 17, 53, 104);
-  static const Color taskInprogress = Color.fromARGB(255, 104, 29, 118);
+  static const Color taskUpcoming = Color.fromARGB(255, 17, 53, 104);
+  static const Color taskOngoing = Color.fromARGB(255, 104, 29, 118);
   static const Color taskBanner = Colors.red;
   static const Color taskText = Color(0xFFf5f5f5);
   static const Color taskIcon = Color(0xFFEEEEEE);

@@ -14,17 +14,17 @@ class TaskUiHelpers {
       return EchnoColors.taskDisposed;
     }
     switch (status) {
-      case TaskStatus.todo:
-        return EchnoColors.taskTodo;
-      case TaskStatus.inProgress:
-        return EchnoColors.taskInprogress;
+      case TaskStatus.upcoming:
+        return EchnoColors.taskUpcoming;
+      case TaskStatus.onGoing:
+        return EchnoColors.taskOngoing;
       case TaskStatus.onHold:
         return EchnoColors.taskOnhold;
       case TaskStatus.completed:
         return EchnoColors.taskCompleted;
 
       default:
-        return EchnoColors.taskTodo;
+        return EchnoColors.taskUpcoming;
     }
   }
 
@@ -34,10 +34,10 @@ class TaskUiHelpers {
   /// Returns a custom name which will be a string representing the status for the task tile.
   static String getTaskTileStatusString(TaskStatus? status) {
     switch (status) {
-      case TaskStatus.todo:
-        return 'TODO';
-      case TaskStatus.inProgress:
-        return 'IN PROGRESS';
+      case TaskStatus.upcoming:
+        return 'Upcoming';
+      case TaskStatus.onGoing:
+        return 'On Going';
       case TaskStatus.onHold:
         return 'ON HOLD';
       case TaskStatus.completed:
@@ -53,10 +53,10 @@ class TaskUiHelpers {
   /// Returns a custom name string representing the name of the task status.
   static String getTaskStatusName(TaskStatus? status) {
     switch (status) {
-      case TaskStatus.todo:
-        return 'TODO';
-      case TaskStatus.inProgress:
-        return 'In Progress';
+      case TaskStatus.upcoming:
+        return 'Upcoming';
+      case TaskStatus.onGoing:
+        return 'On Going';
       case TaskStatus.onHold:
         return 'On Hold';
       case TaskStatus.completed:
@@ -115,9 +115,9 @@ class TaskUiHelpers {
     switch (selectedStatus) {
       case 'onHold':
         return 0;
-      case 'inProgress':
+      case 'onGoing':
         return 1;
-      case 'todo':
+      case 'upcoming':
         return 2;
       case 'completed':
         return 3;
@@ -136,14 +136,14 @@ class TaskUiHelpers {
       case 0:
         return TaskStatus.onHold;
       case 1:
-        return TaskStatus.inProgress;
+        return TaskStatus.onGoing;
       case 2:
-        return TaskStatus.todo;
+        return TaskStatus.upcoming;
       case 3:
         return TaskStatus.completed;
 
       default:
-        return TaskStatus.todo;
+        return TaskStatus.upcoming;
     }
   }
 
@@ -153,16 +153,16 @@ class TaskUiHelpers {
   /// Returns the TaskStatus enum value corresponding to the input string.
   static TaskStatus getStatus(String? status) {
     switch (status) {
-      case 'todo':
-        return TaskStatus.todo;
-      case 'inProgress':
-        return TaskStatus.inProgress;
+      case 'upcoming':
+        return TaskStatus.upcoming;
+      case 'onGoing':
+        return TaskStatus.onGoing;
       case 'onHold':
         return TaskStatus.onHold;
       case 'completed':
         return TaskStatus.completed;
       default:
-        return TaskStatus.todo;
+        return TaskStatus.upcoming;
     }
   }
 
