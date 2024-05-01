@@ -75,7 +75,7 @@ class _AddTaskFormState extends State<AddTaskForm> {
   }
 
   // Variables to store dropdowns field values
-  TaskType? _selectedTaskType;
+  TaskType selectedTaskType = TaskType.open;
   TaskStatus? _selectedTaskStatus;
 
   // Variables to store date values
@@ -366,35 +366,6 @@ class _AddTaskFormState extends State<AddTaskForm> {
           ),
           const SizedBox(height: EchnoSize.spaceBtwItems),
           Text(
-            'Task Type',
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
-          const SizedBox(height: 5.0),
-          // Task Type Dropdown
-          DropdownButtonFormField<TaskType>(
-            value: _selectedTaskType,
-            onChanged: (TaskType? newValue) {
-              setState(() {
-                _selectedTaskType = newValue;
-              });
-            },
-            items: TaskType.values.map((TaskType taskType) {
-              String typeName = TaskUiHelpers.getTaskTypeName(taskType);
-              return DropdownMenuItem<TaskType>(
-                value: taskType,
-                child: Text(typeName),
-              );
-            }).toList(),
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-            ),
-            validator: (value) => EchnoValidator.defaultValidator(
-              value,
-              'Task type is required',
-            ),
-          ),
-          const SizedBox(height: EchnoSize.spaceBtwItems),
-          Text(
             'Task Status',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
@@ -510,7 +481,7 @@ class _AddTaskFormState extends State<AddTaskForm> {
                   final endDate = _endDate;
                   const taskAuthor =
                       'Current Employee'; // From the currentEmployye function
-                  final taskType = _selectedTaskType.toString().split('.').last;
+                  final taskType = selectedTaskType.toString().split('.').last;
                   final taskStatus =
                       _selectedTaskStatus.toString().split('.').last;
                   final taskProgress = _taskProgress;
