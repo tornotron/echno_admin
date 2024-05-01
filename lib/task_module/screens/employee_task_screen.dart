@@ -24,7 +24,7 @@ class EmployeeTaskHomeScreen extends StatefulWidget {
 }
 
 class _EmployeeTaskHomeScreenState extends State<EmployeeTaskHomeScreen> {
-  final _taskProvider = TaskService.firestoreTasks();
+  final taskService = TaskService.firestoreTasks();
 
   int? _selectedIndex;
 
@@ -32,44 +32,46 @@ class _EmployeeTaskHomeScreenState extends State<EmployeeTaskHomeScreen> {
 
   final TextEditingController _searchController = TextEditingController();
 
-  bool isLoading = false;
-  int onHoldCount = 0;
-  int onGoingCount = 0;
-  int upComingCount = 0;
-  int completedCount = 0;
-
   @override
   void initState() {
     super.initState();
     _selectedIndex = widget.index ?? 1;
-    _updateTaskCounts();
   }
 
-  Future<void> _updateTaskCounts() async {
-    setState(() {
-      isLoading = true;
-    });
-    final taskCountMap = await _taskProvider.getEmployeeTaskCounts(
-        assignedEmployee: currentEmployee.employeeId);
-    setState(() {
-      onHoldCount = taskCountMap[TaskStatus.onHold] ?? 0;
-      onGoingCount = taskCountMap[TaskStatus.onGoing] ?? 0;
-      upComingCount = taskCountMap[TaskStatus.upcoming] ?? 0;
-      completedCount = taskCountMap[TaskStatus.completed] ?? 0;
-      isLoading = false;
-    });
-  }
+  late Map<TaskStatus, int> _taskCounts;
 
   @override
   Widget build(context) {
     final isDark = EchnoHelperFunctions.isDarkMode(context);
 
     return Scaffold(
-      body: isLoading
-          ? const Center(
+      body: FutureBuilder<Map<TaskStatus, int>>(
+        future: taskService.getEmployeeTaskCounts(
+            assignedEmployee: currentEmployee.employeeId),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
               child: CircularProgressIndicator(),
-            )
-          : Padding(
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                'Error: ${snapshot.error}',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            );
+          } else {
+            if (!snapshot.hasData || snapshot.data == null) {
+              _taskCounts = {
+                TaskStatus.onHold: 0,
+                TaskStatus.onGoing: 0,
+                TaskStatus.upcoming: 0,
+                TaskStatus.completed: 0,
+              };
+            } else {
+              _taskCounts = snapshot.data!;
+            }
+            return Padding(
               padding: CustomPaddingStyle.defaultPaddingWithAppbar,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -119,10 +121,22 @@ class _EmployeeTaskHomeScreenState extends State<EmployeeTaskHomeScreen> {
                                 ? EchnoColors.selectedNavDark
                                 : EchnoColors.selectedNavLight,
                             children: {
-                              0: Text('On Hold ($onHoldCount)'),
-                              1: Text('Ongoing ($onGoingCount)'),
-                              2: Text('Upcoming ($upComingCount)'),
-                              3: Text('Completed ($completedCount)'),
+                              0: Text(
+                                'On Hold (${_taskCounts[TaskStatus.onHold]!})',
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
+                              1: Text(
+                                'Ongoing (${_taskCounts[TaskStatus.onGoing]!})',
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
+                              2: Text(
+                                'Upcoming (${_taskCounts[TaskStatus.upcoming]!})',
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
+                              3: Text(
+                                'Completed (${_taskCounts[TaskStatus.completed]!})',
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
                             },
                             groupValue: _selectedIndex,
                             onValueChanged: (int? index) {
@@ -139,13 +153,16 @@ class _EmployeeTaskHomeScreenState extends State<EmployeeTaskHomeScreen> {
                   const SizedBox(height: EchnoSize.spaceBtwItems),
                   EmployeeTaskStreamWidget(
                     employeeId: widget.currentEmployee!.employeeId,
-                    taskProvider: _taskProvider,
+                    taskProvider: taskService,
                     searchController: _searchController,
                     selectedIndex: _selectedIndex!,
                   ),
                 ],
               ),
-            ),
+            );
+          }
+        },
+      ),
     );
   }
 }

@@ -98,13 +98,21 @@ class _TaskHomeScreenState extends State<TaskHomeScreen> {
                               : EchnoColors.selectedNavLight,
                           children: {
                             0: Text(
-                                'On Hold (${_taskCounts[TaskStatus.onHold]!})'),
+                              'On Hold (${_taskCounts[TaskStatus.onHold]!})',
+                              style: Theme.of(context).textTheme.labelSmall,
+                            ),
                             1: Text(
-                                'Ongoing (${_taskCounts[TaskStatus.onGoing]!})'),
+                              'Ongoing (${_taskCounts[TaskStatus.onGoing]!})',
+                              style: Theme.of(context).textTheme.labelSmall,
+                            ),
                             2: Text(
-                                'Upcoming (${_taskCounts[TaskStatus.upcoming]!})'),
+                              'Upcoming (${_taskCounts[TaskStatus.upcoming]!})',
+                              style: Theme.of(context).textTheme.labelSmall,
+                            ),
                             3: Text(
-                                'Completed (${_taskCounts[TaskStatus.completed]!})'),
+                              'Completed (${_taskCounts[TaskStatus.completed]!})',
+                              style: Theme.of(context).textTheme.labelSmall,
+                            ),
                           },
                           groupValue: _selectedIndex,
                           onValueChanged: (int? index) {

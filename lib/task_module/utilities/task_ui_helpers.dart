@@ -35,9 +35,9 @@ class TaskUiHelpers {
   static String getTaskTileStatusString(TaskStatus? status) {
     switch (status) {
       case TaskStatus.upcoming:
-        return 'Upcoming';
+        return 'UPCOMING';
       case TaskStatus.onGoing:
-        return 'On Going';
+        return 'ON GOING';
       case TaskStatus.onHold:
         return 'ON HOLD';
       case TaskStatus.completed:
