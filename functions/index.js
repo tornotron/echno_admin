@@ -12,6 +12,18 @@ const firestore = admin.firestore();
 
 setGlobalOptions({ region: "asia-south1" });
 
+async function fetchEmployeeList() {
+  try {
+    const snapshot = await firestore.collection("attendance").get();
+    const documentNames = snapshot.docs.map((doc) => doc.id);
+    return documentNames;
+  } catch (error) {
+    console.error("Error fetching employee list:", error);
+    throw error;
+  }
+}
+
+
 async function createDocument(collectionName, empId, formattedDate) {
   try {
     await firestore.collection(collectionName).doc(empId).collection("attendancedate").doc(formattedDate).set({
@@ -24,32 +36,34 @@ async function createDocument(collectionName, empId, formattedDate) {
   }
 }
 
-async function checkforAttendanceMarking() {
+async function checkforAttendanceMarking(empList) {
   const currentDate = new Date();
   const year = currentDate.getFullYear();
   const month = String(currentDate.getMonth() + 1).padStart(2, "0");
   const day = String(currentDate.getDate()).padStart(2, "0");
   const formattedDate = `${year}-${month}-${day}`;
   const collectionName = "attendance";
-  const empId = "EMP-000004";
-  try {
-    await firestore.collection(collectionName).doc(empId).collection("attendancedate").doc(formattedDate).get().then(async (doc)=>{
-      if (!doc.exists) {
-        await createDocument(collectionName, empId, formattedDate);
-      } else {
-        console.log("Document already exists");
-      }
-    });
-  } catch (err) {
-    console.error(err);
-    throw err;
+  for (let i = 0; i < empList.length; i++) {
+    try {
+      await firestore.collection(collectionName).doc(empList[i]).collection("attendancedate").doc(formattedDate).get().then(async (doc)=>{
+        if (!doc.exists) {
+          await createDocument(collectionName, empList[i], formattedDate);
+        } else {
+          console.log("Document already exists");
+        }
+      });
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
   }
 }
 
 
 exports.scheduleLeaveMarking = onSchedule("* * * * *", async (context) => {
   try {
-    await checkforAttendanceMarking();
+    const empList = await fetchEmployeeList();
+    await checkforAttendanceMarking(empList);
   } catch (error) {
     console.error("Error creating document: ", error);
   }
