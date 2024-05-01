@@ -38,4 +38,18 @@ class EmployeeService implements BasicEmployeeDatabaseHandler {
       image: image,
     );
   }
+
+  @override
+  Future<void> updateAuthUserIdWithEmployeeId(
+      {required String employeeId,
+      required String authUserId,
+      required String authUserEmail,
+      required bool isEmailVerified}) {
+    return _handler.updateAuthUserIdWithEmployeeId(
+      employeeId: employeeId,
+      authUserId: authUserId,
+      authUserEmail: authUserEmail,
+      isEmailVerified: isEmailVerified,
+    );
+  }
 }

@@ -117,6 +117,37 @@ class BasicEmployeeFirestoreDatabaseHandler
       throw Exception('Error uploading image: $e');
     }
   }
+
+  @override
+  Future<void> updateAuthUserIdWithEmployeeId(
+      {required String employeeId,
+      required String authUserId,
+      required String authUserEmail,
+      required bool isEmailVerified}) async {
+    try {
+      CollectionReference employeesCollection =
+          FirebaseFirestore.instance.collection('employees');
+
+      DocumentSnapshot employeeDocument =
+          await employeesCollection.doc(employeeId).get();
+      if (employeeDocument.exists) {
+        await employeesCollection.doc(employeeId).update({
+          'auth-user-id': authUserId,
+          'auth-user-email': authUserEmail,
+          'is-email-verified': isEmailVerified,
+        });
+        logs.i('Employee found');
+      } else {
+        logs.i('Employee not found');
+        throw Exception('Employee Not Added to Employee Collection');
+      }
+    } on FirebaseException catch (error) {
+      logs.e('Firebase Exception: ${error.message}');
+    } catch (e) {
+      logs.e('Other Exception: $e');
+      throw Exception('Error updating auth user id with employee id: $e');
+    }
+  }
 }
 
 class HrFirestoreDatabaseHandler extends BasicEmployeeFirestoreDatabaseHandler

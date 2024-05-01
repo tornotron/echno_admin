@@ -13,6 +13,11 @@ abstract class BasicEmployeeDatabaseHandler implements IReadEmployee {
       {required String imagePath,
       required String employeeId,
       required XFile image});
+  Future<void> updateAuthUserIdWithEmployeeId(
+      {required String employeeId,
+      required String authUserId,
+      required String authUserEmail,
+      required bool isEmailVerified});
 }
 
 abstract class HrDatabaseHandler extends BasicEmployeeDatabaseHandler
