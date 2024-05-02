@@ -60,7 +60,7 @@ async function checkforAttendanceMarking(empList) {
 }
 
 
-exports.scheduleLeaveMarking = onSchedule("* * * * *", async (context) => {
+exports.scheduleLeaveMarking = onSchedule("0 10 * * *", async (context) => {
   try {
     const empList = await fetchEmployeeList();
     await checkforAttendanceMarking(empList);
