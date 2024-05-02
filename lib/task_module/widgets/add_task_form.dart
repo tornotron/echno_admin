@@ -1,8 +1,8 @@
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/employee/models/employee.dart';
-import 'package:echno_attendance/employee/services/hr_employee_service.dart';
 import 'package:echno_attendance/employee/utilities/employee_role.dart';
 import 'package:echno_attendance/site_module/models/site_model.dart';
+import 'package:echno_attendance/task_module/bloc/task_bloc.dart';
 import 'package:echno_attendance/task_module/services/task_service.dart';
 import 'package:echno_attendance/task_module/utilities/task_status.dart';
 import 'package:echno_attendance/task_module/utilities/task_types.dart';
@@ -10,6 +10,7 @@ import 'package:echno_attendance/task_module/utilities/task_ui_helpers.dart';
 import 'package:echno_attendance/utilities/helpers/form_validators.dart';
 import 'package:echno_attendance/utilities/popups/custom_snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class AddTaskForm extends StatefulWidget {
@@ -39,7 +40,6 @@ class _AddTaskFormState extends State<AddTaskForm> {
   final TextEditingController _assignedEmployeeController =
       TextEditingController();
 
-  List<Employee> members = [];
   late Employee assignedEmployee;
   bool isLoading = false;
   late TextEditingController controller;
@@ -47,32 +47,6 @@ class _AddTaskFormState extends State<AddTaskForm> {
   // Variables to control task progress update
   bool _isProgressEditable = true;
   double _progressEditedValue = 0.0;
-
-  void _fetchEmployeeFromFirestore() async {
-    setState(() {
-      isLoading = true;
-    });
-    try {
-      members = await HrEmployeeService.firestore()
-          .populateMemberList(employeeIdList: widget.siteOffice.membersList);
-    } catch (e) {
-      EchnoSnackBar.errorSnackBar(
-        context: context,
-        title: 'Oh Snap...!',
-        message: e.toString(),
-      );
-    } finally {
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchEmployeeFromFirestore();
-  }
 
   // Variables to store dropdowns field values
   TaskType selectedTaskType = TaskType.open;
@@ -171,6 +145,9 @@ class _AddTaskFormState extends State<AddTaskForm> {
 
   @override
   Widget build(BuildContext context) {
+    final members = context.select((TaskBloc bloc) {
+      return bloc.members;
+    });
     return Form(
       key: _addTaskFormKey,
       child: Column(
