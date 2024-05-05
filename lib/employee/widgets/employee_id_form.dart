@@ -13,17 +13,17 @@ class EnterEmployeeIdForm extends StatelessWidget {
     required GlobalKey<FormState> authEmployeeIdFormKey,
     required TextEditingController controller,
     required this.isDark,
-  })  : _forgotPasswordFormKey = authEmployeeIdFormKey,
+  })  : _authEmployeeIdFormKey = authEmployeeIdFormKey,
         _controller = controller;
 
-  final GlobalKey<FormState> _forgotPasswordFormKey;
+  final GlobalKey<FormState> _authEmployeeIdFormKey;
   final TextEditingController _controller;
   final bool isDark;
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _forgotPasswordFormKey,
+      key: _authEmployeeIdFormKey,
       child: Column(
         children: [
           TextFormField(
@@ -50,7 +50,7 @@ class EnterEmployeeIdForm extends StatelessWidget {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () async {
-                if (_forgotPasswordFormKey.currentState!.validate()) {}
+                if (_authEmployeeIdFormKey.currentState!.validate()) {}
               },
               child: const Text(
                 EchnoText.enterEmployeeIdButton,
