@@ -21,7 +21,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late final Employee currentEmployee;
   late PageController pageController;
   int _selectedIndex = 2;
 
@@ -40,7 +39,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final isDark = EchnoHelperFunctions.isDarkMode(context);
-    final currentEmployee = context.select((EmployeeBloc bloc) {
+    final Employee? currentEmployee = context.select((EmployeeBloc bloc) {
       return bloc.currentEmployee;
     });
     return Scaffold(
@@ -60,7 +59,7 @@ class _HomePageState extends State<HomePage> {
               style: Theme.of(context).textTheme.bodySmall,
             ),
             Text(
-              currentEmployee.employeeName,
+              currentEmployee!.employeeName,
               style: Theme.of(context).textTheme.headlineSmall,
             ),
           ],

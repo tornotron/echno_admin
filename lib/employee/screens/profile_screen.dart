@@ -23,7 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = EchnoHelperFunctions.isDarkMode(context);
-    final currentEmployee = context.select((EmployeeBloc bloc) {
+    final Employee? currentEmployee = context.select((EmployeeBloc bloc) {
       return bloc.currentEmployee;
     });
     return Material(
@@ -40,7 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   EmployeeProfilePhoto(
-                    currentEmployee: currentEmployee,
+                    currentEmployee: currentEmployee!,
                     isDark: isDark,
                     isUpdating: isUpdating,
                   ),

@@ -91,9 +91,43 @@ class BasicEmployeeFirestoreDatabaseHandler
   }
 
   @override
+  Future<Map<String, dynamic>?> searchEmployeeByAuthUserIdBeforeInitialize(
+      {required String? authUserId}) async {
+    try {
+      // Search user with reference to the uid in firestore
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('employees')
+          .where('auth-user-id', isEqualTo: authUserId)
+          .get();
+
+      // Check if any documents match the query
+      if (querySnapshot.docs.isNotEmpty) {
+        // Get the first document
+        Map<String, dynamic> employeeData =
+            querySnapshot.docs.first.data() as Map<String, dynamic>;
+        logs.i('Employee found');
+        return employeeData;
+      } else {
+        logs.i('Employee Not Added to Employee Collection by Admin');
+        return null;
+      }
+    } catch (e) {
+      logs.e('Error searching for employee: $e');
+      throw Exception('Error searching for employee: $e');
+    }
+  }
+
+  @override
   Future<Employee> get currentEmployee async {
     final user = AuthService.firebase().currentUser!;
     Employee employee = await Employee.fromFirebaseUser(user);
+    return employee;
+  }
+
+  @override
+  Future<Employee?> get currentEmployeeBeforeInialization async {
+    final user = AuthService.firebase().currentUser!;
+    Employee? employee = await Employee.fromFirebaseUserBeforeInitialize(user);
     return employee;
   }
 

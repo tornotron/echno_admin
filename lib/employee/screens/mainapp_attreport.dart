@@ -3,6 +3,7 @@ import 'package:echno_attendance/attendance/services/attendance_controller.dart'
 import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/constants/sizes.dart';
 import 'package:echno_attendance/employee/bloc/employee_bloc.dart';
+import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/employee/widgets/attcard_monthly.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +60,7 @@ class _MainAttendanceReportScreenState
     DateTime currentDate = DateTime.now();
     String currentMonth = monthMap[currentDate.month]!;
     String formattedDate = DateFormat('dd MMM yyyy').format(currentDate);
-    final currentEmployee = context.select((EmployeeBloc bloc) {
+    final Employee? currentEmployee = context.select((EmployeeBloc bloc) {
       return bloc.currentEmployee;
     });
     return Column(
@@ -97,7 +98,7 @@ class _MainAttendanceReportScreenState
           ),
         ),
         AttendanceCardMonthly(
-            employeeId: currentEmployee.employeeId,
+            employeeId: currentEmployee!.employeeId,
             attendanceMonth: currentMonth,
             attYear: currentDate.year.toString()),
       ],

@@ -8,7 +8,10 @@ import 'package:image_picker/image_picker.dart';
 abstract class BasicEmployeeDatabaseHandler implements IReadEmployee {
   Future<Map<String, dynamic>> searchEmployeeByAuthUserId(
       {required String? authUserId});
+  Future<Map<String, dynamic>?> searchEmployeeByAuthUserIdBeforeInitialize(
+      {required String? authUserId});
   Future<Employee> get currentEmployee;
+  Future<Employee?> get currentEmployeeBeforeInialization;
   Future<void> uploadImage(
       {required String imagePath,
       required String employeeId,

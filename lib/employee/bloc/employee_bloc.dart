@@ -15,7 +15,7 @@ import 'package:intl/intl.dart';
 class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
   final BasicEmployeeDatabaseHandler basicEmployeeDatabaseHandler;
   final SiteService siteService = SiteService.firestore();
-  late Employee currentEmployee;
+  late Employee? currentEmployee;
   late List<SiteOffice> siteOffices;
   late bool isAttendanceMarked;
   final String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
@@ -23,22 +23,16 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
   EmployeeBloc(this.basicEmployeeDatabaseHandler)
       : super(const EmployeeNotInitializedState()) {
     on<EmployeeInitializeEvent>((event, emit) async {
-      try {
-        currentEmployee = await basicEmployeeDatabaseHandler.currentEmployee;
-      } catch (e) {
-        if (e
-            .toString()
-            .contains('Employee Not Added to Employee Collection')) {
-          emit(const EnterEmployeeIdState());
-        } else {
-          emit(const EmployeeNotInitializedState());
-        }
+      currentEmployee =
+          await basicEmployeeDatabaseHandler.currentEmployeeBeforeInialization;
+      if (currentEmployee == null) {
+        emit(const EnterEmployeeIdState());
       }
       siteOffices = await siteService.populateSiteOfficeList(
-          siteNameList: currentEmployee.sites!);
+          siteNameList: currentEmployee!.sites!);
       isAttendanceMarked = await AttendanceCheck()
-          .attendanceTodayCheck(currentEmployee.employeeId, formattedDate);
-      if (currentEmployee.employeeStatus == false) {
+          .attendanceTodayCheck(currentEmployee!.employeeId, formattedDate);
+      if (currentEmployee!.employeeStatus == false) {
         emit(const EmployeeInactiveState());
       } else {
         emit(const EmployeeInitializedState());
@@ -52,12 +46,12 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
         emit(const EmployeeLeavesState());
       } else {
         emit(EmployeeProfileState(
-            isUpdating: false, currentEmployee: currentEmployee));
+            isUpdating: false, currentEmployee: currentEmployee!));
       }
     });
     on<EmployeeUpdatePhotoEvent>((event, emit) async {
       emit(EmployeeProfileState(
-          isUpdating: true, currentEmployee: currentEmployee));
+          isUpdating: true, currentEmployee: currentEmployee!));
       final imagePicker = ImagePicker();
       final XFile? image = await imagePicker.pickImage(
           source: ImageSource.camera,
@@ -70,15 +64,15 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
       }
       currentEmployee = await basicEmployeeDatabaseHandler.currentEmployee;
       emit(EmployeeProfileState(
-          isUpdating: false, currentEmployee: currentEmployee));
+          isUpdating: false, currentEmployee: currentEmployee!));
     });
     on<HrHomeEvent>((event, emit) {
       emit(const HrHomeState());
     });
     on<MarkAttendanceEvent>((event, emit) async {
       isAttendanceMarked = await AttendanceCheck()
-          .attendanceTodayCheck(currentEmployee.employeeId, formattedDate);
-      if (currentEmployee.sites == null || currentEmployee.sites!.isEmpty) {
+          .attendanceTodayCheck(currentEmployee!.employeeId, formattedDate);
+      if (currentEmployee!.sites == null || currentEmployee!.sites!.isEmpty) {
         emit(EmployeeHomeState(
             exception: Exception("No site assigned to this employee")));
       }
@@ -92,7 +86,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
       double currentLongitude = location['longitude']!;
 
       siteOffices = await siteService.populateSiteOfficeList(
-          siteNameList: currentEmployee.sites!);
+          siteNameList: currentEmployee!.sites!);
       SiteOffice? currentSiteOffice;
 
       bool isEmployeeWithinSite = false;
@@ -121,8 +115,8 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
           emit(DisplayPictureState(imagePath: event.imagePath!));
         } else {
           await AttendanceInsertionService().attendanceTrigger(
-              employeeId: currentEmployee.employeeId,
-              employeeName: currentEmployee.employeeName,
+              employeeId: currentEmployee!.employeeId,
+              employeeName: currentEmployee!.employeeName,
               imageUrl: event.imageUrl!,
               siteName: currentSiteOffice!.siteOfficeName);
           isAttendanceMarked = true;

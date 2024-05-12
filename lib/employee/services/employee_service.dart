@@ -17,6 +17,11 @@ class EmployeeService implements BasicEmployeeDatabaseHandler {
   }
 
   @override
+  Future<Employee?> get currentEmployeeBeforeInialization {
+    return _handler.currentEmployee;
+  }
+
+  @override
   Future<Employee?> readEmployee({required String employeeId}) {
     return _handler.readEmployee(employeeId: employeeId);
   }
@@ -25,6 +30,13 @@ class EmployeeService implements BasicEmployeeDatabaseHandler {
   Future<Map<String, dynamic>> searchEmployeeByAuthUserId(
       {required String? authUserId}) {
     return _handler.searchEmployeeByAuthUserId(authUserId: authUserId);
+  }
+
+  @override
+  Future<Map<String, dynamic>?> searchEmployeeByAuthUserIdBeforeInitialize(
+      {required String? authUserId}) {
+    return _handler.searchEmployeeByAuthUserIdBeforeInitialize(
+        authUserId: authUserId);
   }
 
   @override

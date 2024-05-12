@@ -76,6 +76,34 @@ class Employee {
         sites: sites);
   }
 
+  static Future<Employee?> fromFirebaseUserBeforeInitialize(
+      AuthUser authUser) async {
+    Map<String, dynamic>? employeeDetails =
+        await employeeService.searchEmployeeByAuthUserIdBeforeInitialize(
+            authUserId: authUser.authUserId);
+    if (employeeDetails == null) {
+      return null;
+    }
+    final employeePhotoUrl = employeeDetails['photo-url'];
+    final employeeId = employeeDetails['employee-id'];
+    final employeeName = employeeDetails['employee-name'];
+    final companyEmail = employeeDetails['company-email'];
+    final phoneNumber = employeeDetails['phone-number'];
+    final employeeStatus = employeeDetails['employee-status'];
+    final employeeRole = getEmployeeRole(employeeDetails['employee-role']);
+    final sites = List<String>.from(employeeDetails['site-office'] ?? []);
+    return Employee._(
+        authUser: authUser,
+        photoUrl: employeePhotoUrl,
+        employeeId: employeeId,
+        employeeName: employeeName,
+        companyEmail: companyEmail,
+        phoneNumber: phoneNumber,
+        employeeStatus: employeeStatus,
+        employeeRole: employeeRole,
+        sites: sites);
+  }
+
   // This method is used to create an empty employee instance
   factory Employee.isEmpty() {
     return Employee(

@@ -5,6 +5,7 @@ import 'package:echno_attendance/employee/bloc/employee_event.dart';
 import 'package:echno_attendance/employee/bloc/employee_state.dart';
 import 'package:echno_attendance/employee/hr_bloc/hr_bloc.dart';
 import 'package:echno_attendance/employee/hr_bloc/hr_state_management.dart';
+import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/employee/screens/enter_employee_id.dart';
 import 'package:echno_attendance/employee/screens/homepage_screen.dart';
 import 'package:echno_attendance/employee/screens/inactive_employee_screen.dart';
@@ -30,10 +31,11 @@ class _EmployeeStateManagementWidgetState
         listener: (context, state) {},
         builder: (context, state) {
           if (state is EmployeeInitializedState) {
-            final currentEmployee = context.select((EmployeeBloc bloc) {
+            final Employee? currentEmployee =
+                context.select((EmployeeBloc bloc) {
               return bloc.currentEmployee;
             });
-            if (currentEmployee.employeeRole == EmployeeRole.hr) {
+            if (currentEmployee!.employeeRole == EmployeeRole.hr) {
               return BlocProvider(
                 create: (context) => HrBloc(),
                 child: const HrStateManagement(),

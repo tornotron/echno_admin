@@ -1,4 +1,5 @@
 import 'package:echno_attendance/employee/bloc/employee_bloc.dart';
+import 'package:echno_attendance/employee/models/employee.dart';
 import 'package:echno_attendance/employee/utilities/dashboard_item.dart';
 import 'package:echno_attendance/employee/utilities/dashboard_item_list.dart';
 import 'package:echno_attendance/employee/widgets/custom_dashboard_tile.dart';
@@ -25,7 +26,7 @@ class _HRDashboardScreenState extends State<HRDashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final currentEmployee = context.select((EmployeeBloc bloc) {
+    final Employee? currentEmployee = context.select((EmployeeBloc bloc) {
       return bloc.currentEmployee;
     });
     final isDark = EchnoHelperFunctions.isDarkMode(context);
@@ -35,7 +36,7 @@ class _HRDashboardScreenState extends State<HRDashboardScreen> {
             style: Theme.of(context).textTheme.headlineSmall),
       ),
       drawer: HrAppDrawer(
-        currentEmployee: currentEmployee,
+        currentEmployee: currentEmployee!,
         isDark: isDark,
       ),
       body: Padding(
