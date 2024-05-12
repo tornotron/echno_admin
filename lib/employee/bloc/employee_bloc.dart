@@ -27,15 +27,16 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
           await basicEmployeeDatabaseHandler.currentEmployeeBeforeInialization;
       if (currentEmployee == null) {
         emit(const EnterEmployeeIdState());
-      }
-      siteOffices = await siteService.populateSiteOfficeList(
-          siteNameList: currentEmployee!.sites!);
-      isAttendanceMarked = await AttendanceCheck()
-          .attendanceTodayCheck(currentEmployee!.employeeId, formattedDate);
-      if (currentEmployee!.employeeStatus == false) {
-        emit(const EmployeeInactiveState());
       } else {
-        emit(const EmployeeInitializedState());
+        if (currentEmployee!.employeeStatus == false) {
+          emit(const EmployeeInactiveState());
+        } else {
+          siteOffices = await siteService.populateSiteOfficeList(
+              siteNameList: currentEmployee!.sites!);
+          isAttendanceMarked = await AttendanceCheck()
+              .attendanceTodayCheck(currentEmployee!.employeeId, formattedDate);
+          emit(const EmployeeInitializedState());
+        }
       }
     });
     on<EmployeeHomeEvent>((event, emit) {
