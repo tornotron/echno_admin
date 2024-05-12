@@ -12,21 +12,20 @@ import 'package:echno_attendance/utilities/styles/padding_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class UpdateTaskProgessScreen extends StatefulWidget {
+class UpdateTaskScreen extends StatefulWidget {
   final SiteOffice? siteOffice;
   final Task task;
-  const UpdateTaskProgessScreen({
+  const UpdateTaskScreen({
     required this.task,
     super.key,
     this.siteOffice,
   });
 
   @override
-  State<UpdateTaskProgessScreen> createState() =>
-      _UpdateTaskProgessScreenState();
+  State<UpdateTaskScreen> createState() => _UpdateTaskScreenState();
 }
 
-class _UpdateTaskProgessScreenState extends State<UpdateTaskProgessScreen> {
+class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
   Task? get task => widget.task;
   final _taskProvider = TaskService.firestoreTasks();
   late TextEditingController _progressController;

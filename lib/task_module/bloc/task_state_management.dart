@@ -30,8 +30,8 @@ class _TaskStateManagementState extends State<TaskStateManagement> {
             siteOffice: state.siteOffice,
             task: state.task,
           );
-        } else if (state is UpdateTaskProgressState) {
-          return UpdateTaskProgessScreen(
+        } else if (state is UpdateTaskState) {
+          return UpdateTaskScreen(
             siteOffice: state.siteOffice,
             task: state.task,
           );

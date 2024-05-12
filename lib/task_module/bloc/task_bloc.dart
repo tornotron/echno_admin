@@ -24,8 +24,8 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         task: event.task,
       ));
     });
-    on<UpdateTaskProgressEvent>((event, emit) {
-      emit(UpdateTaskProgressState(
+    on<UpdateTaskEvent>((event, emit) {
+      emit(UpdateTaskState(
         siteOffice: event.siteOffice,
         task: event.task,
       ));

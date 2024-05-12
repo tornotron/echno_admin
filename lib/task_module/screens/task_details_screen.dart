@@ -102,10 +102,10 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
             onPressed: () {
               if (widget.siteOffice == null) {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return UpdateTaskProgessScreen(task: task);
+                  return UpdateTaskScreen(task: task);
                 }));
               } else {
-                context.read<TaskBloc>().add(UpdateTaskProgressEvent(
+                context.read<TaskBloc>().add(UpdateTaskEvent(
                       siteOffice: widget.siteOffice!,
                       task: widget.task,
                     ));

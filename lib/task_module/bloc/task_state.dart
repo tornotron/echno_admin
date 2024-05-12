@@ -24,10 +24,10 @@ class TaskDetailsState extends TaskState {
   });
 }
 
-class UpdateTaskProgressState extends TaskState {
+class UpdateTaskState extends TaskState {
   final SiteOffice siteOffice;
   final Task task;
-  const UpdateTaskProgressState({
+  const UpdateTaskState({
     required this.siteOffice,
     required this.task,
   });
