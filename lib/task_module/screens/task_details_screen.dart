@@ -5,7 +5,7 @@ import 'package:echno_attendance/site_module/models/site_model.dart';
 import 'package:echno_attendance/task_module/bloc/task_bloc.dart';
 import 'package:echno_attendance/task_module/bloc/task_event.dart';
 import 'package:echno_attendance/task_module/models/task_model.dart';
-import 'package:echno_attendance/task_module/screens/update_task_progress_screen.dart';
+import 'package:echno_attendance/task_module/screens/update_task_screen.dart';
 import 'package:echno_attendance/task_module/utilities/task_ui_helpers.dart';
 import 'package:echno_attendance/task_module/widgets/task_details_form.dart';
 import 'package:echno_attendance/utilities/helpers/helper_functions.dart';

@@ -3,7 +3,7 @@ import 'package:echno_attendance/task_module/bloc/task_state.dart';
 import 'package:echno_attendance/task_module/screens/add_task_screen.dart';
 import 'package:echno_attendance/task_module/screens/task_details_screen.dart';
 import 'package:echno_attendance/task_module/screens/task_home_screen.dart';
-import 'package:echno_attendance/task_module/screens/update_task_progress_screen.dart';
+import 'package:echno_attendance/task_module/screens/update_task_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,10 +31,7 @@ class _TaskStateManagementState extends State<TaskStateManagement> {
             task: state.task,
           );
         } else if (state is UpdateTaskState) {
-          return UpdateTaskScreen(
-            siteOffice: state.siteOffice,
-            task: state.task,
-          );
+          return UpdateTaskScreen(task: state.task);
         } else {
           return const Scaffold(
             body: Center(
