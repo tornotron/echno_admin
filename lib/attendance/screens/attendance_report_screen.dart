@@ -1,10 +1,8 @@
 import 'package:echno_attendance/attendance/widgets/daily_report.dart';
 import 'package:echno_attendance/attendance/widgets/monthly_report.dart';
 import 'package:echno_attendance/common_widgets/custom_app_bar.dart';
-import 'package:echno_attendance/constants/colors.dart';
 import 'package:echno_attendance/employee/hr_bloc/hr_bloc.dart';
 import 'package:echno_attendance/employee/hr_bloc/hr_event.dart';
-import 'package:echno_attendance/utilities/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -82,7 +80,6 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = EchnoHelperFunctions.isDarkMode(context);
     return Scaffold(
       appBar: EchnoAppBar(
         leadingIcon: Icons.arrow_back_ios_new,
@@ -93,21 +90,18 @@ class _AttendanceReportScreenState extends State<AttendanceReportScreen> {
             style: Theme.of(context).textTheme.headlineSmall),
       ),
       body: showMainContent ? const MonthlyReport() : const DailyReport(),
-      floatingActionButton: ElevatedButton(
-        onPressed: () {
-          _showBottomSheet(context);
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: Text(
+      floatingActionButton: SizedBox(
+        width: 250,
+        child: ElevatedButton(
+          onPressed: () {
+            _showBottomSheet(context);
+          },
+          child: const Text(
             "Report Type",
-            style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                fontSize: 10,
-                fontWeight: FontWeight.bold,
-                color: isDarkMode ? EchnoColors.white : EchnoColors.white),
           ),
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
