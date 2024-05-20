@@ -10,7 +10,7 @@ import 'package:echno_attendance/employee/screens/enter_employee_id.dart';
 import 'package:echno_attendance/employee/screens/hr_screens/hr_dashboard_screen.dart';
 import 'package:echno_attendance/employee/screens/inactive_employee_screen.dart';
 import 'package:echno_attendance/employee/utilities/employee_role.dart';
-import 'package:echno_attendance/leave_module/screens/leave_status_screen.dart';
+import 'package:echno_attendance/leave_module/screens/leave_register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -57,7 +57,7 @@ class _EmployeeStateManagementWidgetState
               child: const HrStateManagement(),
             );
           } else if (state is EmployeeLeavesState) {
-            return const LeaveStatusScreen();
+            return const LeaveRegisterScreen();
           } else if (state is TakePictureState) {
             return TakePictureScreen(camera: state.frontCamera);
           } else if (state is DisplayPictureState) {
