@@ -32,26 +32,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
           if (state is EmployeeProfileState) {
             isUpdating = state.isUpdating;
           }
-          return SingleChildScrollView(
-            child: Padding(
-              padding: CustomPaddingStyle.defaultPaddingWithAppbar,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  EmployeeProfilePhoto(
-                    currentEmployee: currentEmployee!,
-                    isDark: isDark,
-                    isUpdating: isUpdating,
-                  ),
-                  EmployeeProfileForm(
-                    currentEmployee: currentEmployee,
-                    isDark: isDark,
-                  ),
-                  SizedBox(
-                    height: DeviceUtilityHelpers.getBottomNavigationBarHeight(),
-                  )
-                ],
+          return Scaffold(
+            appBar: AppBar(
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back_ios_new),
+                onPressed: () {},
+              ),
+              title: Text('Profile',
+                  style: Theme.of(context).textTheme.headlineSmall),
+            ),
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: CustomPaddingStyle.defaultPaddingWithAppbar,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    EmployeeProfilePhoto(
+                      currentEmployee: currentEmployee!,
+                      isDark: isDark,
+                      isUpdating: isUpdating,
+                    ),
+                    EmployeeProfileForm(
+                      currentEmployee: currentEmployee,
+                      isDark: isDark,
+                    ),
+                    SizedBox(
+                      height:
+                          DeviceUtilityHelpers.getBottomNavigationBarHeight(),
+                    )
+                  ],
+                ),
               ),
             ),
           );
